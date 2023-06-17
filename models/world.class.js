@@ -1,32 +1,10 @@
 class World {
-
-
     character = new Character();
-    enemies = [
-        new Boar(),
-        new Boar(),
-        new Boar()
-    ];
-    birds = [
-        new Bird(),
-        new Bird(),
-        new Bird(),
-        new Bird(),
-        new Bird(),
-    ];
-    backgroundObjects = [
-        new BackgroundObject('./img/5_background/02/layers/l1_background.png'),
-        new BackgroundObject('./img/5_background/02/layers/l2_trees01.png'),
-        new BackgroundObject('./img/5_background/02/layers/l3_trees02.png'),
-        new BackgroundObject('./img/5_background/02/layers/l4_grass01.png'),
-        new BackgroundObject('./img/5_background/02/layers/l5_grass02.png'),
-        new BackgroundObject('./img/5_background/02/layers/l6_fog.png'),
-        new BackgroundObject('./img/5_background/02/layers/l7_ground.png'),
-        new BackgroundObject('./img/5_background/02/layers/l8_foreground.png')
-    ]
+    level = level1;
     canvas;
     ctx;
     keyboard;
+    cameraX = 0;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -43,10 +21,14 @@ class World {
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); //canvas wird geleert bevor objects neu angezeigt werden.
 
-        this.addObjectsToMap(this.backgroundObjects);
-        this.addObjectsToMap(this.enemies);
-        this.addObjectsToMap(this.birds);
+        this.ctx.translate(this.cameraX, 0);
+
+        this.addObjectsToMap(this.level.backgroundObjects);
+        this.addObjectsToMap(this.level.enemies);
+        this.addObjectsToMap(this.level.birds);
         this.character.draw(this.ctx);
+
+        this.ctx.translate(-this.cameraX, 0);
 
         let self = this;
         requestAnimationFrame(function () { //somit wird draw() funktion immer wieder neu ausgeführt
