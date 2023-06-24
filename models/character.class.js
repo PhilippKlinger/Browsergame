@@ -1,7 +1,7 @@
 class Character extends MoveableObject {
     height = 200;
     width = 180;
-    y = 230;
+    y = 74; //230
     x = 100;
     world;
     speed = 10;
@@ -49,13 +49,29 @@ class Character extends MoveableObject {
         './img/2_character_maya/Attacking/Attacking_011.png'
     ];
 
+    IMAGES_JUMPING = [
+        './img/2_character_maya/Jumping/Jump_000.png',
+        './img/2_character_maya/Jumping/Jump_001.png',
+        './img/2_character_maya/Jumping/Jump_002.png',
+        './img/2_character_maya/Jumping/Jump_003.png',
+        './img/2_character_maya/Jumping/Jump_004.png',
+        './img/2_character_maya/Jumping/Jump_005.png',
+        './img/2_character_maya/Jumping/Jump_006.png',
+        './img/2_character_maya/Jumping/Jump_007.png',
+        './img/2_character_maya/Jumping/Jump_008.png',
+        './img/2_character_maya/Jumping/Jump_009.png',
+        './img/2_character_maya/Jumping/Jump_010.png',
+        './img/2_character_maya/Jumping/Jump_011.png'
+    ];
+
     constructor() {
         super().loadImage('./img/2_character_maya/Walking/Walking_000.png');
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_ATTACKING);
+        this.loadImages(this.IMAGES_JUMPING);
         this.animate();
+        this.applyGravity();
     }
-
 
     animate() {
         setInterval(() => {
@@ -70,20 +86,28 @@ class Character extends MoveableObject {
                 this.otherDirection = true;
                 this.walkingSound.play();
             }
-            
+
             this.world.cameraX = -this.x + 100;
         }, 1000 / 60);
 
         setInterval(() => {
-            if (this.world.keyboard.ARROWRIGHT || this.world.keyboard.ARROWLEFT) {
-                let i = this.currentImage % this.IMAGES_WALKING.length;
-                let path = this.IMAGES_WALKING[i];
-                this.img = this.imageCache[path];
-                this.currentImage++;
+
+            if (this.isAboveGround()) {
+                this.playAnimation(this.IMAGES_JUMPING);
+            } else {
+                if ((this.world.keyboard.ARROWRIGHT && this.x < this.world.level.levelEndpointX) || (this.world.keyboard.ARROWLEFT && this.x > 100)) {
+                    this.playAnimation(this.IMAGES_WALKING);
+                }
             }
+
         }, 1000 / 60);
 
-        setInterval(() => {
+
+    }
+}
+
+/**
+ *  setInterval(() => {
             if (this.world.keyboard.ARROWUP) {
                 let i = this.currentImage % this.IMAGES_ATTACKING.length;
                 let path = this.IMAGES_ATTACKING[i];
@@ -91,5 +115,4 @@ class Character extends MoveableObject {
                 this.currentImage++;
             }
         }, 1000 / 30);
-    }
-}
+ */
