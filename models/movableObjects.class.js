@@ -1,23 +1,41 @@
-class MoveableObject {
-    currentImage = 0;
-    img;
-    imageCache = {};
-    speed = 1;
-    otherDirection = false;
+class MoveableObject extends DrawableObject {
     speedY = 0;
     acceleration = 1.5;
+    speed = 1;
+    otherDirection = false;
+    health = 100;
+    lastHit = 0;
 
-    
+    isColliding(obj) {
+        return (
+            (this.x + this.offsetWidth / 2.2) + (this.width - this.offsetWidth) >= (obj.x + obj.offsetWidth / 2.2) &&
+            (this.x + this.offsetWidth / 2.2) <= (obj.x + obj.offsetWidth / 2.2) + (obj.width - obj.offsetWidth) &&
+            (this.y + this.offsetHeight / 3) + (this.height - this.offsetHeight) >= obj.y &&
+            (this.height - this.offsetHeight) <= obj.y + obj.height
+        );
+    }
+
     drawBoundingBox(ctx) {
-        if(this instanceof Character || this instanceof Boar) {
+        if (this instanceof Character || this instanceof Boar || this instanceof Endboss) {
             ctx.beginPath();
-            ctx.rect(this.x, this.y, this.width, this.height);
+            ctx.rect(this.x + (this.offsetWidth / 2.2), this.y + (this.offsetHeight / 3), this.width - this.offsetWidth, this.height - this.offsetHeight);
             ctx.lineWidth = '3';
             ctx.strokeStyle = 'red';
             ctx.stroke();
             ctx.closePath();
         }
-     
+    }
+
+    flipImage(ctx) {
+        ctx.save();
+        ctx.scale(-1, 1);
+        ctx.translate(-this.width, 0);
+        this.x = this.x * -1;
+    }
+
+    reflipImage(ctx) {
+        ctx.restore();
+        this.x = this.x * -1;
     }
 
     applyGravity() {
@@ -33,11 +51,6 @@ class MoveableObject {
         return this.y < 220;
     }
 
-    loadImage(path) {
-        this.img = new Image();
-        this.img.src = path;
-    }
-
     moveRight() {
         this.x += this.speed;
         this.otherDirection = false;
@@ -48,35 +61,27 @@ class MoveableObject {
         this.otherDirection = true;
     }
 
-    flipImage(ctx) {
-        ctx.save();
-        ctx.scale(-1, 1);
-        ctx.translate(-this.width, 0);
-        this.x = this.x * -1;
+    jump() {
+        this.speedY = 20;
     }
 
-    reflipImage(ctx) {
-        ctx.restore();
-        this.x = this.x * -1;
-    }
-
-    draw(ctx) {
-        this.drawBoundingBox(ctx);
-        if (this.otherDirection) {
-            this.flipImage(ctx);
-        }
-        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-        if (this.otherDirection) {
-            this.reflipImage(ctx);
+    hit() {
+        this.health -= 5;
+        if (this.health < 0) {
+            this.health = 0;
+        } else {
+            this.lastHit = new Date().getTime();
         }
     }
 
-    loadImages(arr) {
-        arr.forEach((path) => {
-            let img = new Image();
-            img.src = path;
-            this.imageCache[path] = img;
-        });
+    isHurt() {
+        let timePassed = new Date().getTime() - this.lastHit;
+        timePassed = timePassed / 1000;
+        return timePassed < 0.3;
+    }
+
+    isDead() {
+        return this.health == 0;
     }
 
     playAnimation(images) {
@@ -86,7 +91,11 @@ class MoveableObject {
         this.currentImage++;
     }
 
-    jump() {
-        this.speedY = 20;
+    stopAnimation(images) {
+        let lastFrameIndex = images.length - 1;
+        this.currentImage = lastFrameIndex;
+        let lastFramePath = images[lastFrameIndex];
+        this.img = this.imageCache[lastFramePath];
     }
+
 } 

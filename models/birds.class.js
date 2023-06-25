@@ -1,7 +1,7 @@
 class Bird extends MoveableObject {
     height = 50;
     width = 60;
-    
+   
 
     IMAGES_FLYING = [
         './img/1_editables/Flying Monster - 01/Idle_000.png',
