@@ -3,8 +3,6 @@ class Endboss extends MoveableObject {
     width = 459;  //Faktor height*1,64
     y = 120;
 
-
-
     IMAGES_WALKING = [
         './img/4_enemie_boss_blackwidow/6_idle/__purple_black_widow_idle_001.png',
         './img/4_enemie_boss_blackwidow/6_idle/__purple_black_widow_idle_002.png',
@@ -34,18 +32,10 @@ class Endboss extends MoveableObject {
         this.animate();
     }
 
-    draw(ctx) {
-        ctx.save();
-        ctx.scale(-1, 1); // Horizontale Spiegelung
-        ctx.drawImage(this.img, -this.x - this.width, this.y, this.width, this.height);
-        ctx.restore();
-    }
-
     animate() {
-
         setInterval(() => {
             this.playAnimation(this.IMAGES_WALKING);
         }, 1000/15)
-
+        this.moveLeft();
     }
 }

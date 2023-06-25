@@ -1,8 +1,7 @@
 class Bird extends MoveableObject {
     height = 50;
     width = 60;
-    y = 80;
-   
+    
 
     IMAGES_FLYING = [
         './img/1_editables/Flying Monster - 01/Idle_000.png',
@@ -28,25 +27,22 @@ class Bird extends MoveableObject {
     constructor() {
         super().loadImage('./img/1_editables/Flying Monster - 01/Idle_000.png');
         this.loadImages(this.IMAGES_FLYING);
+        this.y = 20 + Math.random() * 80;
         this.x = -800 + Math.random() * 600;
         this.speed = 1.5 + Math.random() * 0.8;
         this.animate();
     }
 
-    draw(ctx) {
-        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-    }
-
     animate() {
+        setInterval(() => {
+            this.moveRight();
+        }, 1000/60);
         setInterval(() => {
             let i = this.currentImage % this.IMAGES_FLYING.length;
             let path = this.IMAGES_FLYING[i];
             this.img = this.imageCache[path];
             this.currentImage++;
-        }, 1000/30);
-        
-        this.moveRight();
-       
+        }, 1000/30);     
     }
 
     

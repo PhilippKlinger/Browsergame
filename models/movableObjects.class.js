@@ -6,15 +6,27 @@ class MoveableObject {
     otherDirection = false;
     speedY = 0;
     acceleration = 1.5;
-   
+
+    
+    drawBoundingBox(ctx) {
+        if(this instanceof Character || this instanceof Boar) {
+            ctx.beginPath();
+            ctx.rect(this.x, this.y, this.width, this.height);
+            ctx.lineWidth = '3';
+            ctx.strokeStyle = 'red';
+            ctx.stroke();
+            ctx.closePath();
+        }
+     
+    }
 
     applyGravity() {
         setInterval(() => {
-            if(this.isAboveGround()) {
-            this.y -= this.speedY;
-            this.speedY -= this.acceleration;
+            if (this.isAboveGround() || this.speedY > 0) {
+                this.y -= this.speedY;
+                this.speedY -= this.acceleration;
             }
-        }, 1000/30);
+        }, 1000 / 30);
     }
 
     isAboveGround() {
@@ -27,15 +39,13 @@ class MoveableObject {
     }
 
     moveRight() {
-        setInterval(() => {
-            this.x += this.speed;
-        }, 1000 / 60);
+        this.x += this.speed;
+        this.otherDirection = false;
     }
 
     moveLeft() {
-        setInterval(() => {
-            this.x -= this.speed;
-        }, 1000 / 60);
+        this.x -= this.speed;
+        this.otherDirection = true;
     }
 
     flipImage(ctx) {
@@ -51,12 +61,11 @@ class MoveableObject {
     }
 
     draw(ctx) {
+        this.drawBoundingBox(ctx);
         if (this.otherDirection) {
             this.flipImage(ctx);
         }
-
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-
         if (this.otherDirection) {
             this.reflipImage(ctx);
         }
@@ -75,5 +84,9 @@ class MoveableObject {
         let path = images[i];
         this.img = this.imageCache[path];
         this.currentImage++;
+    }
+
+    jump() {
+        this.speedY = 20;
     }
 } 

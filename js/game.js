@@ -27,7 +27,7 @@ window.addEventListener('keydown', (event) => {
         keyboard.ARROWDOWN = true;
     }
 
-    if (event.key === '') {
+    if (event.key === " ") {
         keyboard.SPACE = true;
     }
 });
@@ -49,7 +49,7 @@ window.addEventListener('keyup', (event) => {
         keyboard.ARROWDOWN = false;
     }
 
-    if (event.key === '') {
+    if (event.key === " ") {
         keyboard.SPACE = false;
     }
 });

@@ -20,16 +20,12 @@ class World {
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); //canvas wird geleert bevor objects neu angezeigt werden.
-
         this.ctx.translate(this.cameraX, 0);
-
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.birds);
         this.character.draw(this.ctx);
-
         this.ctx.translate(-this.cameraX, 0);
-
         let self = this;
         requestAnimationFrame(function () { //somit wird draw() funktion immer wieder neu ausgeführt
             self.draw();
@@ -39,7 +35,7 @@ class World {
     addObjectsToMap(objects) {
         objects.forEach(o => {
             o.draw(this.ctx);
-        })
+        });
     }
 
     addToMap(mo) {

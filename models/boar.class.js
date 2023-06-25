@@ -1,7 +1,7 @@
 class Boar extends MoveableObject {
     height = 100;
     width = 120;
-    y = 300;
+  
 
     IMAGES_WALKING = [
         './img/3_enemies_boar/boar/Walking/Walking_000.png',
@@ -25,27 +25,23 @@ class Boar extends MoveableObject {
     ];
 
     
-    
     constructor() {
         super().loadImage('./img/3_enemies_boar/boar/Walking/Walking_000.png');
         this.loadImages(this.IMAGES_WALKING);
+        this.y = 290 + Math.random() * 20;
         this.x = 500 + Math.random() * 400;
         this.speed = 0.8 + Math.random() * 0.5;
         this.animate();
     }
 
-    draw(ctx) {
-        ctx.save();
-        ctx.scale(-1, 1); // Horizontale Spiegelung
-        ctx.drawImage(this.img, -this.x - this.width, this.y, this.width, this.height);
-        ctx.restore();
-    }
-
     animate() {
         setInterval(() => {
-            this.playAnimation(this.IMAGES_WALKING);
-        }, 1000/30)
+            this.moveLeft();
+        }, 1000/60);
 
-       this.moveLeft();
+        setInterval(() => {
+            this.playAnimation(this.IMAGES_WALKING);
+        }, 1000/30);
+
     }
 }
