@@ -5,6 +5,7 @@ class World {
     ctx;
     keyboard;
     cameraX = 0;
+    statusbar = new Statusbar();
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -27,6 +28,7 @@ class World {
 
     setWorld() {
         this.character.world = this;
+        this.statusbar.world = this;
     }
 
     draw() {
@@ -36,6 +38,9 @@ class World {
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.birds);
         this.character.draw(this.ctx);
+        this.statusbar.x = 30 + this.cameraX;
+        this.statusbar.y = 30;
+        this.statusbar.draw(this.ctx);
         this.ctx.translate(-this.cameraX, 0);
         let self = this;
         requestAnimationFrame(function () { //somit wird draw() funktion immer wieder neu ausgeführt

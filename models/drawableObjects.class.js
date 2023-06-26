@@ -9,6 +9,14 @@ class DrawableObject {
         this.img.src = path;
     }
 
+    loadImages(arr) {
+        arr.forEach((path) => {
+            let img = new Image();
+            img.src = path;
+            this.imageCache[path] = img;
+        });
+    }
+
     draw(ctx) {
         this.drawBoundingBox(ctx);
         if (this.otherDirection) {
@@ -20,13 +28,20 @@ class DrawableObject {
         }
     }
 
-    loadImages(arr) {
-        arr.forEach((path) => {
-            let img = new Image();
-            img.src = path;
-            this.imageCache[path] = img;
-        });
+    drawBoundingBox(ctx) {
+        if (this instanceof Character || this instanceof Boar || this instanceof Endboss) {
+            ctx.beginPath();
+            ctx.rect(this.x + (this.offsetWidth / 2.2), this.y + (this.offsetHeight / 3), this.width - this.offsetWidth, this.height - this.offsetHeight);
+            ctx.lineWidth = '3';
+            ctx.strokeStyle = 'red';
+            ctx.stroke();
+            ctx.closePath();
+        }
     }
+
+    
+
+
 
 
 }

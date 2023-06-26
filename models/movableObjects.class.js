@@ -14,18 +14,7 @@ class MoveableObject extends DrawableObject {
             (this.height - this.offsetHeight) <= obj.y + obj.height
         );
     }
-
-    drawBoundingBox(ctx) {
-        if (this instanceof Character || this instanceof Boar || this instanceof Endboss) {
-            ctx.beginPath();
-            ctx.rect(this.x + (this.offsetWidth / 2.2), this.y + (this.offsetHeight / 3), this.width - this.offsetWidth, this.height - this.offsetHeight);
-            ctx.lineWidth = '3';
-            ctx.strokeStyle = 'red';
-            ctx.stroke();
-            ctx.closePath();
-        }
-    }
-
+   
     flipImage(ctx) {
         ctx.save();
         ctx.scale(-1, 1);
