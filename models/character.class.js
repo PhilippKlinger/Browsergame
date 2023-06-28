@@ -153,7 +153,6 @@ class Character extends MoveableObject {
         setInterval(() => {
             if (this.world.keyboard.ARROWUP) {
                 this.playAnimation(this.IMAGES_ATTACKING);
-                 
             }
         }, 1000 / 30);
     }

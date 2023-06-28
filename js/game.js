@@ -30,6 +30,22 @@ window.addEventListener('keydown', (event) => {
     if (event.key === " ") {
         keyboard.SPACE = true;
     }
+
+    if (event.key === "w") {
+        keyboard.W = true;
+    }
+
+    if (event.key === "a") {
+        keyboard.A = true;
+    }
+
+    if (event.key === "s") {
+        keyboard.S = true;
+    }
+
+    if (event.key === "d") {
+        keyboard.D = true;
+    }
 });
 
 window.addEventListener('keyup', (event) => {
@@ -51,6 +67,22 @@ window.addEventListener('keyup', (event) => {
 
     if (event.key === " ") {
         keyboard.SPACE = false;
+    }
+
+    if (event.key === "w") {
+        keyboard.W = false;
+    }
+
+    if (event.key === "a") {
+        keyboard.A = false;
+    }
+
+    if (event.key === "s") {
+        keyboard.S = false;
+    }
+
+    if (event.key === "d") {
+        keyboard.D = false;
     }
 });
 

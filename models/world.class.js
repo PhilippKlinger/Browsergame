@@ -7,41 +7,61 @@ class World {
     cameraX = 0;
     statusbar = new Statusbar();
 
+
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
         this.draw();
         this.setWorld();
-        this.checkCollisions();
+        this.run();
+        this.character.statusbar = this.statusbar;
+    }
+
+    run() {
+        setInterval(() => {
+            this.checkCollisions();
+            this.checkThrowing();
+        }, 1000 / 10);
     }
 
     checkCollisions() {
-        setInterval(() => {
-            this.level.enemies.forEach((enemy) => {
-                if (this.character.isColliding(enemy)) {
-                    this.character.hit();
-                };
-            });
-        }, 1000 / 10);
+        this.level.enemies.forEach((enemy) => {
+            if (this.character.isColliding(enemy)) {
+                this.character.hit();
+                this.statusbar.setPercentage(this.character.health);
+            };
+        });
+    }
+
+    checkThrowing() {
+        if (this.keyboard.D && !this.character.otherDirection) {
+            let spear = new ThrowableObject(this.character.x + 120, this.character.y + 80);
+            this.level.throwableObjects.push(spear);
+        }
     }
 
     setWorld() {
         this.character.world = this;
-        this.statusbar.world = this;
     }
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); //canvas wird geleert bevor objects neu angezeigt werden.
+
         this.ctx.translate(this.cameraX, 0);
         this.addObjectsToMap(this.level.backgroundObjects);
+
+        this.ctx.translate(-this.cameraX, 0);
+        this.statusbar.draw(this.ctx);
+        this.ctx.translate(this.cameraX, 0);
+
+        this.character.draw(this.ctx);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.birds);
-        this.character.draw(this.ctx);
-        this.statusbar.x = 30 + this.cameraX;
-        this.statusbar.y = 30;
-        this.statusbar.draw(this.ctx);
+        this.addObjectsToMap(this.level.throwableObjects);
+
         this.ctx.translate(-this.cameraX, 0);
+
         let self = this;
         requestAnimationFrame(function () { //somit wird draw() funktion immer wieder neu ausgeführt
             self.draw();

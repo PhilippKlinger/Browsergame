@@ -18,6 +18,9 @@ const level1 = new Level(
         new Bird()
     ],
     [
+        
+    ],
+    [
         new BackgroundObject('./img/5_background/02/layers/l1_background.png', 0),
         new BackgroundObject('./img/5_background/02/layers/l2_trees01.png', 0),
         new BackgroundObject('./img/5_background/02/layers/l3_trees02.png', 0),
