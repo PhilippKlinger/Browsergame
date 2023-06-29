@@ -13,7 +13,8 @@ class Keyboard {
             this.W ||
             this.A ||
             this.S ||
-            this.D
+            this.D ||
+            this.H
         );
 }
 }

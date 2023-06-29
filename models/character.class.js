@@ -243,5 +243,12 @@ class Character extends MoveableObject {
                 }
             }
         }, 1000 / 30);
+
+        setInterval(() => {
+            if(this.world.keyboard.H) {
+                console.log(this.x);
+            }
+            
+        }, 1000);
     }
 }

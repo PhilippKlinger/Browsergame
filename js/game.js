@@ -54,6 +54,11 @@ window.addEventListener('keydown', (event) => {
         keyboard.D = true;
          keyboard.NOKEY = false;
     }
+
+    if (event.key === "h") {
+        keyboard.H = true;
+         keyboard.NOKEY = false;
+    }
 }
 });
 
@@ -101,6 +106,11 @@ window.addEventListener('keyup', (event) => {
 
     if (event.key === "d") {
         keyboard.D = false;
+         keyboard.NOKEY = true;
+    }
+
+    if (event.key === "h") {
+        keyboard.H = false;
          keyboard.NOKEY = true;
     }
 }
