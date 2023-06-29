@@ -9,6 +9,27 @@ class Character extends MoveableObject {
     speed = 10;
     walkingSound = new Audio('./audio/walking.mp3');
 
+    IMAGES_IDLE = [
+        './img/2_character_maya/Idle/Idle_000.png',
+        './img/2_character_maya/Idle/Idle_001.png',
+        './img/2_character_maya/Idle/Idle_002.png',
+        './img/2_character_maya/Idle/Idle_003.png',
+        './img/2_character_maya/Idle/Idle_004.png',
+        './img/2_character_maya/Idle/Idle_005.png',
+        './img/2_character_maya/Idle/Idle_006.png',
+        './img/2_character_maya/Idle/Idle_007.png',
+        './img/2_character_maya/Idle/Idle_008.png',
+        './img/2_character_maya/Idle/Idle_009.png',
+        './img/2_character_maya/Idle/Idle_010.png',
+        './img/2_character_maya/Idle/Idle_011.png',
+        './img/2_character_maya/Idle/Idle_012.png',
+        './img/2_character_maya/Idle/Idle_013.png',
+        './img/2_character_maya/Idle/Idle_014.png',
+        './img/2_character_maya/Idle/Idle_015.png',
+        './img/2_character_maya/Idle/Idle_016.png',
+        './img/2_character_maya/Idle/Idle_017.png'
+    ];
+
     IMAGES_WALKING = [
         './img/2_character_maya/Walking/Walking_000.png',
         './img/2_character_maya/Walking/Walking_001.png',
@@ -82,7 +103,7 @@ class Character extends MoveableObject {
         './img/2_character_maya/Dying/Dying_012.png',
         './img/2_character_maya/Dying/Dying_013.png',
         './img/2_character_maya/Dying/Dying_014.png'
-    ]
+    ];
 
     IMAGES_HURTING = [
         './img/2_character_maya/Hurt/Hurt_000.png',
@@ -97,15 +118,68 @@ class Character extends MoveableObject {
         './img/2_character_maya/Hurt/Hurt_009.png',
         './img/2_character_maya/Hurt/Hurt_010.png',
         './img/2_character_maya/Hurt/Hurt_011.png'
-    ]
+    ];
+
+    IMAGES_THROWING = [
+        './img/2_character_maya/Throwing/Throwing_000.png',
+        './img/2_character_maya/Throwing/Throwing_001.png',
+        './img/2_character_maya/Throwing/Throwing_002.png',
+        './img/2_character_maya/Throwing/Throwing_003.png',
+        './img/2_character_maya/Throwing/Throwing_004.png',
+        './img/2_character_maya/Throwing/Throwing_005.png',
+        './img/2_character_maya/Throwing/Throwing_006.png',
+        './img/2_character_maya/Throwing/Throwing_007.png',
+        './img/2_character_maya/Throwing/Throwing_008.png',
+        './img/2_character_maya/Throwing/Throwing_009.png',
+        './img/2_character_maya/Throwing/Throwing_010.png',
+        './img/2_character_maya/Throwing/Throwing_011.png'
+    ];
+
+    IMAGES_SLIDING = [
+        './img/2_character_maya/Sliding/Sliding_000.png',
+        './img/2_character_maya/Sliding/Sliding_001.png',
+        './img/2_character_maya/Sliding/Sliding_002.png',
+        './img/2_character_maya/Sliding/Sliding_003.png',
+        './img/2_character_maya/Sliding/Sliding_004.png',
+        './img/2_character_maya/Sliding/Sliding_005.png'
+    ];
+
+    IMAGES_FALLING = [
+        './img/2_character_maya/Falling/Falling_000.png',
+        './img/2_character_maya/Falling/Falling_001.png',
+        './img/2_character_maya/Falling/Falling_002.png',
+        './img/2_character_maya/Falling/Falling_003.png',
+        './img/2_character_maya/Falling/Falling_004.png',
+        './img/2_character_maya/Falling/Falling_005.png'
+    ];
+
+    IMAGES_KICKING = [
+        './img/2_character_maya/Kicking/Kicking_000.png',
+        './img/2_character_maya/Kicking/Kicking_001.png',
+        './img/2_character_maya/Kicking/Kicking_002.png',
+        './img/2_character_maya/Kicking/Kicking_003.png',
+        './img/2_character_maya/Kicking/Kicking_004.png',
+        './img/2_character_maya/Kicking/Kicking_005.png',
+        './img/2_character_maya/Kicking/Kicking_006.png',
+        './img/2_character_maya/Kicking/Kicking_007.png',
+        './img/2_character_maya/Kicking/Kicking_008.png',
+        './img/2_character_maya/Kicking/Kicking_009.png',
+        './img/2_character_maya/Kicking/Kicking_010.png',
+        './img/2_character_maya/Kicking/Kicking_011.png'
+    ];
 
     constructor() {
         super().loadImage('./img/2_character_maya/Walking/Walking_000.png');
+        this.loadImages(this.IMAGES_IDLE);
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_ATTACKING);
         this.loadImages(this.IMAGES_JUMPING);
         this.loadImages(this.IMAGES_DYING);
         this.loadImages(this.IMAGES_HURTING);
+        this.loadImages(this.IMAGES_THROWING);
+        this.loadImages(this.IMAGES_SLIDING);
+        this.loadImages(this.IMAGES_FALLING);
+        this.loadImages(this.IMAGES_KICKING);
         this.animate();
         this.applyGravity();
     }
@@ -132,18 +206,26 @@ class Character extends MoveableObject {
                 this.playAnimation(this.IMAGES_DYING);
                 setTimeout(() => {
                     this.stopAnimation(this.IMAGES_DYING);
-                }, 150); 
+                }, 150);
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURTING);
                 setTimeout(() => {
                     this.stopAnimation(this.IMAGES_HURTING);
-                }, 200); 
+                }, 200);
             } else if (this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_JUMPING);
                 setTimeout(() => {
                     this.stopAnimation(this.IMAGES_JUMPING);
-                }, 100); 
-            } else {
+                }, 100);
+            } else if (this.world.keyboard.S) {
+                if (!this.otherDirection) {
+                    this.slideRight();
+                } else {
+                    this.slideLeft();
+                }
+                this.playAnimation(this.IMAGES_SLIDING);
+            }
+            else {
                 if ((this.world.keyboard.ARROWRIGHT && this.x < this.world.level.levelEndpointX) || (this.world.keyboard.ARROWLEFT && this.x > 100)) {
                     this.playAnimation(this.IMAGES_WALKING);
                 }
@@ -151,13 +233,15 @@ class Character extends MoveableObject {
         }, 1000 / 60);
 
         setInterval(() => {
-            if (this.world.keyboard.ARROWUP) {
-                this.playAnimation(this.IMAGES_ATTACKING);
+            if (!this.isDead()) {
+                if (this.world.keyboard.ARROWUP) {
+                    this.playAnimation(this.IMAGES_ATTACKING);
+                } else if (this.world.keyboard.NOKEY) {
+                    this.playAnimation(this.IMAGES_IDLE);
+                } else if (this.world.keyboard.D) {
+                    this.playAnimation(this.IMAGES_THROWING);
+                }
             }
         }, 1000 / 30);
     }
 }
-
-/**
- *  
- */

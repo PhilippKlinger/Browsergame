@@ -4,7 +4,7 @@ class Level {
     throwableObjects;
     backgroundObjects;
    
-    levelEndpointX = 1600;
+    levelEndpointX = 5500;
 
     constructor(enemies, birds,throwableObjects, backgroundObjects) {
         this.enemies = enemies;

@@ -22,6 +22,7 @@ class World {
         setInterval(() => {
             this.checkCollisions();
             this.checkThrowing();
+            this.checkDying();
         }, 1000 / 10);
     }
 
@@ -38,6 +39,12 @@ class World {
         if (this.keyboard.D && !this.character.otherDirection) {
             let spear = new ThrowableObject(this.character.x + 120, this.character.y + 80);
             this.level.throwableObjects.push(spear);
+        }
+    }
+
+    checkDying() {
+        if (this.character.isDead()) {
+            this.keyboard.isLocked = true;
         }
     }
 

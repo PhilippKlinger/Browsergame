@@ -1,11 +1,19 @@
 class Keyboard {
-    ARROWLEFT = false;
-    ARROWRIGHT = false;
-    ARROWUP = false;
-    ARROWDOWN = false;
-    SPACE = false;
-    W = false;
-    A = false;
-    S = false;
-    D = false;
+  
+    NOKEY = true;
+    isLocked = false;
+
+    isKeyPressed() {
+        return (
+            this.ARROWLEFT ||
+            this.ARROWRIGHT ||
+            this.ARROWUP ||
+            this.ARROWDOWN ||
+            this.SPACE ||
+            this.W ||
+            this.A ||
+            this.S ||
+            this.D
+        );
+}
 }

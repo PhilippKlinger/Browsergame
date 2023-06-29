@@ -42,7 +42,6 @@ class MoveableObject extends DrawableObject {
         } else {
             return this.y < 220;
         }
-        
     }
 
     moveRight() {
@@ -59,8 +58,16 @@ class MoveableObject extends DrawableObject {
         this.speedY = 20;
     }
 
+    slideRight() {
+        this.x += (this.speed)*1.5;
+    }
+
+    slideLeft() {
+        this.x -= (this.speed)*1.5;
+    }
+
     hit() {
-        this.health -= 5;
+        this.health -= 1;
         if (this.health < 0) {
             this.health = 0;
         } else {
