@@ -5,6 +5,7 @@ class Boar extends MoveableObject {
     offsetHeight = 0;
     offsetWidth = 15;
 
+
     IMAGES_WALKING = [
         './img/3_enemies_boar/boar/Walking/Walking_000.png',
         './img/3_enemies_boar/boar/Walking/Walking_001.png',
@@ -26,23 +27,35 @@ class Boar extends MoveableObject {
         './img/3_enemies_boar/boar/Walking/Walking_017.png'
     ];
 
-    
-    constructor() {
-        super().loadImage('./img/3_enemies_boar/boar/Walking/Walking_000.png');
+
+    constructor(intervals) {
+        super(intervals).loadImage('./img/3_enemies_boar/boar/Walking/Walking_000.png');
         this.loadImages(this.IMAGES_WALKING);
-        this.x = 500 + Math.random() * 400;
-        this.speed = 0.8 + Math.random() * 0.5;
+        this.x = 500 + Math.random() * 1000;
+        this.speed = 1.4 + Math.random() * 1;
+        this.health = 10;
         this.animate();
+        //this.stopInterval();
     }
 
     animate() {
-        setInterval(() => {
+        this.intervals.push(setInterval(() => {
             this.moveLeft();
-        }, 1000/60);
-
-        setInterval(() => {
             this.playAnimation(this.IMAGES_WALKING);
-        }, 1000/30);
-
+        }, 1000 / 30));
+        console.log(this.intervals);
     }
+
+    /**
+     * stopInterval() {
+        if (this.world.keyboard.A) {
+            intervals.forEach(interval => clearInterval(interval));
+        }
+    }
+     */
+    
 }
+
+
+// Intervalle stoppen
+//

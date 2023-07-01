@@ -153,20 +153,6 @@ class Character extends MoveableObject {
         './img/2_character_maya/Falling/Falling_005.png'
     ];
 
-    IMAGES_KICKING = [
-        './img/2_character_maya/Kicking/Kicking_000.png',
-        './img/2_character_maya/Kicking/Kicking_001.png',
-        './img/2_character_maya/Kicking/Kicking_002.png',
-        './img/2_character_maya/Kicking/Kicking_003.png',
-        './img/2_character_maya/Kicking/Kicking_004.png',
-        './img/2_character_maya/Kicking/Kicking_005.png',
-        './img/2_character_maya/Kicking/Kicking_006.png',
-        './img/2_character_maya/Kicking/Kicking_007.png',
-        './img/2_character_maya/Kicking/Kicking_008.png',
-        './img/2_character_maya/Kicking/Kicking_009.png',
-        './img/2_character_maya/Kicking/Kicking_010.png',
-        './img/2_character_maya/Kicking/Kicking_011.png'
-    ];
 
     constructor() {
         super().loadImage('./img/2_character_maya/Walking/Walking_000.png');
@@ -179,7 +165,6 @@ class Character extends MoveableObject {
         this.loadImages(this.IMAGES_THROWING);
         this.loadImages(this.IMAGES_SLIDING);
         this.loadImages(this.IMAGES_FALLING);
-        this.loadImages(this.IMAGES_KICKING);
         this.animate();
         this.applyGravity();
     }
@@ -187,6 +172,7 @@ class Character extends MoveableObject {
     animate() {
         setInterval(() => {
             this.walkingSound.pause();
+            if (!this.isDead()) {
             if (this.world.keyboard.ARROWRIGHT && this.x < this.world.level.levelEndpointX) {
                 this.moveRight();
                 this.walkingSound.play();
@@ -199,6 +185,7 @@ class Character extends MoveableObject {
                 this.jump();
             }
             this.world.cameraX = -this.x + 100;
+        }
         }, 1000 / 60);
 
         setInterval(() => {
@@ -216,7 +203,7 @@ class Character extends MoveableObject {
                 this.playAnimation(this.IMAGES_JUMPING);
                 setTimeout(() => {
                     this.stopAnimation(this.IMAGES_JUMPING);
-                }, 100);
+                }, 50);
             } else if (this.world.keyboard.S) {
                 if (!this.otherDirection) {
                     this.slideRight();

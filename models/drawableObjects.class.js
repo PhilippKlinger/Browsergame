@@ -1,7 +1,9 @@
 class DrawableObject {
+    world;
     currentImage = 0;
     img;
     imageCache = {};
+    intervals = [];
 
 
     loadImage(path) {
@@ -38,10 +40,4 @@ class DrawableObject {
             ctx.closePath();
         }
     }
-
-    
-
-
-
-
 }

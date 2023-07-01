@@ -1,4 +1,5 @@
 class World {
+    drawableObject = new DrawableObject();
     character = new Character();
     level = level1;
     canvas;
@@ -32,6 +33,9 @@ class World {
                 this.character.hit();
                 this.statusbar.setPercentage(this.character.health);
             };
+            if (enemy.isColliding(this.character) && this.keyboard.ARROWUP) {
+                clearInterval(1);
+            };
         });
     }
 
@@ -50,6 +54,7 @@ class World {
 
     setWorld() {
         this.character.world = this;
+        this.drawableObject.world = this;
     }
 
     draw() {
@@ -84,4 +89,5 @@ class World {
     addToMap(mo) {
         mo.draw(this.ctx);
     }
+    
 }

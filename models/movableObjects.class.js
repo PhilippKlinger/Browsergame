@@ -14,7 +14,7 @@ class MoveableObject extends DrawableObject {
             (this.height - this.offsetHeight) <= obj.y + obj.height
         );
     }
-   
+
     flipImage(ctx) {
         ctx.save();
         ctx.scale(-1, 1);
@@ -38,13 +38,13 @@ class MoveableObject extends DrawableObject {
 
     isAboveGround() {
         if (this instanceof ThrowableObject) {
-          return true;
-        } else if (this.x >= 1830 && this.x <= 1990 && this.y > 220) {
-          return this.y < 500;
+            return true;
+        } else if (this.x >= 1850 && this.x <= 1970 && this.y > 220) {
+            return  [this.y < 500, this.health = 0, this.statusbar.setPercentage(this.health)];
         } else {
-          return this.y < 220;
+            return this.y < 220;
         }
-      }
+    } 
 
     moveRight() {
         this.x += this.speed;
@@ -61,11 +61,11 @@ class MoveableObject extends DrawableObject {
     }
 
     slideRight() {
-        this.x += (this.speed)*1.5;
+        this.x += (this.speed) * 1.5;
     }
 
     slideLeft() {
-        this.x -= (this.speed)*1.5;
+        this.x -= (this.speed) * 1.5;
     }
 
     hit() {
