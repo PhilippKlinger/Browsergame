@@ -18,7 +18,9 @@ const level1 = new Level(
         new Bird()
     ],
     [
-        
+        new ThrowableObject(),
+        new ThrowableObject(),
+        new ThrowableObject()
     ],
     [
         new BackgroundObject('./img/5_background/l1_background.png', 0),

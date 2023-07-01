@@ -7,6 +7,7 @@ class World {
     keyboard;
     cameraX = 0;
     statusbar = new Statusbar();
+    spearCount = new SpearCount();
 
 
     constructor(canvas, keyboard) {
@@ -40,12 +41,15 @@ class World {
     }
 
     checkThrowing() {
+        this.spearCount.updateCount(this.level.throwableObjects.length);
         if (this.keyboard.D && !this.character.otherDirection) {
-            let spear = new ThrowableObject(this.character.x + 120, this.character.y + 80);
-            this.level.throwableObjects.push(spear);
+            if (this.level.throwableObjects.length > 0) {
+                let spear = new ThrowableObject(this.character.x + 120, this.character.y + 80);
+                this.level.throwableObjects.pop(spear);
+            }
         }
     }
-
+     
     checkDying() {
         if (this.character.isDead()) {
             this.keyboard.isLocked = true;
@@ -65,6 +69,7 @@ class World {
 
         this.ctx.translate(-this.cameraX, 0);
         this.statusbar.draw(this.ctx);
+        this.spearCount.draw(this.ctx);
         this.ctx.translate(this.cameraX, 0);
 
         this.character.draw(this.ctx);

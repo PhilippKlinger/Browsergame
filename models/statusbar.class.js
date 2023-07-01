@@ -58,24 +58,3 @@ class Statusbar extends DrawableObject {
         }
     }
 }
-
-
-
-
-/**
- * updateHealthStatus(healthStatus) {
-        // Berechnen Sie den Index des passenden Bildes basierend auf dem healthStatus
-        let imageIndex = Math.floor(healthStatus / 10);
-    
-        // Stellen Sie sicher, dass der imageIndex innerhalb des Array-Bereichs bleibt
-        if (imageIndex < 0) {
-            imageIndex = 0;
-        } else if (imageIndex >= this.IMAGES_HEALTHBAR.length) {
-            imageIndex = this.IMAGES_HEALTHBAR.length - 1;
-        }
-    
-        // Setzen Sie das Bild entsprechend des imageIndex
-        let imagePath = this.IMAGES_HEALTHBAR[imageIndex];
-        this.img = this.imageCache[imagePath];
-    }
- */
