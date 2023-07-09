@@ -31,7 +31,7 @@ class Boar extends MoveableObject {
     constructor(intervals) {
         super(intervals).loadImage('./img/3_enemies_boar/boar/Walking/Walking_000.png');
         this.loadImages(this.IMAGES_WALKING);
-        this.x = 500 + Math.random() * 1000;
+        this.x = 5500 + Math.random() * 1000;
         this.speed = 1.4 + Math.random() * 1;
         this.health = 10;
         this.animate();

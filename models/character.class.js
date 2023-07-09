@@ -225,7 +225,7 @@ class Character extends MoveableObject {
                     this.playAnimation(this.IMAGES_ATTACKING);
                 } else if (this.world.keyboard.NOKEY) {
                     this.playAnimation(this.IMAGES_IDLE);
-                } else if (this.world.keyboard.D) {
+                } else if (this.world.keyboard.D && this.world.canThrow()) {
                     this.playAnimation(this.IMAGES_THROWING);
                 }
             }

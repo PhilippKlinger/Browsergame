@@ -6,8 +6,12 @@ class World {
     ctx;
     keyboard;
     cameraX = 0;
+    collectedSpears = 7;
+    lastThrowTime = null;
     statusbar = new Statusbar();
     spearCount = new SpearCount();
+    spearDisplay = new SpearDisplay();
+    coinDisplay = new CoinDisplay();
 
 
     constructor(canvas, keyboard) {
@@ -41,15 +45,25 @@ class World {
     }
 
     checkThrowing() {
-        this.spearCount.updateCount(this.level.throwableObjects.length);
-        if (this.keyboard.D && !this.character.otherDirection) {
-            if (this.level.throwableObjects.length > 0) {
-                let spear = new ThrowableObject(this.character.x + 120, this.character.y + 80);
-                this.level.throwableObjects.pop(spear);
-            }
+        this.spearCount.updateCount(this.collectedSpears);
+        if (this.keyboard.D && this.canThrow()) {
+            let spear = new ThrowableObject(this.character.x + 120, this.character.y + 80);
+            this.collectedSpears--;
+            this.level.throwableObjects.push(spear);
+            this.lastThrowTime = Date.now();
         }
     }
-     
+
+    canThrow() {
+        const minThrowInterval = 1000; // Mindestzeit zwischen zwei Würfen in Millisekunden
+        const currentTime = Date.now();
+        if (!this.lastThrowTime || currentTime - this.lastThrowTime >= minThrowInterval
+            && this.collectedSpears > 0 && !this.keyboard.ARROWRIGHT && !this.character.otherDirection) {
+            return true;
+        }
+        return false;
+    }
+
     checkDying() {
         if (this.character.isDead()) {
             this.keyboard.isLocked = true;
@@ -70,6 +84,8 @@ class World {
         this.ctx.translate(-this.cameraX, 0);
         this.statusbar.draw(this.ctx);
         this.spearCount.draw(this.ctx);
+        this.spearDisplay.draw(this.ctx);
+        this.coinDisplay.draw(this.ctx);
         this.ctx.translate(this.cameraX, 0);
 
         this.character.draw(this.ctx);
@@ -94,5 +110,5 @@ class World {
     addToMap(mo) {
         mo.draw(this.ctx);
     }
-    
+
 }

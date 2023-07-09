@@ -2,6 +2,8 @@ class ThrowableObject extends MoveableObject {
     world;
     offsetY = 50;
     offsetX = 20;
+    offsetHeight = 30;
+    offsetWidth = 40;
 
     IMAGES_SPEARTHROWING = [
         './img/6_spear/spear_animation/spear0.png',
@@ -20,10 +22,6 @@ class ThrowableObject extends MoveableObject {
         './img/6_spear/spear_animation/spear65.png',
         './img/6_spear/spear_animation/spear7.png',
         './img/6_spear/spear_animation/spear75.png',
-        './img/6_spear/spear_animation/spear8.png',
-        './img/6_spear/spear_animation/spear85.png',
-        './img/6_spear/spear_animation/spear9.png'
-
     ];
 
 
@@ -42,7 +40,7 @@ class ThrowableObject extends MoveableObject {
         this.speedY = 10;
         this.applyGravity();
         setInterval(() => {
-            this.x += 20;
+            this.x += 25;
             this.playAnimation(this.IMAGES_SPEARTHROWING);
         }, 1000 / 30);
     }

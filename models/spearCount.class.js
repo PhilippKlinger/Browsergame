@@ -17,10 +17,10 @@ class SpearCount extends DrawableObject {
         super();
         this.loadImage('./img/6_spear/spear_animation/spear0.png');
         this.loadImages(this.IMAGES_COUNT);
-        this.x = 25;
-        this.y = 30;
-        this.width = 100;
-        this.height = 100;
+        this.x = 100;
+        this.y = 55;
+        this.width = 30;
+        this.height = 35;
         this.updateCount();
     }
 

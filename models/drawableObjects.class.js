@@ -31,7 +31,7 @@ class DrawableObject {
     }
 
     drawBoundingBox(ctx) {
-        if (this instanceof Character || this instanceof Boar || this instanceof Endboss) {
+        if (this instanceof Character || this instanceof Boar || this instanceof Endboss || this instanceof ThrowableObject) {
             ctx.beginPath();
             ctx.rect(this.x + (this.offsetWidth / 2.2), this.y + (this.offsetHeight / 3), this.width - this.offsetWidth, this.height - this.offsetHeight);
             ctx.lineWidth = '3';
