@@ -28,34 +28,22 @@ class Boar extends MoveableObject {
     ];
 
 
-    constructor(intervals) {
-        super(intervals).loadImage('./img/3_enemies_boar/boar/Walking/Walking_000.png');
+    constructor() {
+        super().loadImage('./img/3_enemies_boar/boar/Walking/Walking_000.png');
         this.loadImages(this.IMAGES_WALKING);
-        this.x = 5500 + Math.random() * 1000;
+        this.x = 1500 + Math.random() * 1000;
         this.speed = 1.4 + Math.random() * 1;
         this.health = 10;
         this.animate();
-        //this.stopInterval();
+        
     }
 
     animate() {
-        this.intervals.push(setInterval(() => {
+        setInterval(() => {
             this.moveLeft();
             this.playAnimation(this.IMAGES_WALKING);
-        }, 1000 / 30));
-        console.log(this.intervals);
-    }
-
-    /**
-     * stopInterval() {
-        if (this.world.keyboard.A) {
-            intervals.forEach(interval => clearInterval(interval));
-        }
-    }
-     */
-    
+        }, 1000 / 30);
+    }    
 }
 
 
-// Intervalle stoppen
-//

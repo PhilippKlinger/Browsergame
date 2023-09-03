@@ -42,9 +42,7 @@ class World {
                 this.character.hit();
                 this.statusbar.setPercentage(this.character.health);
             };
-            if (enemy.isColliding(this.character) && this.keyboard.ARROWUP) {
-                clearInterval(1);
-            };
+           
         });
         for (let i = 0; i < this.level.spearCollect.length; i++) {
             let spear = this.level.spearCollect[i];

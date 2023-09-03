@@ -2,6 +2,7 @@ const level1 = new Level(
     [
         new Boar(),
         new Boar(),
+        
         new Boar(),
         new Endboss()
     ],

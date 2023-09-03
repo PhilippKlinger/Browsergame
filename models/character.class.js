@@ -223,7 +223,7 @@ class Character extends MoveableObject {
             if (!this.isDead()) {
                 if (this.world.keyboard.ARROWUP) {
                     this.playAnimation(this.IMAGES_ATTACKING);
-                } else if (this.world.keyboard.NOKEY) {
+                } else if (this.world.keyboard.NOKEY && !this.isAboveGround()) {
                     this.playAnimation(this.IMAGES_IDLE);
                 } else if (this.world.keyboard.D && this.world.canThrow()) {
                     this.playAnimation(this.IMAGES_THROWING);

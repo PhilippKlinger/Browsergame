@@ -6,57 +6,21 @@ class MoveableObject extends DrawableObject {
     health = 100;
     lastHit = 0;
 
+
+    // Überprüft, ob dieses DrawableObject mit einem anderen Objekt (übergeben als 'obj') kollidiert.
     isColliding(obj) {
         return (
+            // Überprüft, ob die rechte Seite dieses Characters größer oder gleich der linken Seite des 'obj' ist.
             (this.x + this.offsetWidth / 2.2) + (this.width - this.offsetWidth) >= (obj.x + obj.offsetWidth / 2.2) &&
+            // Überprüft, ob die linke Seite dieses Characters kleiner oder gleich der rechten Seite des 'obj' ist.
             (this.x + this.offsetWidth / 2.2) <= (obj.x + obj.offsetWidth / 2.2) + (obj.width - obj.offsetWidth) &&
-            (this.y + this.offsetHeight / 3) + (this.height - this.offsetHeight) >= obj.y &&
-            (this.height - this.offsetHeight) <= obj.y + obj.height
+            // Überprüft, ob die untere Seite dieses Characters größer oder gleich der oberen Seite des 'obj' ist.
+            (this.y + this.offsetHeight / 3) + (this.height - this.offsetHeight) >= (obj.y + obj.offsetHeight) &&
+            // Überprüft, ob die obere Seite dieses Characters kleiner oder gleich der unteren Seite des 'obj' ist.
+            (this.y + this.offsetHeight) <= (obj.y + obj.offsetHeight) + (obj.height - obj.offsetHeight)
         );
     }
-     
-   
 
-    /**isColliding(obj) {
-        // Calculate the bottom position of the current object
-        thisBottom = this.y + this.offsetHeight;
-    
-        // Calculate the top position of the other object
-        objTop = obj.y;
-    
-        // Check for vertical collision
-        verticalCollision =
-            thisBottom > objTop && this.y < objTop; // Current object's bottom is below the other object's top, and its top is above the other object's top
-    
-        if (!verticalCollision) {
-            // No vertical collision, so we proceed to check for horizontal collision
-    
-            // Calculate the center position of the current object
-            thisCenterX = this.x + this.offsetWidth / 2.2;
-    
-            // Calculate the center position of the other object
-            objCenterX = obj.x + obj.offsetWidth / 2.2;
-    
-            // Calculate the left and right positions of the current object
-            thisLeft = thisCenterX - (this.width - this.offsetWidth) / 2;
-            thisRight = thisCenterX + (this.width - this.offsetWidth) / 2;
-    
-            // Calculate the left and right positions of the other object
-            objLeft = objCenterX - (obj.width - obj.offsetWidth) / 2;
-            objRight = objCenterX + (obj.width - obj.offsetWidth) / 2;
-    
-            // Check for horizontal collision
-            horizontalCollision = thisRight > objLeft && thisLeft < objRight; // Current object's right is to the right of the other object's left, and its left is to the left of the other object's right
-    
-            // Return the result of both vertical and horizontal collisions
-            return verticalCollision && horizontalCollision;
-        }
-    
-        // If there is a vertical collision, return false to indicate no collision
-        return false;
-    }
- */
-    
     flipImage(ctx) {
         ctx.save();
         ctx.scale(-1, 1);
