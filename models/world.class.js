@@ -6,12 +6,14 @@ class World {
     ctx;
     keyboard;
     cameraX = 0;
-    collectedSpears = 7;
+    collectedSpears = 3;
+    collectedCoins = 0;
     lastThrowTime = null;
     statusbar = new Statusbar();
     spearCount = new SpearCount();
     spearDisplay = new SpearDisplay();
     coinDisplay = new CoinDisplay();
+    coinCount = new CoinCount();
 
 
     constructor(canvas, keyboard) {
@@ -29,6 +31,8 @@ class World {
             this.checkCollisions();
             this.checkThrowing();
             this.checkDying();
+            this.checkCoinCollect();
+            this.checkCount();
         }, 1000 / 10);
     }
 
@@ -42,16 +46,45 @@ class World {
                 clearInterval(1);
             };
         });
+        for (let i = 0; i < this.level.spearCollect.length; i++) {
+            let spear = this.level.spearCollect[i];
+            if (this.character.isColliding(spear)) {
+                this.collectedSpears++;
+                this.level.spearCollect.splice(i, 1);
+                i--; 
+            }
+        }
+        for (let i = 0; i < this.level.coinCollect.length; i++) {
+            let coin = this.level.coinCollect[i];
+            if (this.character.isColliding(coin)) {
+                this.collectedCoins++;
+                this.level.coinCollect.splice(i, 1);
+                i--;
+            }
+        }
     }
 
     checkThrowing() {
-        this.spearCount.updateCount(this.collectedSpears);
+        
         if (this.keyboard.D && this.canThrow()) {
             let spear = new ThrowableObject(this.character.x + 120, this.character.y + 80);
             this.collectedSpears--;
             this.level.throwableObjects.push(spear);
             this.lastThrowTime = Date.now();
         }
+    }
+
+    checkCoinCollect() {
+       
+    }
+
+    checkSpearCollect() {
+
+    }
+
+    checkCount() {
+        this.spearCount.updateSpearCount(this.collectedSpears);
+        this.coinCount.updateCount(this.collectedCoins);
     }
 
     canThrow() {
@@ -80,12 +113,15 @@ class World {
 
         this.ctx.translate(this.cameraX, 0);
         this.addObjectsToMap(this.level.backgroundObjects);
+        this.addObjectsToMap(this.level.spearCollect);
+        this.addObjectsToMap(this.level.coinCollect);
 
         this.ctx.translate(-this.cameraX, 0);
         this.statusbar.draw(this.ctx);
         this.spearCount.draw(this.ctx);
         this.spearDisplay.draw(this.ctx);
         this.coinDisplay.draw(this.ctx);
+        this.coinCount.draw(this.ctx);
         this.ctx.translate(this.cameraX, 0);
 
         this.character.draw(this.ctx);

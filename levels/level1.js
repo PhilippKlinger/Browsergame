@@ -93,4 +93,23 @@ const level1 = new Level(
         new BackgroundObject('./img/5_background/l7_ground_1.png', 5040),
         new BackgroundObject('./img/5_background/l8_foreground_2.png', 5040),
     ],
+    [
+        new SpearCollect('./img/6_spear/spear_ground1.png', 580),
+        new SpearCollect('./img/6_spear/spear_ground1.png', 1120),
+        new SpearCollect('./img/6_spear/spear_ground2.png', 1540),
+        new SpearCollect('./img/6_spear/spear_ground1.png', 2780),
+        new SpearCollect('./img/6_spear/spear_ground2.png', 3510),
+        new SpearCollect('./img/6_spear/spear_ground2.png', 4200)
+    ],
+    [
+        new CoinCollect('./img/8_coin/Gold_21.png', 680, 180),
+        new CoinCollect('./img/8_coin/Gold_21.png', 760, 170),
+        new CoinCollect('./img/8_coin/Gold_21.png', 840, 160),
+        new CoinCollect('./img/8_coin/Gold_21.png', 920, 170),
+        new CoinCollect('./img/8_coin/Gold_21.png', 1000, 180),
+        new CoinCollect('./img/8_coin/Gold_21.png', 1580, 180),
+        new CoinCollect('./img/8_coin/Gold_21.png', 1660, 170),
+        new CoinCollect('./img/8_coin/Gold_21.png', 1740, 160),
+        new CoinCollect('./img/8_coin/Gold_21.png', 1820, 170), 
+    ],
 );

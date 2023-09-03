@@ -1,4 +1,4 @@
-class SpearCount extends DrawableObject {
+class CoinCount extends DrawableObject {
   
     IMAGES_COUNT = [
         './img/10_gui/numbers/0.png',
@@ -15,16 +15,16 @@ class SpearCount extends DrawableObject {
 
     constructor() {
         super();
-        this.loadImage('./img/6_spear/spear_animation/spear0.png');
+        this.loadImage(this.IMAGES_COUNT[0]);
         this.loadImages(this.IMAGES_COUNT);
         this.x = 100;
-        this.y = 55;
+        this.y = 100;
         this.width = 30;
         this.height = 35;
-        this.updateSpearCount();
+        this.updateCount();
     }
 
-    updateSpearCount(count){
+    updateCount(count){
         this.count = count;
         let path = this.IMAGES_COUNT[this.resolveImageIndex()];
         this.img = this.imageCache[path];
