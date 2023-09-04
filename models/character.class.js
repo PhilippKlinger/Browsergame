@@ -7,7 +7,18 @@ class Character extends MoveableObject {
     offsetWidth = 100;
     world;
     speed = 10;
+    soundIndex = 0;
     walkingSound = new Audio('./audio/walking.mp3');
+    attackingSound = new Audio('./audio/hit.mp3');
+    jumpingSound = new Audio('./audio/jumping2.mp3');
+    throwingSound = new Audio('./audio/throwing.mp3');
+    hurtingSound = [new Audio('./audio/hurting2.mp3'), new Audio('./audio/hurting3.mp3'), 
+                    new Audio('./audio/hurting4.mp3'), new Audio('./audio/hurting5.mp3'),
+                    new Audio('./audio/hurting6.mp3')]; 
+    dyingSound = new Audio('./audio/dying.mp3');
+    slidingSound = new Audio('./audio/sliding2.mp3');
+
+    
 
     IMAGES_IDLE = [
         './img/2_character_maya/Idle/Idle_000.png',
@@ -167,34 +178,38 @@ class Character extends MoveableObject {
         this.loadImages(this.IMAGES_FALLING);
         this.animate();
         this.applyGravity();
+        
     }
 
     animate() {
         setInterval(() => {
             this.walkingSound.pause();
             if (!this.isDead()) {
-            if (this.world.keyboard.ARROWRIGHT && this.x < this.world.level.levelEndpointX) {
-                this.moveRight();
-                this.walkingSound.play();
+                if (this.world.keyboard.ARROWRIGHT && this.x < this.world.level.levelEndpointX) {
+                    this.moveRight();
+                    this.walkingSound.play();
+                }
+                if (this.world.keyboard.ARROWLEFT && this.x > 100) {
+                    this.moveLeft();
+                    this.walkingSound.play();
+                }
+                if (this.world.keyboard.SPACE && !this.isAboveGround()) {
+                    this.jump();
+                    this.jumpingSound.play();
+                }
+                this.world.cameraX = -this.x + 100;
             }
-            if (this.world.keyboard.ARROWLEFT && this.x > 100) {
-                this.moveLeft();
-                this.walkingSound.play();
-            }
-            if (this.world.keyboard.SPACE && !this.isAboveGround()) {
-                this.jump();
-            }
-            this.world.cameraX = -this.x + 100;
-        }
         }, 1000 / 60);
 
         setInterval(() => {
-            if (this.isDead()) {
+            if (this.isDead()) {  
+                //this.dyingSound.play();
                 this.playAnimation(this.IMAGES_DYING);
                 setTimeout(() => {
                     this.stopAnimation(this.IMAGES_DYING);
                 }, 150);
             } else if (this.isHurt()) {
+                this.hurtingSound[this.soundIndex].play();
                 this.playAnimation(this.IMAGES_HURTING);
                 setTimeout(() => {
                     this.stopAnimation(this.IMAGES_HURTING);
@@ -205,6 +220,7 @@ class Character extends MoveableObject {
                     this.stopAnimation(this.IMAGES_JUMPING);
                 }, 50);
             } else if (this.world.keyboard.S) {
+                this.slidingSound.play();
                 if (!this.otherDirection) {
                     this.slideRight();
                 } else {
@@ -222,20 +238,29 @@ class Character extends MoveableObject {
         setInterval(() => {
             if (!this.isDead()) {
                 if (this.world.keyboard.ARROWUP) {
+                    this.attackingSound.play();
                     this.playAnimation(this.IMAGES_ATTACKING);
                 } else if (this.world.keyboard.NOKEY && !this.isAboveGround()) {
+                    this.slidingSound.pause();
                     this.playAnimation(this.IMAGES_IDLE);
                 } else if (this.world.keyboard.D && this.world.canThrow()) {
+                    this.throwingSound.play();
                     this.playAnimation(this.IMAGES_THROWING);
                 }
             }
         }, 1000 / 30);
 
         setInterval(() => {
-            if(this.world.keyboard.H) {
+            if (this.world.keyboard.H) {
                 console.log(this.x);
             }
-            
+            if (this.isHurt()) {
+                this.soundIndex = Math.floor(Math.random() * this.hurtingSound.length);
+                
+            }
         }, 1000);
     }
+
+    
+
 }

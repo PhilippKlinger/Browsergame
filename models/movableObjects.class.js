@@ -6,7 +6,6 @@ class MoveableObject extends DrawableObject {
     health = 100;
     lastHit = 0;
 
-
     // Überprüft, ob dieses DrawableObject mit einem anderen Objekt (übergeben als 'obj') kollidiert.
     isColliding(obj) {
         return (
@@ -67,11 +66,12 @@ class MoveableObject extends DrawableObject {
     }
 
     slideRight() {
-        this.x += (this.speed) * 1.5;
+        this.x += this.speed;
+      
     }
 
     slideLeft() {
-        this.x -= (this.speed) * 1.5;
+        this.x -= (this.speed);
     }
 
     hit() {

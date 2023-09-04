@@ -14,7 +14,9 @@ class World {
     spearDisplay = new SpearDisplay();
     coinDisplay = new CoinDisplay();
     coinCount = new CoinCount();
-
+    coincollectSound = new Audio('./audio/collectcoin.mp3');
+    spearcollectSound = new Audio('./audio/collectspear.mp3');
+    
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -47,6 +49,7 @@ class World {
         for (let i = 0; i < this.level.spearCollect.length; i++) {
             let spear = this.level.spearCollect[i];
             if (this.character.isColliding(spear)) {
+                this.spearcollectSound.play();
                 this.collectedSpears++;
                 this.level.spearCollect.splice(i, 1);
                 i--; 
@@ -55,6 +58,7 @@ class World {
         for (let i = 0; i < this.level.coinCollect.length; i++) {
             let coin = this.level.coinCollect[i];
             if (this.character.isColliding(coin)) {
+                this.coincollectSound.play();
                 this.collectedCoins++;
                 this.level.coinCollect.splice(i, 1);
                 i--;
@@ -144,5 +148,4 @@ class World {
     addToMap(mo) {
         mo.draw(this.ctx);
     }
-
 }
