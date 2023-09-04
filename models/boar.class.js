@@ -4,7 +4,7 @@ class Boar extends MoveableObject {
     y = 300;
     offsetHeight = 0;
     offsetWidth = 15;
-
+    gruntingSound = new Audio('./audio/boargrunting.mp3');
 
     IMAGES_WALKING = [
         './img/3_enemies_boar/boar/Walking/Walking_000.png',
@@ -27,11 +27,36 @@ class Boar extends MoveableObject {
         './img/3_enemies_boar/boar/Walking/Walking_017.png'
     ];
 
+    IMAGES_HURTING = [
+        './img/3_enemies_boar/boar/Hurt/Hurt_000.png',
+        './img/3_enemies_boar/boar/Hurt/Hurt_001.png',
+        './img/3_enemies_boar/boar/Hurt/Hurt_002.png',
+        './img/3_enemies_boar/boar/Hurt/Hurt_003.png',
+        './img/3_enemies_boar/boar/Hurt/Hurt_004.png',
+        './img/3_enemies_boar/boar/Hurt/Hurt_005.png',
+        './img/3_enemies_boar/boar/Hurt/Hurt_006.png',
+        './img/3_enemies_boar/boar/Hurt/Hurt_007.png',
+        './img/3_enemies_boar/boar/Hurt/Hurt_008.png'
+    ];
+
+    IMAGES_DYING = [
+        './img/3_enemies_boar/boar/Dying/Dying_000.png',
+        './img/3_enemies_boar/boar/Dying/Dying_001.png',
+        './img/3_enemies_boar/boar/Dying/Dying_002.png',
+        './img/3_enemies_boar/boar/Dying/Dying_003.png',
+        './img/3_enemies_boar/boar/Dying/Dying_004.png',
+        './img/3_enemies_boar/boar/Dying/Dying_005.png',
+        './img/3_enemies_boar/boar/Dying/Dying_006.png',
+        './img/3_enemies_boar/boar/Dying/Dying_007.png',
+        './img/3_enemies_boar/boar/Dying/Dying_008.png',
+        './img/3_enemies_boar/boar/Dying/Dying_009.png',
+        './img/3_enemies_boar/boar/Dying/Dying_010.png'
+    ];
 
     constructor() {
         super().loadImage('./img/3_enemies_boar/boar/Walking/Walking_000.png');
         this.loadImages(this.IMAGES_WALKING);
-        this.x = 1500 + Math.random() * 1000;
+        this.x = 2500 + Math.random() * 1000;
         this.speed = 1.4 + Math.random() * 1;
         this.health = 10;
         this.animate();
@@ -43,6 +68,8 @@ class Boar extends MoveableObject {
             this.moveLeft();
             this.playAnimation(this.IMAGES_WALKING);
         }, 1000 / 30);
+
+        
     }    
 }
 

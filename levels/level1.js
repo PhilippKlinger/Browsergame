@@ -2,9 +2,9 @@ const level1 = new Level(
     [
         new Boar(),
         new Boar(),
-        
         new Boar(),
-        new Endboss()
+    ],
+    [   new Endboss()
     ],
     [
         new Bird(),
@@ -19,7 +19,7 @@ const level1 = new Level(
         new Bird()
     ],
     [
-       
+
     ],
     [
         new BackgroundObject('./img/5_background/l1_background.png', 0),
@@ -39,7 +39,7 @@ const level1 = new Level(
         new BackgroundObject('./img/5_background/l6_fog.png', 720),
         new BackgroundObject('./img/5_background/l7_ground_3.png', 720),
         new BackgroundObject('./img/5_background/l8_foreground_2.png', 720),
-    
+
         new BackgroundObject('./img/5_background/l1_background.png', 1440),
         new BackgroundObject('./img/5_background/l2_trees01_1.png', 1440),
         new BackgroundObject('./img/5_background/l3_trees02_1.png', 1440),
@@ -111,6 +111,6 @@ const level1 = new Level(
         new CoinCollect('./img/8_coin/Gold_21.png', 1580, 180),
         new CoinCollect('./img/8_coin/Gold_21.png', 1660, 170),
         new CoinCollect('./img/8_coin/Gold_21.png', 1740, 160),
-        new CoinCollect('./img/8_coin/Gold_21.png', 1820, 170), 
+        new CoinCollect('./img/8_coin/Gold_21.png', 1820, 170),
     ],
 );

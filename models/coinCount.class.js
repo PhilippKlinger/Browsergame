@@ -18,7 +18,7 @@ class CoinCount extends DrawableObject {
         this.loadImage(this.IMAGES_COUNT[0]);
         this.loadImages(this.IMAGES_COUNT);
         this.x = 100;
-        this.y = 100;
+        this.y = 90;
         this.width = 30;
         this.height = 35;
         this.updateCount();

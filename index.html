@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,18 +27,29 @@
     <script src="./models/keyboard.class.js"></script>
     <script src="./models/level.class.js"></script>
     <script src="./models/endboss.class.js"></script>
-    
+
     <script src="./levels/level1.js"></script>
     <script src="./js/game.js"></script>
-   
+
 </head>
 
 <body onload="init()">
-    <h1>Browsergame</h1>
+    <content>
+        <h1>El Pequeño Maya</h1>
+        <div class="canvasSection" id="canvasSection">
+            <canvas id="canvas" width="920" height="480"></canvas>
+            <div id="optionsOverlay" class="optionsOverlay">
+                <img src="img/10_gui/options_overlay/fullscreen.png">
+                <img src="img/10_gui/options_overlay/sound_off.png">
+                <img src="img/10_gui/options_overlay/faq.png">
+            </div>
 
-    <canvas id="canvas" width="720" height="480">
+        </div>
 
-    </canvas>
-    
+
+    </content>
+
+
 </body>
+
 </html>

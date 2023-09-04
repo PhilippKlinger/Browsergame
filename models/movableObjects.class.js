@@ -5,6 +5,9 @@ class MoveableObject extends DrawableObject {
     otherDirection = false;
     health = 100;
     lastHit = 0;
+    maxSlideDistance = 250;
+    slideDistance = 0;
+    newX;
 
     // Überprüft, ob dieses DrawableObject mit einem anderen Objekt (übergeben als 'obj') kollidiert.
     isColliding(obj) {
@@ -66,12 +69,23 @@ class MoveableObject extends DrawableObject {
     }
 
     slideRight() {
-        this.x += this.speed;
-      
+        this.newX = this.x + this.maxSlideDistance;
+        if (this.newX <= (5000 - this.width) && this.slideDistance < this.maxSlideDistance) {
+            this.x += this.speed;
+            this.slideDistance += this.speed; // Erhöhe die Gleitdistanz
+        } 
     }
 
     slideLeft() {
-        this.x -= (this.speed);
+        this.newX = this.x - this.maxSlideDistance;
+        if (this.newX <= (5000 - this.width) && this.slideDistance < this.maxSlideDistance) {
+            this.x -= this.speed;
+            this.slideDistance += this.speed; // Erhöhe die Gleitdistanz
+        } 
+    }
+
+    resetSlideDistance() {
+        this.slideDistance = 0; // Setze die Gleitdistanz zurück
     }
 
     hit() {
@@ -107,4 +121,11 @@ class MoveableObject extends DrawableObject {
         this.img = this.imageCache[lastFramePath];
     }
 
+    hitBoar(boar) {
+        const collisionDistance = 20; // Die minimale Distanz, um einen Treffer auszulösen (angepasst an deine Anforderungen)
+        if (Math.abs(this.x - boar.x) < collisionDistance) {
+            const damage = 50; // Die Schadenmenge (angepasst an deine Anforderungen)
+            boar.takeDamage(damage); // Methode im Boar, um Schaden zu verarbeiten
+        }
+    }
 } 

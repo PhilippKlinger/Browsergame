@@ -4,6 +4,8 @@ class Endboss extends MoveableObject {
     y = 120;
     offsetHeight = 40;
     offsetWidth = 100;
+    encounterSound = new Audio('./audio/spiderEncounter2.mp3');
+
 
     IMAGES_WALKING = [
         './img/4_enemie_boss_blackwidow/6_idle/__purple_black_widow_idle_001.png',

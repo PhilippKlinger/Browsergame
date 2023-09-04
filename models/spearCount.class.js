@@ -18,7 +18,7 @@ class SpearCount extends DrawableObject {
         this.loadImage('./img/6_spear/spear_animation/spear0.png');
         this.loadImages(this.IMAGES_COUNT);
         this.x = 100;
-        this.y = 55;
+        this.y = 45;
         this.width = 30;
         this.height = 35;
         this.updateSpearCount();

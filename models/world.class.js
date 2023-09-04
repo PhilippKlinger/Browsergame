@@ -16,7 +16,7 @@ class World {
     coinCount = new CoinCount();
     coincollectSound = new Audio('./audio/collectcoin.mp3');
     spearcollectSound = new Audio('./audio/collectspear.mp3');
-    
+
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -35,6 +35,8 @@ class World {
             this.checkDying();
             this.checkCoinCollect();
             this.checkCount();
+            this.checkDistanceToEnemies();
+            this.checkDistanceToEndboss();
         }, 1000 / 10);
     }
 
@@ -44,7 +46,12 @@ class World {
                 this.character.hit();
                 this.statusbar.setPercentage(this.character.health);
             };
-           
+        });
+        this.level.endboss.forEach((endboss) => {
+            if (this.character.isColliding(endboss)) {
+                this.character.hit();
+                this.statusbar.setPercentage(this.character.health);
+            };
         });
         for (let i = 0; i < this.level.spearCollect.length; i++) {
             let spear = this.level.spearCollect[i];
@@ -52,7 +59,7 @@ class World {
                 this.spearcollectSound.play();
                 this.collectedSpears++;
                 this.level.spearCollect.splice(i, 1);
-                i--; 
+                i--;
             }
         }
         for (let i = 0; i < this.level.coinCollect.length; i++) {
@@ -67,7 +74,6 @@ class World {
     }
 
     checkThrowing() {
-        
         if (this.keyboard.D && this.canThrow()) {
             let spear = new ThrowableObject(this.character.x + 120, this.character.y + 80);
             this.collectedSpears--;
@@ -77,7 +83,7 @@ class World {
     }
 
     checkCoinCollect() {
-       
+
     }
 
     checkSpearCollect() {
@@ -105,6 +111,39 @@ class World {
         }
     }
 
+    checkDistanceToEnemies() {
+        let threshold = 600;
+        this.level.enemies.forEach((enemy) => {
+            let distance = Math.abs(this.character.x - enemy.x);
+            if (distance < threshold && !enemy.soundPlayed) {
+                if (enemy.gruntingSound) {
+                    enemy.gruntingSound.play();
+                    enemy.soundPlayed = true;
+                }
+            }
+        });
+    };
+    /*else if (distance >= threshold) {
+                // Setze soundPlayed zurück, wenn der Charakter sich außerhalb der Schwellenwert-Entfernung befindet
+                enemy.soundPlayed = false;
+            }*/
+
+    checkDistanceToEndboss() {
+        let threshold = 400; 
+        this.level.endboss.forEach((endboss) => { 
+            let distance = Math.abs(this.character.x - endboss.x);
+            if (distance < threshold && !endboss.soundPlayed) {
+                if (endboss.encounterSound) {
+                    endboss.encounterSound.play();
+                    endboss.soundPlayed = true;
+                }
+        } else if (distance >= threshold) {
+            endboss.soundPlayed = false;
+        }
+    });
+        
+    }
+
     setWorld() {
         this.character.world = this;
         this.drawableObject.world = this;
@@ -128,6 +167,7 @@ class World {
 
         this.character.draw(this.ctx);
         this.addObjectsToMap(this.level.enemies);
+        this.addObjectsToMap(this.level.endboss);
         this.addObjectsToMap(this.level.birds);
         this.addObjectsToMap(this.level.throwableObjects);
 

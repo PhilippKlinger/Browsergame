@@ -242,6 +242,7 @@ class Character extends MoveableObject {
                     this.playAnimation(this.IMAGES_ATTACKING);
                 } else if (this.world.keyboard.NOKEY && !this.isAboveGround()) {
                     this.slidingSound.pause();
+                    this.resetSlideDistance();
                     this.playAnimation(this.IMAGES_IDLE);
                 } else if (this.world.keyboard.D && this.world.canThrow()) {
                     this.throwingSound.play();
@@ -258,9 +259,15 @@ class Character extends MoveableObject {
                 this.soundIndex = Math.floor(Math.random() * this.hurtingSound.length);
                 
             }
+            
         }, 1000);
+
+        setInterval(() => {
+            
+        }, 3000);
     }
 
+   
     
 
 }

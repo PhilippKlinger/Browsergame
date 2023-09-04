@@ -17,7 +17,7 @@ class CoinDisplay extends MoveableObject {
         super().loadImage(this.IMAGES_COIN[0]);
         this.loadImages(this.IMAGES_COIN);
         this.x = 30;
-        this.y = 100;
+        this.y = 90;
         this.width = 40;
         this.height = 40;
         this.animate();
