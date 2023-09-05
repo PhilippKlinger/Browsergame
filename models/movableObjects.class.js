@@ -23,6 +23,13 @@ class MoveableObject extends DrawableObject {
         );
     }
 
+    isInFrontOf(obj) {
+        return (
+            (this.x + this.offsetWidth) + (this.width - this.offsetWidth) >= (obj.x + obj.offsetWidth / 2.2)
+        );
+        
+    }
+
     flipImage(ctx) {
         ctx.save();
         ctx.scale(-1, 1);
@@ -64,8 +71,16 @@ class MoveableObject extends DrawableObject {
         this.otherDirection = true;
     }
 
+    stopMoving() {
+        this.x += 0;
+    }
+
     jump() {
         this.speedY = 20;
+    }
+
+    bounce() {
+        this.speedY = 15;
     }
 
     slideRight() {
@@ -119,13 +134,5 @@ class MoveableObject extends DrawableObject {
         this.currentImage = lastFrameIndex;
         let lastFramePath = images[lastFrameIndex];
         this.img = this.imageCache[lastFramePath];
-    }
-
-    hitBoar(boar) {
-        const collisionDistance = 20; // Die minimale Distanz, um einen Treffer auszulösen (angepasst an deine Anforderungen)
-        if (Math.abs(this.x - boar.x) < collisionDistance) {
-            const damage = 50; // Die Schadenmenge (angepasst an deine Anforderungen)
-            boar.takeDamage(damage); // Methode im Boar, um Schaden zu verarbeiten
-        }
     }
 } 

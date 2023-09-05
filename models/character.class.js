@@ -2,7 +2,7 @@ class Character extends MoveableObject {
     height = 200;
     width = 180;
     y = 240;
-    x = 100;
+    x = 4100;
     offsetHeight = 40;
     offsetWidth = 100;
     world;
@@ -12,13 +12,13 @@ class Character extends MoveableObject {
     attackingSound = new Audio('./audio/hit.mp3');
     jumpingSound = new Audio('./audio/jumping2.mp3');
     throwingSound = new Audio('./audio/throwing.mp3');
-    hurtingSound = [new Audio('./audio/hurting2.mp3'), new Audio('./audio/hurting3.mp3'), 
-                    new Audio('./audio/hurting4.mp3'), new Audio('./audio/hurting5.mp3'),
-                    new Audio('./audio/hurting6.mp3')]; 
+    hurtingSound = [new Audio('./audio/hurting2.mp3'), new Audio('./audio/hurting3.mp3'),
+    new Audio('./audio/hurting4.mp3'), new Audio('./audio/hurting5.mp3'),
+    new Audio('./audio/hurting6.mp3')];
     dyingSound = new Audio('./audio/dying.mp3');
     slidingSound = new Audio('./audio/sliding2.mp3');
 
-    
+
 
     IMAGES_IDLE = [
         './img/2_character_maya/Idle/Idle_000.png',
@@ -178,7 +178,7 @@ class Character extends MoveableObject {
         this.loadImages(this.IMAGES_FALLING);
         this.animate();
         this.applyGravity();
-        
+
     }
 
     animate() {
@@ -202,13 +202,13 @@ class Character extends MoveableObject {
         }, 1000 / 60);
 
         setInterval(() => {
-            if (this.isDead()) {  
+            if (this.isDead()) {
                 //this.dyingSound.play();
                 this.playAnimation(this.IMAGES_DYING);
                 setTimeout(() => {
                     this.stopAnimation(this.IMAGES_DYING);
                 }, 150);
-            } else if (this.isHurt()) {
+            } else if (this.isHurt() && !this.isAboveGround()) {
                 this.hurtingSound[this.soundIndex].play();
                 this.playAnimation(this.IMAGES_HURTING);
                 setTimeout(() => {
@@ -257,17 +257,20 @@ class Character extends MoveableObject {
             }
             if (this.isHurt()) {
                 this.soundIndex = Math.floor(Math.random() * this.hurtingSound.length);
-                
+
             }
-            
+
         }, 1000);
 
         setInterval(() => {
-            
+
         }, 3000);
     }
 
-   
-    
+    isJumpingOnBoar(enemy) {
+        return this.isColliding(enemy) && this.isAboveGround() && this.speedY < 0;
+    }
+
+
 
 }

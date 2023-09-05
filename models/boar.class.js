@@ -56,20 +56,40 @@ class Boar extends MoveableObject {
     constructor() {
         super().loadImage('./img/3_enemies_boar/boar/Walking/Walking_000.png');
         this.loadImages(this.IMAGES_WALKING);
-        this.x = 2500 + Math.random() * 1000;
+        this.loadImages(this.IMAGES_HURTING);
+        this.loadImages(this.IMAGES_DYING);
+        this.x = 1500 + Math.random() * 2000;
         this.speed = 1.4 + Math.random() * 1;
-        this.health = 10;
+        this.health = 2;
         this.animate();
-        
     }
 
     animate() {
-        setInterval(() => {
+       let walkInt = setInterval(() => {
+        if(!this.isDead()) {
             this.moveLeft();
             this.playAnimation(this.IMAGES_WALKING);
+        } 
+            
         }, 1000 / 30);
 
-        
+
+        setInterval(() => {
+            if(this.isDead()) {
+                //no damage to chracater
+                this.stopMoving();
+                this.playAnimation(this.IMAGES_DYING);
+                setTimeout(() => {
+                    this.stopAnimation(this.IMAGES_DYING);
+                }, 150);
+            } else if (this.isHurt()) {
+                this.playAnimation(this.IMAGES_HURTING);
+            }
+        }, 1000 / 30);
+
+        setInterval(() => {
+           
+        }, 2000);
     }    
 }
 

@@ -2,6 +2,7 @@ class World {
     drawableObject = new DrawableObject();
     character = new Character();
     level = level1;
+    enemies = level1.enemies;
     canvas;
     ctx;
     keyboard;
@@ -31,9 +32,11 @@ class World {
     run() {
         setInterval(() => {
             this.checkCollisions();
+            this.checkAttackToBoar();
             this.checkThrowing();
             this.checkDying();
             this.checkCoinCollect();
+            this.checkSpearCollect();
             this.checkCount();
             this.checkDistanceToEnemies();
             this.checkDistanceToEndboss();
@@ -41,36 +44,61 @@ class World {
     }
 
     checkCollisions() {
+        this.checkCollisionsBoar();
+        this.checkCollisionsEndboss();
+        this.checkCollisionsSpear();
+    }
+
+    checkAttackToBoar() {
         this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy)) {
+            if (this.character.isJumpingOnBoar(enemy)) {
+                this.character.bounce();
+                enemy.hit();
+                if (enemy.isDead()) {
+                    this.boarDies(enemy);
+                }
+            }
+            if ((this.character.isInFrontOf(enemy) && this.keyboard.ARROWUP)) {
+                enemy.hit();
+                if (enemy.isDead()) {
+                    this.boarDies(enemy);
+                }
+            }
+           
+        });
+    }
+
+    checkCollisionsBoar() {
+        this.level.enemies.forEach((enemy) => {
+            if (this.character.isColliding(enemy) && !this.character.isAboveGround() && !enemy.isDead()) {
                 this.character.hit();
                 this.statusbar.setPercentage(this.character.health);
-            };
+            }
         });
+    }
+
+    checkCollisionsEndboss() {
         this.level.endboss.forEach((endboss) => {
             if (this.character.isColliding(endboss)) {
                 this.character.hit();
                 this.statusbar.setPercentage(this.character.health);
             };
         });
-        for (let i = 0; i < this.level.spearCollect.length; i++) {
-            let spear = this.level.spearCollect[i];
-            if (this.character.isColliding(spear)) {
-                this.spearcollectSound.play();
-                this.collectedSpears++;
-                this.level.spearCollect.splice(i, 1);
-                i--;
-            }
-        }
-        for (let i = 0; i < this.level.coinCollect.length; i++) {
-            let coin = this.level.coinCollect[i];
-            if (this.character.isColliding(coin)) {
-                this.coincollectSound.play();
-                this.collectedCoins++;
-                this.level.coinCollect.splice(i, 1);
-                i--;
-            }
-        }
+    }
+
+    checkCollisionsSpear() {
+        this.level.throwableObjects.forEach((spear) => {
+            this.level.enemies.forEach((enemy) => {
+                if (enemy.isColliding(spear)) {
+                    enemy.hit();
+                    enemy.hit();
+                    this.level.throwableObjects.splice(this.level.throwableObjects.indexOf(spear), 1);
+                    if (enemy.isDead()) {
+                        this.boarDies(enemy);
+                    }
+                }
+            });
+        });
     }
 
     checkThrowing() {
@@ -83,11 +111,27 @@ class World {
     }
 
     checkCoinCollect() {
-
+        for (let i = 0; i < this.level.coinCollect.length; i++) {
+            let coin = this.level.coinCollect[i];
+            if (this.character.isColliding(coin)) {
+                this.coincollectSound.play();
+                this.collectedCoins++;
+                this.level.coinCollect.splice(i, 1);
+                i--;
+            }
+        }
     }
 
     checkSpearCollect() {
-
+        for (let i = 0; i < this.level.spearCollect.length; i++) {
+            let spear = this.level.spearCollect[i];
+            if (this.character.isColliding(spear)) {
+                this.spearcollectSound.play();
+                this.collectedSpears++;
+                this.level.spearCollect.splice(i, 1);
+                i--;
+            }
+        }
     }
 
     checkCount() {
@@ -123,25 +167,22 @@ class World {
             }
         });
     };
-    /*else if (distance >= threshold) {
-                // Setze soundPlayed zurück, wenn der Charakter sich außerhalb der Schwellenwert-Entfernung befindet
-                enemy.soundPlayed = false;
-            }*/
 
     checkDistanceToEndboss() {
-        let threshold = 400; 
-        this.level.endboss.forEach((endboss) => { 
+        let threshold = 300;
+        this.level.endboss.forEach((endboss) => {
             let distance = Math.abs(this.character.x - endboss.x);
             if (distance < threshold && !endboss.soundPlayed) {
                 if (endboss.encounterSound) {
                     endboss.encounterSound.play();
                     endboss.soundPlayed = true;
+                    endboss.startAttack = true;
                 }
-        } else if (distance >= threshold) {
-            endboss.soundPlayed = false;
-        }
-    });
-        
+            } else if (distance >= threshold) {
+                endboss.soundPlayed = false;
+            }
+        });
+
     }
 
     setWorld() {
@@ -187,5 +228,13 @@ class World {
 
     addToMap(mo) {
         mo.draw(this.ctx);
+    }
+
+    boarDies(enemy) {
+        const removeBoar = this.enemies.indexOf(enemy);
+        setTimeout(() => {
+            this.enemies.splice(removeBoar, 1);
+        }, 1500);
+
     }
 }
