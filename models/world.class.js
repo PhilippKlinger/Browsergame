@@ -3,6 +3,7 @@ class World {
     character = new Character();
     level = level1;
     enemies = level1.enemies;
+    endboss = level1.endboss;
     canvas;
     ctx;
     keyboard;
@@ -46,7 +47,8 @@ class World {
     checkCollisions() {
         this.checkCollisionsBoar();
         this.checkCollisionsEndboss();
-        this.checkCollisionsSpear();
+        this.checkCollisionsSpearToBoar();
+        this.checkCollisionsSpearToEndboss();
     }
 
     checkAttackToBoar() {
@@ -64,7 +66,7 @@ class World {
                     this.boarDies(enemy);
                 }
             }
-           
+
         });
     }
 
@@ -86,7 +88,7 @@ class World {
         });
     }
 
-    checkCollisionsSpear() {
+    checkCollisionsSpearToBoar() {
         this.level.throwableObjects.forEach((spear) => {
             this.level.enemies.forEach((enemy) => {
                 if (enemy.isColliding(spear)) {
@@ -95,6 +97,20 @@ class World {
                     this.level.throwableObjects.splice(this.level.throwableObjects.indexOf(spear), 1);
                     if (enemy.isDead()) {
                         this.boarDies(enemy);
+                    }
+                }
+            });
+        });
+    }
+
+    checkCollisionsSpearToEndboss() {
+        this.level.throwableObjects.forEach((spear) => {
+            this.level.endboss.forEach((endboss) => {
+                if (endboss.isColliding(spear)) {
+                    endboss.hit();
+                    this.level.throwableObjects.splice(this.level.throwableObjects.indexOf(spear), 1);
+                    if (endboss.isDead()) {
+                        this.endbossDies(endboss);
                     }
                 }
             });
@@ -169,20 +185,26 @@ class World {
     };
 
     checkDistanceToEndboss() {
-        let threshold = 300;
+        let startAttackAt = 300;
+        let startHitAt = 95;
         this.level.endboss.forEach((endboss) => {
             let distance = Math.abs(this.character.x - endboss.x);
-            if (distance < threshold && !endboss.soundPlayed) {
+            if (distance <= startAttackAt && !endboss.soundPlayed) {
                 if (endboss.encounterSound) {
                     endboss.encounterSound.play();
                     endboss.soundPlayed = true;
                     endboss.startAttack = true;
                 }
-            } else if (distance >= threshold) {
-                endboss.soundPlayed = false;
+            } else if (distance >= startHitAt) {
+                endboss.startHit = false;
+                if (distance > startAttackAt) {
+                    endboss.soundPlayed = false;
+                }
+            }
+            if (distance <= startHitAt && endboss.startAttack) {
+                endboss.startHit = true;
             }
         });
-
     }
 
     setWorld() {
@@ -235,6 +257,12 @@ class World {
         setTimeout(() => {
             this.enemies.splice(removeBoar, 1);
         }, 1500);
+    }
 
+    endbossDies(endboss) {
+        const removeEndboss = this.endboss.indexOf(endboss);
+        setTimeout(() => {
+            this.endboss.splice(removeEndboss, 1);
+        }, 1500);
     }
 }
