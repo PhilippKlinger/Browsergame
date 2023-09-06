@@ -1,9 +1,10 @@
 class Endboss extends MoveableObject {
     height = 280;
     width = 459;  //Faktor height*1,64
-    health = 2;
+    health = 6;
     y = 120;
     speed = 8;
+    spiderwebs = 10;
     offsetHeight = 40;
     offsetWidth = 100;
     attackStartpoint = 5000;
@@ -114,7 +115,7 @@ class Endboss extends MoveableObject {
         this.loadImages(this.IMAGES_IDLE);
         this.x = this.attackStartpoint;
         this.animate();
-        this.startThrowTimer()
+        this.startThrowTimer();
     }
 
 
@@ -156,10 +157,14 @@ class Endboss extends MoveableObject {
 
     startThrowTimer() {
         setInterval(() => {
-            this.startThrow = true;
-            setTimeout(() => {
-                this.startThrow = false;
-            }, 400);
+            if (this.x < this.attackEndpoint && this.spiderwebs > 0) {
+                this.startThrow = true;
+                this.spiderwebs--;
+                setTimeout(() => {
+                    this.startThrow = false;
+                }, 400);
+            }
         }, 3000);
+
     }
 }

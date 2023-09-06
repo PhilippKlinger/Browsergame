@@ -2,7 +2,7 @@ class Character extends MoveableObject {
     height = 200;
     width = 180;
     y = 240;
-    x = 4100;
+    x = 100;
     offsetHeight = 40;
     offsetWidth = 100;
     world;

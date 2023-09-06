@@ -66,7 +66,7 @@ class Boar extends MoveableObject {
 
     animate() {
        let walkInt = setInterval(() => {
-        if(!this.isDead()) {
+        if(!this.isDead()) {    // x koordinate von character hinzufügen
             this.moveLeft();
             this.playAnimation(this.IMAGES_WALKING);
         } 

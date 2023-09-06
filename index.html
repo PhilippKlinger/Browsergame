@@ -4,15 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>EL MAYA VALIENTE</title>
 
+    <link rel="stylesheet" href="./fonts/fonts.css">
     <link rel="stylesheet" href="style.css">
+    
     <link rel="icon" type="image/x-icon" href="./favicon/favicon.ico">
 
     <script src="./models/drawableObjects.class.js"></script>
     <script src="./models/movableObjects.class.js"></script>
     <script src="./models/backgroundObjects.class.js"></script>
     <script src="./models/throwableObjects.class.js"></script>
+    <script src="./models/spiderweb.class.js"></script>
     <script src="./models/character.class.js"></script>
     <script src="./models/boar.class.js"></script>
     <script src="./models/birds.class.js"></script>
@@ -27,6 +30,7 @@
     <script src="./models/keyboard.class.js"></script>
     <script src="./models/level.class.js"></script>
     <script src="./models/endboss.class.js"></script>
+   
 
     <script src="./levels/level1.js"></script>
     <script src="./js/game.js"></script>
@@ -35,13 +39,17 @@
 
 <body onload="init()">
     <content>
-        <h1>El Maya Pequeño</h1>
+        <h1 style="display: none;">EL MAYA VALIENTE</h1>
         <div class="canvasSection" id="canvasSection">
             <canvas id="canvas" width="720" height="480"></canvas>  <!-- for 21:9 ratio -> width = 1120 -->
             <div id="optionsOverlay" class="optionsOverlay">
-                <img src="img/10_gui/options_overlay/fullscreen.png">
+                <img src="img/10_gui/options_overlay/fullscreen.png" >
                 <img src="img/10_gui/options_overlay/sound_off.png">
                 <img src="img/10_gui/options_overlay/faq.png">
+            </div>
+            <div id="startOverlay" class="startOverlay" style="display: none;">
+                <img src="./img/start_theme/startScreen.png">
+                <img src="./img/10_gui/options_overlay/play.png">
             </div>
 
         </div>

@@ -10,15 +10,15 @@ class World {
     cameraX = 0;
     collectedSpears = 3;
     collectedCoins = 0;
+    amountOfSpiderwebs = 10;
     lastThrowTime = null;
     statusbar = new Statusbar();
     spearCount = new SpearCount();
     spearDisplay = new SpearDisplay();
     coinDisplay = new CoinDisplay();
     coinCount = new CoinCount();
-    coincollectSound = new Audio('./audio/collectcoin.mp3');
+    coincollectSound = new Audio('./audio/collectcoin.mp3'); 
     spearcollectSound = new Audio('./audio/collectspear.mp3');
-
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -41,6 +41,7 @@ class World {
             this.checkCount();
             this.checkDistanceToEnemies();
             this.checkDistanceToEndboss();
+            this.checkSpiderweb();
         }, 1000 / 10);
     }
 
@@ -49,6 +50,7 @@ class World {
         this.checkCollisionsEndboss();
         this.checkCollisionsSpearToBoar();
         this.checkCollisionsSpearToEndboss();
+        this.checkCollisionsSpiderweb();
     }
 
     checkAttackToBoar() {
@@ -88,6 +90,16 @@ class World {
         });
     }
 
+    checkCollisionsSpiderweb() {
+        this.level.spiderwebs.forEach((spiderweb) => {
+            if (this.character.isColliding(spiderweb)) {
+                this.character.hit();
+                this.statusbar.setPercentage(this.character.health);
+                this.level.spiderwebs.splice(this.level.spiderwebs.indexOf(spiderweb), 1);
+            }
+        });
+    }
+
     checkCollisionsSpearToBoar() {
         this.level.throwableObjects.forEach((spear) => {
             this.level.enemies.forEach((enemy) => {
@@ -105,7 +117,7 @@ class World {
 
     checkCollisionsSpearToEndboss() {
         this.level.throwableObjects.forEach((spear) => {
-            this.level.endboss.forEach((endboss) => {
+            this.endboss.forEach((endboss) => {
                 if (endboss.isColliding(spear)) {
                     endboss.hit();
                     this.level.throwableObjects.splice(this.level.throwableObjects.indexOf(spear), 1);
@@ -124,6 +136,18 @@ class World {
             this.level.throwableObjects.push(spear);
             this.lastThrowTime = Date.now();
         }
+    }
+
+    checkSpiderweb() {
+        this.level.endboss.forEach((endboss) => {
+            if (endboss.startThrow && this.canThrow() && this.amountOfSpiderwebs > 0) {
+                let spiderweb = new Spiderweb();
+                this.amountOfSpiderwebs--;
+                this.level.spiderwebs.push(spiderweb);
+                this.lastThrowTime = Date.now();
+            }
+        });
+        
     }
 
     checkCoinCollect() {
@@ -233,6 +257,7 @@ class World {
         this.addObjectsToMap(this.level.endboss);
         this.addObjectsToMap(this.level.birds);
         this.addObjectsToMap(this.level.throwableObjects);
+        this.addObjectsToMap(this.level.spiderwebs);
 
         this.ctx.translate(-this.cameraX, 0);
 

@@ -7,6 +7,10 @@ function init() {
     world = new World(canvas, keyboard);    
 }
 
+function startGame() {
+    
+}
+
 
 window.addEventListener('keydown', (event) => {
     if (!keyboard.isLocked) {
