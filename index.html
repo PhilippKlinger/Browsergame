@@ -26,6 +26,7 @@
     <script src="./models/coinCollect.class.js"></script>
     <script src="./models/coinDisplay.class.js"></script>
     <script src="./models/coinCount.class.js"></script>
+    <script src="./models/obstacle.class.js"></script>
     <script src="./models/world.class.js"></script>
     <script src="./models/keyboard.class.js"></script>
     <script src="./models/level.class.js"></script>
@@ -38,26 +39,21 @@
 </head>
 
 <body onload="init()">
-    <content>
-        <h1 style="display: none;">EL MAYA VALIENTE</h1>
+    <div class="contentSection">
+        <h1 id="headline">EL MAYA VALIENTE</h1>
         <div class="canvasSection" id="canvasSection">
-            <canvas id="canvas" width="720" height="480"></canvas>  <!-- for 21:9 ratio -> width = 1120 -->
+            <canvas id="canvas" width="720px" height="480px"></canvas>  <!-- for 21:9 ratio -> width = 1120 -->
             <div id="optionsOverlay" class="optionsOverlay">
                 <img src="img/10_gui/options_overlay/fullscreen.png" >
                 <img src="img/10_gui/options_overlay/sound_off.png">
                 <img src="img/10_gui/options_overlay/faq.png">
             </div>
-            <div id="startOverlay" class="startOverlay" style="display: none;">
-                <img src="./img/start_theme/startScreen.png">
-                <img src="./img/10_gui/options_overlay/play.png">
+            <div id="startOverlay" class="startOverlay" >
+                <img class="startTheme" src="./img/start_theme/startScreen.png">
+                <img class="startBtn" src="./img/10_gui/options_overlay/play.png" onclick="startGame()">
             </div>
-
         </div>
-
-
-    </content>
-
-
+    </div>
 </body>
 
 </html>

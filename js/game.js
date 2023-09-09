@@ -8,7 +8,13 @@ function init() {
 }
 
 function startGame() {
-    
+    const headline = document.querySelector('h1');
+    const optionsOverlay = document.querySelector('.optionsOverlay');
+    document.getElementById('startOverlay').style.display = 'none';
+    headline.classList.add('slide');
+    setTimeout(() => {
+        optionsOverlay.style.top = '0';
+    }, 850); 
 }
 
 

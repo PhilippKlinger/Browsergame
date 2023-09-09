@@ -243,6 +243,7 @@ class World {
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.spearCollect);
         this.addObjectsToMap(this.level.coinCollect);
+        this.addObjectsToMap(this.level.spikes);
 
         this.ctx.translate(-this.cameraX, 0);
         this.statusbar.draw(this.ctx);

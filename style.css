@@ -1,55 +1,70 @@
 body {
     font-family: 'SecretHalloween', 'inter', 'sans-serif';
     margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
     background-image: url(img/canvas_bg2.jpg);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    align-items: center;
+    object-fit: fill;
     height: 100vh;
-    justify-content: center;
 }
 
-content {
+.contentSection {
+    position: absolute;
     display: flex;
-    justify-content: center;
     align-items: center;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
     flex-direction: column;
 }
 
-
 canvas {
     background-color: black;
-    border-radius: 20px;
     box-shadow: 0px 0px 60px 30px rgba(136 142 126 / 60%);
+    border-radius: 20px;
+    display: block;
 }
 
 h1 {
     z-index: 99;
+    height: 50px;
     margin: 0;
     font-size: 85px;
     font-weight: 500;
     text-shadow: 2px 2px 4px #dcdcdc, 4px 4px 0 #9c9c9c;
     color: #000000;
-    transform: translate(10px, 105px);
+    transform: translate(10px, 60px);
+    transition: transform 1s ease, font-size 1s ease;
+
+}
+
+h1.slide {
+    transform: translate(0, 0);
+    font-size: 50px;
 }
 
 .canvasSection {
     position: relative;
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 720px;
+    height: 480px;
     justify-content: center;
 }
 
 .optionsOverlay {
     position: absolute;
-    top: 0;
-    width: 95%;
+    bottom: 0;
+    top: auto;
+    width: 100%;
     display: flex;
     justify-content: flex-end;
     padding: 10px;
+    margin-right: 20px;
+    z-index: 99;
+    transition: all ease-in-out 0.3;
 }
 
 .optionsOverlay img {
@@ -64,13 +79,44 @@ h1 {
 }
 
 .startOverlay {
+    display: flex;
     position: absolute;
     top: 0;
-    width: 100%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
 }
 
 .startOverlay img {
-    width: 720px;
-    height: 480px;
     border-radius: 20px;
+}
+
+.startTheme {
+    width: 100%;
+    height: 100%;
+}
+
+.startBtn {
+    position: absolute;
+    height: 140px;
+    animation: pulseStartBtn 1.5s infinite;
+}
+
+.startBtn:hover {
+    cursor: pointer;
+    animation: none; 
+    transform: scale(1.1);
+    transition: all ease-in-out 0.3s;
+}
+
+@keyframes pulseStartBtn {
+    0%, 100% {
+        transform: scale(0.8);
+    }
+    50% {
+        transform: scale(1);
+    }
 }

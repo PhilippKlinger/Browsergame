@@ -4,6 +4,7 @@ class Boar extends MoveableObject {
     y = 300;
     offsetHeight = 0;
     offsetWidth = 15;
+    allowWalking = false;
     gruntingSound = new Audio('./audio/boargrunting.mp3');
 
     IMAGES_WALKING = [
@@ -58,24 +59,25 @@ class Boar extends MoveableObject {
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_HURTING);
         this.loadImages(this.IMAGES_DYING);
-        this.x = 1500 + Math.random() * 2000;
+        this.x = 500 + Math.random() * 2000;
         this.speed = 1.4 + Math.random() * 1;
         this.health = 2;
         this.animate();
     }
 
     animate() {
-       let walkInt = setInterval(() => {
-        if(!this.isDead()) {    // x koordinate von character hinzufügen
-            this.moveLeft();
-            this.playAnimation(this.IMAGES_WALKING);
-        } 
-            
+        
+       setInterval(() => {
+
+            if (this.allowWalking && !this.isDead() && world.character.x > 110) {
+                this.playAnimation(this.IMAGES_WALKING);
+                this.moveLeft();
+            }
         }, 1000 / 30);
 
 
         setInterval(() => {
-            if(this.isDead()) {
+            if (this.isDead()) {
                 //no damage to chracater
                 this.stopMoving();
                 this.playAnimation(this.IMAGES_DYING);
@@ -89,8 +91,12 @@ class Boar extends MoveableObject {
 
         setInterval(() => {
            
-        }, 2000);
-    }    
+        }, 1000);
+
+        setTimeout(() => {
+            this.allowWalking = true;
+        }, 1000);
+    }
 }
 
 

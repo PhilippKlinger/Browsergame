@@ -7,10 +7,11 @@ class Level {
     backgroundObjects;
     spearCollect;
     coinCollect;
+    spikes;
 
     levelEndpointX = 4900;
 
-    constructor(enemies, endboss, birds, throwableObjects, spiderwebs, backgroundObjects, spearCollect, coinCollect) {
+    constructor(enemies, endboss, birds, throwableObjects, spiderwebs, backgroundObjects, spearCollect, coinCollect, spikes) {
         this.enemies = enemies;
         this.endboss = endboss;
         this.birds = birds;
@@ -19,5 +20,6 @@ class Level {
         this.backgroundObjects = backgroundObjects;
         this.spearCollect = spearCollect;
         this.coinCollect = coinCollect;
+        this.spikes = spikes;
     }
 }
