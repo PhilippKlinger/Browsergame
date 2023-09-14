@@ -68,7 +68,6 @@ class World {
                     this.boarDies(enemy);
                 }
             }
-
         });
     }
 

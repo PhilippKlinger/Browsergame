@@ -18,6 +18,7 @@
     <script src="./models/spiderweb.class.js"></script>
     <script src="./models/character.class.js"></script>
     <script src="./models/boar.class.js"></script>
+    <script src="./models/obstacle.class.js"></script>
     <script src="./models/birds.class.js"></script>
     <script src="./models/statusbar.class.js"></script>
     <script src="./models/spearCount.class.js"></script>
@@ -26,7 +27,6 @@
     <script src="./models/coinCollect.class.js"></script>
     <script src="./models/coinDisplay.class.js"></script>
     <script src="./models/coinCount.class.js"></script>
-    <script src="./models/obstacle.class.js"></script>
     <script src="./models/world.class.js"></script>
     <script src="./models/keyboard.class.js"></script>
     <script src="./models/level.class.js"></script>
@@ -45,7 +45,7 @@
             <canvas id="canvas" width="720px" height="480px"></canvas>  <!-- for 21:9 ratio -> width = 1120 -->
             <div id="optionsOverlay" class="optionsOverlay">
                 <img src="img/10_gui/options_overlay/fullscreen.png" >
-                <img src="img/10_gui/options_overlay/sound_off.png">
+                <img id="soundImg" src="img/10_gui/options_overlay/sound_off.png" onclick="toggleAmbientSound()">
                 <img src="img/10_gui/options_overlay/faq.png">
             </div>
             <div id="startOverlay" class="startOverlay" >

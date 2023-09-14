@@ -1,8 +1,17 @@
 const level1 = new Level(
     [
-        new Boar(),
-        new Boar(),
-        new Boar(),
+        new Boar(800),
+        new Boar(1000),
+        new Boar(1600),
+        new Boar(1800),
+        new Boar(2000),
+        new Boar(2400),
+        new Boar(2600),
+        new Boar(3200),
+        new Boar(3400),
+        new Boar(3500),
+        new Boar(3600),
+        new Boar(4000)
     ],
     [   new Endboss()
     ],
@@ -105,15 +114,15 @@ const level1 = new Level(
         new SpearCollect('./img/6_spear/spear_ground2.png', 4200)
     ],
     [
-        new CoinCollect('./img/8_coin/Gold_21.png', 680, 180),
-        new CoinCollect('./img/8_coin/Gold_21.png', 760, 170),
-        new CoinCollect('./img/8_coin/Gold_21.png', 840, 160),
-        new CoinCollect('./img/8_coin/Gold_21.png', 920, 170),
-        new CoinCollect('./img/8_coin/Gold_21.png', 1000, 180),
-        new CoinCollect('./img/8_coin/Gold_21.png', 1580, 180),
-        new CoinCollect('./img/8_coin/Gold_21.png', 1660, 170),
-        new CoinCollect('./img/8_coin/Gold_21.png', 1740, 160),
-        new CoinCollect('./img/8_coin/Gold_21.png', 1820, 170),
+        new CoinCollect('./img/8_coin/Gold_21.png', 710, 180),
+        new CoinCollect('./img/8_coin/Gold_21.png', 1270, 170),
+        new CoinCollect('./img/8_coin/Gold_21.png', 1780, 160),
+        new CoinCollect('./img/8_coin/Gold_21.png', 2300, 170),
+        new CoinCollect('./img/8_coin/Gold_21.png', 2830, 180),
+        new CoinCollect('./img/8_coin/Gold_21.png', 3150, 180),
+        new CoinCollect('./img/8_coin/Gold_21.png', 3760, 170),
+        new CoinCollect('./img/8_coin/Gold_21.png', 4330, 160),
+        new CoinCollect('./img/8_coin/Gold_21.png', 4750, 170),
     ],
     [
         new Obstacle(2620 , 260),

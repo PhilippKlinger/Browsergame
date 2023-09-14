@@ -2,9 +2,17 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 
+ambientSound = new Audio('./audio/rainforest_ambient.mp3');
+menuSound = new Audio('audio/menuSoundFinal.mp3');
+isPlaying = true;
+
 function init() {
     canvas = document.getElementById('canvas');
-    world = new World(canvas, keyboard);    
+    world = new World(canvas, keyboard);
+    setTimeout(() => {
+        menuSound.play();
+    }, 1000);
+    
 }
 
 function startGame() {
@@ -14,7 +22,23 @@ function startGame() {
     headline.classList.add('slide');
     setTimeout(() => {
         optionsOverlay.style.top = '0';
-    }, 850); 
+    }, 650);
+    ambientSound.play();
+    menuSound.pause();
+}
+
+function toggleAmbientSound() {
+    let soundImg = document.getElementById('soundImg');
+    if(isPlaying) {
+        ambientSound.pause();
+        soundImg.src = './img/10_gui/options_overlay/sound.png';
+        isPlaying = false;
+    } else if (!isPlaying){
+        ambientSound.play();
+        soundImg.src = './img/10_gui/options_overlay/sound_off.png';
+        isPlaying = true;
+    }
+   
 }
 
 

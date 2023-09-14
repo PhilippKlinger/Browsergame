@@ -54,22 +54,21 @@ class Boar extends MoveableObject {
         './img/3_enemies_boar/boar/Dying/Dying_010.png'
     ];
 
-    constructor() {
-        super().loadImage('./img/3_enemies_boar/boar/Walking/Walking_000.png');
+    constructor(x) {
+        super().loadImage(this.IMAGES_WALKING[0]);
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_HURTING);
         this.loadImages(this.IMAGES_DYING);
-        this.x = 500 + Math.random() * 2000;
+        this.x = x + Math.random() * 200;
         this.speed = 1.4 + Math.random() * 1;
         this.health = 2;
         this.animate();
     }
 
     animate() {
-        
-       setInterval(() => {
 
-            if (this.allowWalking && !this.isDead() && world.character.x > 110) {
+        setInterval(() => {
+            if (this.allowWalking && !this.isDead() && world.character.x > 110 && world.character.x > (this.x - 800)) {
                 this.playAnimation(this.IMAGES_WALKING);
                 this.moveLeft();
             }
@@ -89,12 +88,10 @@ class Boar extends MoveableObject {
             }
         }, 1000 / 30);
 
-        setInterval(() => {
-           
-        }, 1000);
-
         setTimeout(() => {
+
             this.allowWalking = true;
+
         }, 1000);
     }
 }

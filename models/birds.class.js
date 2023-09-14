@@ -1,7 +1,7 @@
 class Bird extends MoveableObject {
     height = 50;
     width = 60;
-   
+    allowFlying = false;
 
     IMAGES_FLYING = [
         './img/1_editables/Flying Monster - 01/Idle_000.png',
@@ -21,29 +21,33 @@ class Bird extends MoveableObject {
         './img/1_editables/Flying Monster - 01/Idle_014.png',
         './img/1_editables/Flying Monster - 01/Idle_015.png',
         './img/1_editables/Flying Monster - 01/Idle_016.png',
-        './img/1_editables/Flying Monster - 01/Idle_017.png'        
+        './img/1_editables/Flying Monster - 01/Idle_017.png'
     ];
 
     constructor() {
-        super().loadImage('./img/1_editables/Flying Monster - 01/Idle_000.png');
+        super().loadImage(this.IMAGES_FLYING[0]);
         this.loadImages(this.IMAGES_FLYING);
         this.y = 20 + Math.random() * 80;
         this.x = -800 + Math.random() * 600;
-        this.speed = 1.5 + Math.random() * 0.8;
+        this.speed = 3 + Math.random() * 0.8;
         this.animate();
     }
 
     animate() {
         setInterval(() => {
-            this.moveRight();
-        }, 1000/60);
-        setInterval(() => {
-            let i = this.currentImage % this.IMAGES_FLYING.length;
-            let path = this.IMAGES_FLYING[i];
-            this.img = this.imageCache[path];
-            this.currentImage++;
-        }, 1000/30);     
+            if (this.allowFlying && world.character.x >110) {
+                this.moveRight();
+                this.playAnimation(this.IMAGES_FLYING);
+            }
+        }, 1000 / 30);
+
+        setTimeout(() => {
+            this.allowFlying = true;
+        }, 2000);
+        
+
     }
 
-    
+
+
 }
