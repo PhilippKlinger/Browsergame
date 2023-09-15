@@ -16,8 +16,8 @@ function init() {
 }
 
 function startGame() {
-    const headline = document.querySelector('h1');
-    const optionsOverlay = document.querySelector('.optionsOverlay');
+    let headline = document.querySelector('h1');
+    let optionsOverlay = document.querySelector('.optionsOverlay');
     document.getElementById('startOverlay').style.display = 'none';
     headline.classList.add('slide');
     setTimeout(() => {
@@ -25,6 +25,34 @@ function startGame() {
     }, 650);
     ambientSound.play();
     menuSound.pause();
+}
+
+function showHelp() {
+    let helpOverlay = document.querySelector('.helpOverlay');
+    let fullscreenImg = document.getElementById('fullscreenImg');
+    let soundImg = document.getElementById('soundImg');
+    let helpImg = document.getElementById('helpImg');
+    let returnBtn = document.getElementById('returnImg');
+    fullscreenImg.classList.add('d-none');
+    soundImg.classList.add('d-none');
+    helpImg.classList.add('d-none');
+    returnBtn.classList.remove('d-none');
+    helpOverlay.style.display = 'block';
+    document.getElementById('startOverlay').style.display = 'none';
+}
+
+function hideHelp() {
+    let helpOverlay = document.querySelector('.helpOverlay');
+    let fullscreenImg = document.getElementById('fullscreenImg');
+    let soundImg = document.getElementById('soundImg');
+    let helpImg = document.getElementById('helpImg');
+    let returnBtn = document.getElementById('returnImg');
+    fullscreenImg.classList.remove('d-none');
+    soundImg.classList.remove('d-none');
+    helpImg.classList.remove('d-none');
+    returnBtn.classList.add('d-none');
+    helpOverlay.style.display = 'none';
+    document.getElementById('startOverlay').style.display = 'flex';
 }
 
 function toggleAmbientSound() {

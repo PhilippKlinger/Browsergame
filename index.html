@@ -35,7 +35,6 @@
 
     <script src="./levels/level1.js"></script>
     <script src="./js/game.js"></script>
-
 </head>
 
 <body onload="init()">
@@ -44,13 +43,31 @@
         <div class="canvasSection" id="canvasSection">
             <canvas id="canvas" width="720px" height="480px"></canvas>  <!-- for 21:9 ratio -> width = 1120 -->
             <div id="optionsOverlay" class="optionsOverlay">
-                <img src="img/10_gui/options_overlay/fullscreen.png" >
+                <img id="fullscreenImg" src="img/10_gui/options_overlay/fullscreen.png" >
                 <img id="soundImg" src="img/10_gui/options_overlay/sound_off.png" onclick="toggleAmbientSound()">
-                <img src="img/10_gui/options_overlay/faq.png">
+                <img id="helpImg" src="img/10_gui/options_overlay/faq.png" onclick="showHelp()">
+                <img id="returnImg" class="d-none" src="./img/10_gui/options_overlay/restart.png" onclick="hideHelp()">
             </div>
             <div id="startOverlay" class="startOverlay" >
                 <img class="startTheme" src="./img/start_theme/startScreen.png">
                 <img class="startBtn" src="./img/10_gui/options_overlay/play.png" onclick="startGame()">
+            </div>
+            <div id="helpOverlay" class="startOverlay helpOverlay" style="display: none;">
+                <img id="startTheme" class="startTheme" src="./img/start_theme/startScreen.png">
+                <div id="helpSection" class="helpSection">
+                    <div id="helpControls" class="helpControls">
+                        <p>move left / <-</p>
+                        <p>move right / -></p>
+                        <p>jump / ._.</p>
+                        <p>slide right / s</p>
+                        <p>throw spear / d</p>
+                        <p>hit / up</p>
+                    </div>
+                    <div id="helpText" class="helpText">
+                        <p>Der abenteuerlustige Maya blablabla erobert den Dschungel und haut den Wildschweinen aufs Maul!</p>
+                    </div>
+                </div>
+                
             </div>
         </div>
     </div>
