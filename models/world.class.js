@@ -17,8 +17,12 @@ class World {
     spearDisplay = new SpearDisplay();
     coinDisplay = new CoinDisplay();
     coinCount = new CoinCount();
-    coincollectSound = new Audio('./audio/collectcoin.mp3'); 
+    coincollectSound = new Audio('./audio/collectcoin.mp3');
     spearcollectSound = new Audio('./audio/collectspear.mp3');
+
+    gameStarted = false;
+    gamePaused = true;
+    gameFinished = false;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -146,7 +150,7 @@ class World {
                 this.lastThrowTime = Date.now();
             }
         });
-        
+
     }
 
     checkCoinCollect() {

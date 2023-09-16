@@ -35,7 +35,7 @@ class Bird extends MoveableObject {
 
     animate() {
         setInterval(() => {
-            if (this.allowFlying && world.character.x >110) {
+            if (this.allowFlying && world.character.x >110 && !world.gamePaused) {
                 this.moveRight();
                 this.playAnimation(this.IMAGES_FLYING);
             }

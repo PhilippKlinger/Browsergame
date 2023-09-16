@@ -6,16 +6,23 @@ ambientSound = new Audio('./audio/rainforest_ambient.mp3');
 menuSound = new Audio('audio/menuSoundFinal.mp3');
 isPlaying = true;
 
+
 function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
     setTimeout(() => {
         menuSound.play();
     }, 1000);
-    
+
+    setInterval(() => {
+        console.log('game is started',world.gameStarted);
+        console.log('game is paused',world.gamePaused);
+    }, 2000);
 }
 
 function startGame() {
+    world.gameStarted = true;
+    world.gamePaused = false;
     let headline = document.querySelector('h1');
     let optionsOverlay = document.querySelector('.optionsOverlay');
     document.getElementById('startOverlay').style.display = 'none';
@@ -39,6 +46,9 @@ function showHelp() {
     returnBtn.classList.remove('d-none');
     helpOverlay.style.display = 'block';
     document.getElementById('startOverlay').style.display = 'none';
+    if (world.gameStarted) {
+        world.gamePaused = true;
+    }
 }
 
 function hideHelp() {
@@ -52,7 +62,33 @@ function hideHelp() {
     helpImg.classList.remove('d-none');
     returnBtn.classList.add('d-none');
     helpOverlay.style.display = 'none';
-    document.getElementById('startOverlay').style.display = 'flex';
+    if (!world.gameStarted) {
+        document.getElementById('startOverlay').style.display = 'flex';
+    }
+    if(world.gamePaused) {
+        world.gamePaused = false;
+    }
+}
+
+function toggleFullscreen() { //canvas width und height auf 100%
+    let elem = document.getElementById('canvasSection');
+    if (!document.fullscreenElement) {
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+        } else if (elem.webkitRequestFullscreen) { /* Safari */
+            elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) { /* IE11 */
+            elem.msRequestFullscreen();
+        }
+    } else {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) { /* Safari */
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) { /* IE11 */
+            document.msExitFullscreen();
+        }
+    }
 }
 
 function toggleAmbientSound() {

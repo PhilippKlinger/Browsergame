@@ -8,7 +8,7 @@
 
     <link rel="stylesheet" href="./fonts/fonts.css">
     <link rel="stylesheet" href="style.css">
-    
+
     <link rel="icon" type="image/x-icon" href="./favicon/favicon.ico">
 
     <script src="./models/drawableObjects.class.js"></script>
@@ -31,7 +31,7 @@
     <script src="./models/keyboard.class.js"></script>
     <script src="./models/level.class.js"></script>
     <script src="./models/endboss.class.js"></script>
-   
+
 
     <script src="./levels/level1.js"></script>
     <script src="./js/game.js"></script>
@@ -41,14 +41,14 @@
     <div class="contentSection">
         <h1 id="headline">EL MAYA VALIENTE</h1>
         <div class="canvasSection" id="canvasSection">
-            <canvas id="canvas" width="720px" height="480px"></canvas>  <!-- for 21:9 ratio -> width = 1120 -->
+            <canvas id="canvas" width="720px" height="480px"></canvas> <!-- for 21:9 ratio -> width = 1120 -->
             <div id="optionsOverlay" class="optionsOverlay">
-                <img id="fullscreenImg" src="img/10_gui/options_overlay/fullscreen.png" >
+                <img id="fullscreenImg" src="img/10_gui/options_overlay/fullscreen.png" onclick="toggleFullscreen()">
                 <img id="soundImg" src="img/10_gui/options_overlay/sound_off.png" onclick="toggleAmbientSound()">
                 <img id="helpImg" src="img/10_gui/options_overlay/faq.png" onclick="showHelp()">
                 <img id="returnImg" class="d-none" src="./img/10_gui/options_overlay/restart.png" onclick="hideHelp()">
             </div>
-            <div id="startOverlay" class="startOverlay" >
+            <div id="startOverlay" class="startOverlay">
                 <img class="startTheme" src="./img/start_theme/startScreen.png">
                 <img class="startBtn" src="./img/10_gui/options_overlay/play.png" onclick="startGame()">
             </div>
@@ -56,18 +56,36 @@
                 <img id="startTheme" class="startTheme" src="./img/start_theme/startScreen.png">
                 <div id="helpSection" class="helpSection">
                     <div id="helpControls" class="helpControls">
-                        <p>move left / <-</p>
-                        <p>move right / -></p>
-                        <p>jump / ._.</p>
-                        <p>slide right / s</p>
-                        <p>throw spear / d</p>
-                        <p>hit / up</p>
+                        <div>
+                            <img class="controlsImg" src="./img/10_gui/keyboard/arrow-back.png">
+                            <p>move left</p>
+                        </div>
+                        <div>
+                            <img class="controlsImg" src="./img/10_gui/keyboard/arrow-right.png">
+                            <p>move right</p>
+                        </div>
+                        <div>
+                            <img class="controlsImg" src="./img/10_gui/keyboard/space.png">
+                            <p>jump</p>
+                        </div>
+                        <div>
+                            <img class="controlsImg" src="./img/10_gui/keyboard/arrow-up.png">
+                            <p>hit</p>
+                        </div>
+                        <div>
+                            <img class="controlsImg" src="./img/10_gui/keyboard/letter-s.png">
+                            <p>slide right</p>
+                        </div>
+                        <div>
+                            <img class="controlsImg" src="./img/10_gui/keyboard/letter-d.png">
+                            <p>throw spear</p>
+                        </div>
                     </div>
                     <div id="helpText" class="helpText">
-                        <p>Der abenteuerlustige Maya blablabla erobert den Dschungel und haut den Wildschweinen aufs Maul!</p>
+                        <p>Tauche ein in das aufregende Abenteuer eines mutigen Maya-Kriegers und erobere den verlorenen Schatz seines Stammes zurueck! Doch der Weg durch den Dschungel ist gefaehrlich und voller Herausforderungen. Nur mit deinem Geschick kann dein Held erfolgreich sein.</p>
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </div>
