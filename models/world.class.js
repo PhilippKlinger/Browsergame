@@ -39,7 +39,7 @@ class World {
             this.checkCollisions();
             this.checkAttackToBoar();
             this.checkThrowing();
-            this.checkDying();
+            this.checkGameIsOver();
             this.checkCoinCollect();
             this.checkSpearCollect();
             this.checkCount();
@@ -192,10 +192,19 @@ class World {
         return false;
     }
 
-    checkDying() {
+    checkGameIsOver() {
         if (this.character.isDead()) {
             this.keyboard.isLocked = true;
-        }
+            this.gameFinished = true;
+            
+        } 
+        this.level.endboss.forEach((endboss) => {
+            if (endboss.isDead()) {
+                this.keyboard.isLocked = true;
+                this.gameFinished = true;
+                
+            }
+        });
     }
 
     checkDistanceToEnemies() {

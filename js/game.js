@@ -14,10 +14,10 @@ function init() {
         menuSound.play();
     }, 1000);
 
-    setInterval(() => {
-        console.log('game is started',world.gameStarted);
-        console.log('game is paused',world.gamePaused);
-    }, 2000);
+    // setInterval(() => {
+    //     console.log('game is started',world.gameStarted);
+    //     console.log('game is paused',world.gamePaused);
+    // }, 2000);
 }
 
 function startGame() {
@@ -70,8 +70,9 @@ function hideHelp() {
     }
 }
 
-function toggleFullscreen() { //canvas width und height auf 100%
+function toggleFullscreen() { 
     let elem = document.getElementById('canvasSection');
+    let canvas = document.getElementById('canvas');
     if (!document.fullscreenElement) {
         if (elem.requestFullscreen) {
             elem.requestFullscreen();
@@ -80,6 +81,8 @@ function toggleFullscreen() { //canvas width und height auf 100%
         } else if (elem.msRequestFullscreen) { /* IE11 */
             elem.msRequestFullscreen();
         }
+        canvas.style.width = '100%';
+        canvas.style.height = '100%';
     } else {
         if (document.exitFullscreen) {
             document.exitFullscreen();
@@ -118,30 +121,30 @@ window.addEventListener('keydown', (event) => {
         keyboard.NOKEY = false;
     }
 
-    if (event.key === 'ArrowUp') {
-        keyboard.ARROWUP = true;
-        keyboard.NOKEY = false;
-    }
+    // if (event.key === 'ArrowUp') {
+    //     keyboard.ARROWUP = true;
+    //     keyboard.NOKEY = false;
+    // }
 
-    if (event.key === 'ArrowDown') {
-        keyboard.ARROWDOWN = true;
-         keyboard.NOKEY = false;
-    }
+    // if (event.key === 'ArrowDown') {
+    //     keyboard.ARROWDOWN = true;
+    //      keyboard.NOKEY = false;
+    // }
 
     if (event.key === " ") {
         keyboard.SPACE = true;
          keyboard.NOKEY = false;
     }
 
-    if (event.key === "w") {
-        keyboard.W = true;
-         keyboard.NOKEY = false;
-    }
+    // if (event.key === "w") {
+    //     keyboard.W = true;
+    //      keyboard.NOKEY = false;
+    // }
 
-    if (event.key === "a") {
-        keyboard.A = true;
-         keyboard.NOKEY = false;
-    }
+    // if (event.key === "a") {
+    //     keyboard.A = true;
+    //      keyboard.NOKEY = false;
+    // }
 
     if (event.key === "s") {
         keyboard.S = true;
@@ -172,30 +175,30 @@ window.addEventListener('keyup', (event) => {
          keyboard.NOKEY = true;
     }
 
-    if (event.key === 'ArrowUp') {
-        keyboard.ARROWUP = false;
-         keyboard.NOKEY = true;
-    }
+    // if (event.key === 'ArrowUp') {
+    //     keyboard.ARROWUP = false;
+    //      keyboard.NOKEY = true;
+    // }
 
-    if (event.key === 'ArrowDown') {
-        keyboard.ARROWDOWN = false;
-         keyboard.NOKEY = true;
-    }
+    // if (event.key === 'ArrowDown') {
+    //     keyboard.ARROWDOWN = false;
+    //      keyboard.NOKEY = true;
+    // }
 
     if (event.key === " ") {
         keyboard.SPACE = false;
          keyboard.NOKEY = true;
     }
 
-    if (event.key === "w") {
-        keyboard.W = false;
-         keyboard.NOKEY = true;
-    }
+    // if (event.key === "w") {
+    //     keyboard.W = false;
+    //      keyboard.NOKEY = true;
+    // }
 
-    if (event.key === "a") {
-        keyboard.A = false;
-         keyboard.NOKEY = true;
-    }
+    // if (event.key === "a") {
+    //     keyboard.A = false;
+    //      keyboard.NOKEY = true;
+    // }
 
     if (event.key === "s") {
         keyboard.S = false;
