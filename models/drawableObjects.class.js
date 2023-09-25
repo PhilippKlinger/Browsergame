@@ -24,7 +24,13 @@ class DrawableObject {
         if (this.otherDirection) {
             this.flipImage(ctx);
         }
-        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+        try {
+            ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+        } catch (error) {
+            console.warn('Error loading Image', error);
+            console.log('Could not load image,', this.img.src);
+        }
+        
         if (this.otherDirection) {
             this.reflipImage(ctx);
         }

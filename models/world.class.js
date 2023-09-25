@@ -19,10 +19,12 @@ class World {
     coinCount = new CoinCount();
     coincollectSound = new Audio('./audio/collectcoin.mp3');
     spearcollectSound = new Audio('./audio/collectspear.mp3');
-
+    
     gameStarted = false;
     gamePaused = true;
     gameFinished = false;
+    treasureCollected = false;
+    playerWins = false;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -32,6 +34,7 @@ class World {
         this.setWorld();
         this.run();
         this.character.statusbar = this.statusbar;
+       
     }
 
     run() {
@@ -196,13 +199,19 @@ class World {
         if (this.character.isDead()) {
             this.keyboard.isLocked = true;
             this.gameFinished = true;
+            setTimeout(() => {
+                this.showEndscreen();
+            }, 1000);
             
         } 
         this.level.endboss.forEach((endboss) => {
-            if (endboss.isDead()) {
+            if (endboss.isDead() ) { //&& this.treasureCollected
                 this.keyboard.isLocked = true;
                 this.gameFinished = true;
-                
+                this.playerWins = true;
+                setTimeout(() => {
+                    this.showEndscreen();
+                }, 1000);
             }
         });
     }
@@ -241,6 +250,18 @@ class World {
                 endboss.startHit = true;
             }
         });
+    }
+
+    showEndscreen() {
+        if(this.gameFinished) {
+            document.getElementById('endScreenOverlay').style.display = 'flex';
+            document.getElementById('optionsOverlay').style.display = 'none';
+            if(this.playerWins) {
+                document.getElementById('endScreenOverlayWin').style.display = 'block';
+            } else {
+                document.getElementById('endScreenOverlayLose').style.display = 'block';
+            }
+        }
     }
 
     setWorld() {

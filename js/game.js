@@ -10,14 +10,6 @@ isPlaying = true;
 function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
-    setTimeout(() => {
-        menuSound.play();
-    }, 1000);
-
-    // setInterval(() => {
-    //     console.log('game is started',world.gameStarted);
-    //     console.log('game is paused',world.gamePaused);
-    // }, 2000);
 }
 
 function startGame() {
@@ -31,7 +23,6 @@ function startGame() {
         optionsOverlay.style.top = '0';
     }, 650);
     ambientSound.play();
-    menuSound.pause();
 }
 
 function showHelp() {
@@ -48,7 +39,9 @@ function showHelp() {
     document.getElementById('startOverlay').style.display = 'none';
     if (world.gameStarted) {
         world.gamePaused = true;
+        ambientSound.pause();
     }
+    menuSound.play();
 }
 
 function hideHelp() {
@@ -68,6 +61,11 @@ function hideHelp() {
     if(world.gamePaused) {
         world.gamePaused = false;
     }
+    if(world.gameStarted) {
+        ambientSound.play();
+    }
+    menuSound.pause();
+    
 }
 
 function toggleFullscreen() { 
@@ -96,7 +94,7 @@ function toggleFullscreen() {
 
 function toggleAmbientSound() {
     let soundImg = document.getElementById('soundImg');
-    if(isPlaying) {
+    if(isPlaying && world.gameStarted) {
         ambientSound.pause();
         soundImg.src = './img/10_gui/options_overlay/sound.png';
         isPlaying = false;

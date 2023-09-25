@@ -40,6 +40,7 @@
 <body onload="init()">
     <div class="contentSection">
         <h1 id="headline">EL MAYA VALIENTE</h1>
+        <h2>ROTATE YOUR DEVICE!</h2>
         <div class="canvasSection" id="canvasSection">
             <canvas id="canvas" width="720px" height="480px"></canvas> <!-- for 21:9 ratio -> width = 1120 -->
             <div id="optionsOverlay" class="optionsOverlay">
@@ -86,6 +87,10 @@
                     </div>
                 </div>
 
+            </div>
+            <div id="endScreenOverlay" class="startOverlay endScreenOverlay" style="display: none;">
+                <img id="endScreenOverlayWin" class="endScreenTheme" src="./img/10_gui/winGame.png">
+                <img id="endScreenOverlayLose" class="endScreenTheme" src="./img/10_gui/loseGame.png" >
             </div>
         </div>
     </div>
