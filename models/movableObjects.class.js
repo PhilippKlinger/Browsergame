@@ -83,24 +83,24 @@ class MoveableObject extends DrawableObject {
         this.speedY = 15;
     }
 
-    slideRight() {
-        this.newX = this.x + this.maxSlideDistance;
-        if (this.newX <= (5000 - this.width) && this.slideDistance < this.maxSlideDistance) {
-            this.x += this.speed;
-            this.slideDistance += this.speed; // Erhöhe die Gleitdistanz
-        } 
-    }
-
-    slideLeft() {
-        this.newX = this.x - this.maxSlideDistance;
-        if (this.newX <= (5000 - this.width) && this.slideDistance < this.maxSlideDistance) {
-            this.x -= this.speed;
-            this.slideDistance += this.speed; // Erhöhe die Gleitdistanz
-        } 
+    slide() {
+        if (!this.otherDirection) {
+            this.newX = this.x + this.maxSlideDistance;
+            if (this.newX <= (5000 - this.width) && this.slideDistance < this.maxSlideDistance) {
+                this.x += this.speed;
+                this.slideDistance += this.speed; // Erhöhe die slidedistanz
+            } 
+        } else {
+            this.newX = this.x - this.maxSlideDistance;
+            if (this.newX <= (5000 - this.width) && this.slideDistance < this.maxSlideDistance) {
+                this.x -= this.speed;
+                this.slideDistance += this.speed; // Erhöhe die slidedistanz
+            } 
+        }
     }
 
     resetSlideDistance() {
-        this.slideDistance = 0; // Setze die Gleitdistanz zurück
+        this.slideDistance = 0; // Setze die slidedistanz zurück
     }
 
     hit() {

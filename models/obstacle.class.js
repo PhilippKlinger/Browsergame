@@ -4,8 +4,8 @@ class Obstacle extends MoveableObject {
     offsetX = 0;
     offsetHeight = 0;
     offsetWidth = 0;
-    activatedSpikes = false;
     allowProcess = false;
+    activateSpikes = false;
 
     IMAGES_SPIKE_UP = [
         './img/12_obstacle/long_wood_spike_01.png',
@@ -21,7 +21,7 @@ class Obstacle extends MoveableObject {
         './img/12_obstacle/long_wood_spike_03.png',
         './img/12_obstacle/long_wood_spike_02.png',
         './img/12_obstacle/long_wood_spike_01.png'
-    ];
+    ]
 
     constructor(x, y) {
         super().loadImage(this.IMAGES_SPIKE_UP[0]);
@@ -37,24 +37,29 @@ class Obstacle extends MoveableObject {
     animate() {
 
         let i = 0;
+        let goingDown = false;
 
         setInterval(() => {
-            if (!this.activatedSpikes && this.allowProcess && world.character.x > 350) { 
-                this.activatedSpikes = true;
-            } else if (this.activatedSpikes && i < 4) {
+            if (this.allowProcess && this.activateSpikes && i < 5 && !goingDown) {
                 this.playAnimation(this.IMAGES_SPIKE_UP);
                 i++;
-            } else if (this.activatedSpikes) {
-                this.stopAnimation(this.IMAGES_SPIKE_UP);
-                this.activatedSpikes = false;
+            } else if (i == 5 && !goingDown) {
+                setTimeout(() => {
+                    goingDown = true;
+                }, 2000);
+            } else if (goingDown && i !== 0) {
+                this.playAnimation(this.IMAGES_SPIKE_DOWN);
+                i--;
+            } else if (i == 0 && goingDown) {
+                setTimeout(() => {
+                    goingDown = false;
+                }, 2000);
             }
-        }, 1000 / 15);
-
+        }, 1000 / 30);
 
         setTimeout(() => {
             this.allowProcess = true;
-        }, 2000);
-
+        }, 1000);
 
     }
 

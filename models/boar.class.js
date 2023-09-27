@@ -59,7 +59,7 @@ class Boar extends MoveableObject {
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_HURTING);
         this.loadImages(this.IMAGES_DYING);
-        this.x = x + Math.random() * 200;
+        this.x = x + 3200;   //Math.random() * 200
         this.speed = 1.4 + Math.random() * 1;
         this.health = 2;
         this.animate();

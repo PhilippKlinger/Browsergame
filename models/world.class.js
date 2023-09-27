@@ -4,6 +4,7 @@ class World {
     level = level1;
     enemies = level1.enemies;
     endboss = level1.endboss;
+    obstacles = level1.obstacles;
     canvas;
     ctx;
     keyboard;
@@ -34,7 +35,6 @@ class World {
         this.setWorld();
         this.run();
         this.character.statusbar = this.statusbar;
-       
     }
 
     run() {
@@ -47,6 +47,7 @@ class World {
             this.checkSpearCollect();
             this.checkCount();
             this.checkDistanceToEnemies();
+            this.checkDistanceToObstacles();
             this.checkDistanceToEndboss();
             this.checkSpiderweb();
         }, 1000 / 10);
@@ -153,7 +154,6 @@ class World {
                 this.lastThrowTime = Date.now();
             }
         });
-
     }
 
     checkCoinCollect() {
@@ -218,7 +218,7 @@ class World {
 
     checkDistanceToEnemies() {
         let threshold = 600;
-        this.level.enemies.forEach((enemy) => {
+        this.enemies.forEach((enemy) => {
             let distance = Math.abs(this.character.x - enemy.x);
             if (distance < threshold && !enemy.soundPlayed) {
                 if (enemy.gruntingSound) {
@@ -227,12 +227,24 @@ class World {
                 }
             }
         });
-    };
+    }
+
+    checkDistanceToObstacles() {
+        let threshold = 300;
+        this.obstacles.forEach((obstacle) => {
+            let distance = Math.abs(this.character.x - obstacle.x);
+            if (distance < threshold) {
+                obstacle.activateSpikes = true;
+            } else if (distance > threshold) {
+                obstacle.activateSpikes = false;
+            }
+        });
+    }
 
     checkDistanceToEndboss() {
         let startAttackAt = 300;
         let startHitAt = 95;
-        this.level.endboss.forEach((endboss) => {
+        this.endboss.forEach((endboss) => {
             let distance = Math.abs(this.character.x - endboss.x);
             if (distance <= startAttackAt && !endboss.soundPlayed) {
                 if (endboss.encounterSound) {
@@ -276,7 +288,7 @@ class World {
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.spearCollect);
         this.addObjectsToMap(this.level.coinCollect);
-        this.addObjectsToMap(this.level.spikes);
+        this.addObjectsToMap(this.level.obstacles);
 
         this.ctx.translate(-this.cameraX, 0);
         this.statusbar.draw(this.ctx);
