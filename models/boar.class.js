@@ -2,7 +2,7 @@ class Boar extends MoveableObject {
     height = 100;
     width = 120;
     y = 300;
-    offsetHeight = 0;
+    offsetHeight = 30;
     offsetWidth = 15;
     allowWalking = false;
     gruntingSound = new Audio('./audio/boargrunting.mp3');

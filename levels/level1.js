@@ -125,8 +125,17 @@ const level1 = new Level(
         new CoinCollect('./img/8_coin/Gold_21.png', 4750, 170),
     ],
     [
-        new Obstacle(2620 , 260),
-        new Obstacle(2640 , 280),
-        new Obstacle(2610 , 300),
+        new Obstacle(1020 , 270),
+        new Obstacle(1040 , 290),
+        new Obstacle(1010 , 310),
+        new Obstacle(2420 , 260),
+        new Obstacle(2440 , 280),
+        new Obstacle(2410 , 300),
+        new Obstacle(3060 , 260),
+        new Obstacle(3080 , 280),
+        new Obstacle(3050 , 300),
+    ],
+    [
+        new Platform(600 , 200),
     ]
 );

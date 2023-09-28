@@ -76,11 +76,16 @@ class MoveableObject extends DrawableObject {
     }
 
     jump() {
-        this.speedY = 20;
+        this.speedY = 18;
     }
 
     bounce() {
         this.speedY = 15;
+    }
+
+    bounceBack() {
+        this.speedY = 8;
+        this.x -= 100;
     }
 
     slide() {
@@ -104,7 +109,7 @@ class MoveableObject extends DrawableObject {
     }
 
     hit() {
-        this.health -= 10;
+        this.health -= 1;
         if (this.health < 0) {
             this.health = 0;
         } else {

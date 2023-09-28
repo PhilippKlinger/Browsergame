@@ -2,9 +2,6 @@ class World {
     drawableObject = new DrawableObject();
     character = new Character();
     level = level1;
-    enemies = level1.enemies;
-    endboss = level1.endboss;
-    obstacles = level1.obstacles;
     canvas;
     ctx;
     keyboard;
@@ -59,6 +56,8 @@ class World {
         this.checkCollisionsSpearToBoar();
         this.checkCollisionsSpearToEndboss();
         this.checkCollisionsSpiderweb();
+        this.checkCollisionsToObstacle();
+        this.checkCollisionsToPlatform();
     }
 
     checkAttackToBoar() {
@@ -75,6 +74,24 @@ class World {
                 if (enemy.isDead()) {
                     this.boarDies(enemy);
                 }
+            }
+        });
+    }
+
+    checkCollisionsToObstacle() {
+        this.level.obstacles.forEach((obstacle) => {
+            if(this.character.isColliding(obstacle) && !obstacle.spikeIsUp) {
+                this.character.hit();
+                this.statusbar.setPercentage(this.character.health);
+                this.character.bounceBack();
+            }
+        });
+    }
+
+    checkCollisionsToPlatform() {
+        this.level.platforms.forEach((platform) => {
+            if(this.character.isColliding(platform) && !this.keyboard.S) {
+               this.character.bounceBack()
             }
         });
     }
@@ -124,7 +141,7 @@ class World {
 
     checkCollisionsSpearToEndboss() {
         this.level.throwableObjects.forEach((spear) => {
-            this.endboss.forEach((endboss) => {
+            this.level.endboss.forEach((endboss) => {
                 if (endboss.isColliding(spear)) {
                     endboss.hit();
                     this.level.throwableObjects.splice(this.level.throwableObjects.indexOf(spear), 1);
@@ -218,7 +235,7 @@ class World {
 
     checkDistanceToEnemies() {
         let threshold = 600;
-        this.enemies.forEach((enemy) => {
+        this.level.enemies.forEach((enemy) => {
             let distance = Math.abs(this.character.x - enemy.x);
             if (distance < threshold && !enemy.soundPlayed) {
                 if (enemy.gruntingSound) {
@@ -231,7 +248,7 @@ class World {
 
     checkDistanceToObstacles() {
         let threshold = 300;
-        this.obstacles.forEach((obstacle) => {
+        this.level.obstacles.forEach((obstacle) => {
             let distance = Math.abs(this.character.x - obstacle.x);
             if (distance < threshold) {
                 obstacle.activateSpikes = true;
@@ -244,7 +261,7 @@ class World {
     checkDistanceToEndboss() {
         let startAttackAt = 300;
         let startHitAt = 95;
-        this.endboss.forEach((endboss) => {
+        this.level.endboss.forEach((endboss) => {
             let distance = Math.abs(this.character.x - endboss.x);
             if (distance <= startAttackAt && !endboss.soundPlayed) {
                 if (endboss.encounterSound) {
@@ -289,6 +306,7 @@ class World {
         this.addObjectsToMap(this.level.spearCollect);
         this.addObjectsToMap(this.level.coinCollect);
         this.addObjectsToMap(this.level.obstacles);
+        this.addObjectsToMap(this.level.platforms);
 
         this.ctx.translate(-this.cameraX, 0);
         this.statusbar.draw(this.ctx);
@@ -324,16 +342,16 @@ class World {
     }
 
     boarDies(enemy) {
-        const removeBoar = this.enemies.indexOf(enemy);
+        const removeBoar = this.level.enemies.indexOf(enemy);
         setTimeout(() => {
-            this.enemies.splice(removeBoar, 1);
-        }, 1500);
+            this.level.enemies.splice(removeBoar, 1);
+        }, 500);
     }
 
     endbossDies(endboss) {
-        const removeEndboss = this.endboss.indexOf(endboss);
+        const removeEndboss = this.level.endboss.indexOf(endboss);
         setTimeout(() => {
-            this.endboss.splice(removeEndboss, 1);
+            this.level.endboss.splice(removeEndboss, 1);
         }, 1500);
     }
 }
