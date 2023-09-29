@@ -128,8 +128,8 @@ class MoveableObject extends DrawableObject {
         this.isSliding = false;
     }
 
-    hit() {
-        this.health -= 1;
+    hit(damage) {
+        this.health -= damage;
         if (this.health < 0) {
             this.health = 0;
         } else {

@@ -1,7 +1,6 @@
 class Endboss extends MoveableObject {
     height = 280;
     width = 459;  //Faktor height*1,64
-    health = 6;
     y = 120;
     speed = 8;
     spiderwebs = 10;
@@ -139,7 +138,6 @@ class Endboss extends MoveableObject {
 
         setInterval(() => {
             if (this.isDead()) {
-                //no damage to chracater
                 this.stopMoving();
                 this.playAnimation(this.IMAGES_DYING);
                 setTimeout(() => {
@@ -149,10 +147,6 @@ class Endboss extends MoveableObject {
                 this.playAnimation(this.IMAGES_HURTING);
             }
         }, 1000 / 15);
-
-        setInterval(() => {
-
-        }, 3000);
     }
 
     startThrowTimer() {
@@ -165,6 +159,5 @@ class Endboss extends MoveableObject {
                 }, 400);
             }
         }, 3000);
-
     }
 }

@@ -11,6 +11,7 @@ class World {
     amountOfSpiderwebs = 10;
     lastThrowTime = null;
     statusbar = new Statusbar();
+    statusbarEndboss = new StatusbarEndboss();
     spearCount = new SpearCount();
     spearDisplay = new SpearDisplay();
     coinDisplay = new CoinDisplay();
@@ -63,13 +64,13 @@ class World {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isJumpingOnBoar(enemy)) {
                 this.character.bounce();
-                enemy.hit();
+                enemy.hit(1);
                 if (enemy.isDead()) {
                     this.boarDies(enemy);
                 }
             }
-            if ((this.character.isInFrontOf(enemy) && this.keyboard.ARROWUP)) {
-                enemy.hit();
+            if ((this.character.isInFrontOf(enemy) && this.keyboard.ARROWDOWN)) {
+                enemy.hit(1);
                 if (enemy.isDead()) {
                     this.boarDies(enemy);
                 }
@@ -80,7 +81,7 @@ class World {
     checkCollisionsToObstacle() {
         this.level.obstacles.forEach((obstacle) => {
             if(this.character.isColliding(obstacle) && !obstacle.spikeIsUp) {
-                this.character.hit();
+                this.character.hit(1);
                 this.statusbar.setPercentage(this.character.health);
                 this.character.bounceBack(50);
             }
@@ -98,7 +99,7 @@ class World {
     checkCollisionsBoar() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy) && !this.character.isAboveGround() && !enemy.isDead()) {
-                this.character.hit();
+                this.character.hit(1);
                 this.statusbar.setPercentage(this.character.health);
             }
         });
@@ -107,8 +108,11 @@ class World {
     checkCollisionsEndboss() {
         this.level.endboss.forEach((endboss) => {
             if (this.character.isColliding(endboss)) {
-                this.character.hit();
+                this.character.hit(5);
                 this.statusbar.setPercentage(this.character.health);
+                this.character.encounterEndboss = true;
+            } else {
+                this.character.encounterEndboss = false;
             };
         });
     }
@@ -116,7 +120,7 @@ class World {
     checkCollisionsSpiderweb() {
         this.level.spiderwebs.forEach((spiderweb) => {
             if (this.character.isColliding(spiderweb)) {
-                this.character.hit();
+                this.character.hit(1);
                 this.statusbar.setPercentage(this.character.health);
                 this.level.spiderwebs.splice(this.level.spiderwebs.indexOf(spiderweb), 1);
             }
@@ -127,8 +131,7 @@ class World {
         this.level.throwableObjects.forEach((spear) => {
             this.level.enemies.forEach((enemy) => {
                 if (enemy.isColliding(spear)) {
-                    enemy.hit();
-                    enemy.hit();
+                    enemy.hit(2);
                     this.level.throwableObjects.splice(this.level.throwableObjects.indexOf(spear), 1);
                     if (enemy.isDead()) {
                         this.boarDies(enemy);
@@ -142,7 +145,8 @@ class World {
         this.level.throwableObjects.forEach((spear) => {
             this.level.endboss.forEach((endboss) => {
                 if (endboss.isColliding(spear)) {
-                    endboss.hit();
+                    endboss.hit(20);
+                    this.statusbarEndboss.setPercentage(endboss.health);
                     this.level.throwableObjects.splice(this.level.throwableObjects.indexOf(spear), 1);
                     if (endboss.isDead()) {
                         this.endbossDies(endboss);
@@ -265,6 +269,7 @@ class World {
                     endboss.encounterSound.play();
                     endboss.soundPlayed = true;
                     endboss.startAttack = true;
+                    this.statusbarEndboss.visible = true;
                 }
             } else if (distance >= startHitAt) {
                 endboss.startHit = false;
@@ -282,6 +287,9 @@ class World {
         if(this.gameFinished) {
             document.getElementById('endScreenOverlay').style.display = 'flex';
             document.getElementById('optionsOverlay').style.display = 'none';
+            setTimeout(() => {
+                document.getElementById('restartBtn').style.opacity = '1';
+            }, 2700);
             if(this.playerWins) {
                 document.getElementById('endScreenOverlayWin').style.display = 'block';
             } else {
@@ -307,6 +315,7 @@ class World {
 
         this.ctx.translate(-this.cameraX, 0);
         this.statusbar.draw(this.ctx);
+        this.drawStatusbar();
         this.spearCount.draw(this.ctx);
         this.spearDisplay.draw(this.ctx);
         this.coinDisplay.draw(this.ctx);
@@ -326,6 +335,12 @@ class World {
         requestAnimationFrame(function () { //somit wird draw() funktion immer wieder neu ausgeführt
             self.draw();
         });
+    }
+
+    drawStatusbar() {
+        if (this.statusbarEndboss.visible) {
+            this.statusbarEndboss.draw(this.ctx);
+        }
     }
 
     addObjectsToMap(objects) {

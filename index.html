@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+<html translate="no">
+
+</html>
 
 <head>
     <meta charset="UTF-8">
@@ -22,6 +25,7 @@
     <script src="./models/platform.class.js"></script>
     <script src="./models/birds.class.js"></script>
     <script src="./models/statusbar.class.js"></script>
+    <script src="./models/statusbarEndboss.class.js"></script>
     <script src="./models/spearCount.class.js"></script>
     <script src="./models/spearDisplay.class.js"></script>
     <script src="./models/spearCollect.class.js"></script>
@@ -48,10 +52,14 @@
         <div class="canvasSection" id="canvasSection">
             <canvas id="canvas" width="720px" height="480px"></canvas> <!-- for 21:9 ratio -> width = 1120 -->
             <div id="optionsOverlay" class="optionsOverlay">
-                <img id="fullscreenImg" src="img/10_gui/options_overlay/fullscreen.png" onclick="toggleFullscreen()">
-                <img id="soundImg" src="img/10_gui/options_overlay/sound_off.png" onclick="toggleAmbientSound()">
+                <div id="fullscreenMode" onclick="toggleFullscreen()">
+                    <img id="fullscreenImg" src="img/10_gui/options_overlay/fullscreen.png">
+                    <img id="normalscreenImg" src="img/10_gui/options_overlay/normalscreen.png" style="display:none">    
+                </div>
+                <img id="soundImgAmbient" src="img/10_gui/options_overlay/sound_off.png" onclick="toggleAmbientSound()" style="display:none">
+                <img id="soundImgMenu" src="img/10_gui/options_overlay/sound_off.png" onclick="toggleMenuSound()" style="display:none">
                 <img id="helpImg" src="img/10_gui/options_overlay/faq.png" onclick="showHelp()">
-                <img id="returnImg" class="d-none" src="./img/10_gui/options_overlay/restart.png" onclick="hideHelp()">
+                <img id="returnImg" class="d-none" src="./img/10_gui/options_overlay/back.png" onclick="hideHelp()">
             </div>
             <div id="startOverlay" class="startOverlay">
                 <img class="startTheme" src="./img/start_theme/startScreen.png">
@@ -75,7 +83,7 @@
                         </div>
                         <div>
                             <img class="controlsImg" src="./img/10_gui/keyboard/arrow-up.png">
-                            <p>hit</p>
+                            <p>hit enemy</p>
                         </div>
                         <div>
                             <img class="controlsImg" src="./img/10_gui/keyboard/letter-s.png">
@@ -87,7 +95,9 @@
                         </div>
                     </div>
                     <div id="helpText" class="helpText">
-                        <p>Tauche ein in das aufregende Abenteuer eines mutigen Mayas und begib dich auf den gefaehrlichen Weg durch den Dschungel. Nur mit deinem Geschick kann dein Held alle Herausfroderungen erfolgreich meistern.</p>
+                        <p>Tauche ein in das aufregende Abenteuer eines mutigen Mayas und begib dich auf den
+                            gefaehrlichen Weg durch den Dschungel. Nur mit deinem Geschick kann dein Held alle
+                            Herausfroderungen erfolgreich meistern.</p>
                     </div>
                 </div>
 
@@ -95,7 +105,7 @@
             <div id="endScreenOverlay" class="startOverlay endScreenOverlay" style="display: none;">
                 <img id="endScreenOverlayWin" class="endScreenTheme" src="./img/10_gui/winGame.png">
                 <img id="endScreenOverlayLose" class="endScreenTheme" src="./img/10_gui/loseGame.png">
-                <button onclick="restartGame()">restart</button>
+                <img id="restartBtn" class="restartBtn" src="./img/10_gui/options_overlay/restart.png" onclick="restartGame()" style="opacity: 0;">
             </div>
         </div>
     </div>

@@ -68,7 +68,7 @@ class Boar extends MoveableObject {
     animate() {
 
         setInterval(() => {
-            if (this.allowWalking && !this.isDead() && world.character.x > 110 && world.character.x > (this.x - 700) && !world.gamePaused) {
+            if (world && this.allowWalking && !this.isDead() && world.character.x > 110 && world.character.x > (this.x - 700) && !world.gamePaused) {
                 this.playAnimation(this.IMAGES_WALKING);
                 this.moveLeft();
             }
