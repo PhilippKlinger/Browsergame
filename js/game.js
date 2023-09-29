@@ -25,6 +25,10 @@ function startGame() {
     ambientSound.play();
 }
 
+function restartGame() {
+    window.location.reload();
+}
+
 function showHelp() {
     let helpOverlay = document.querySelector('.helpOverlay');
     let fullscreenImg = document.getElementById('fullscreenImg');
@@ -64,8 +68,7 @@ function hideHelp() {
     if(world.gameStarted) {
         ambientSound.play();
     }
-    menuSound.pause();
-    
+    menuSound.pause();  
 }
 
 function toggleFullscreen() { 
@@ -103,9 +106,7 @@ function toggleAmbientSound() {
         soundImg.src = './img/10_gui/options_overlay/sound_off.png';
         isPlaying = true;
     }
-   
 }
-
 
 window.addEventListener('keydown', (event) => {
     if (!keyboard.isLocked) {
@@ -119,10 +120,10 @@ window.addEventListener('keydown', (event) => {
         keyboard.NOKEY = false;
     }
 
-    // if (event.key === 'ArrowUp') {
-    //     keyboard.ARROWUP = true;
-    //     keyboard.NOKEY = false;
-    // }
+    if (event.key === 'ArrowUp') {
+        keyboard.ARROWUP = true;
+        keyboard.NOKEY = false;
+    }
 
     // if (event.key === 'ArrowDown') {
     //     keyboard.ARROWDOWN = true;
@@ -173,10 +174,10 @@ window.addEventListener('keyup', (event) => {
          keyboard.NOKEY = true;
     }
 
-    // if (event.key === 'ArrowUp') {
-    //     keyboard.ARROWUP = false;
-    //      keyboard.NOKEY = true;
-    // }
+    if (event.key === 'ArrowUp') {
+        keyboard.ARROWUP = false;
+         keyboard.NOKEY = true;
+    }
 
     // if (event.key === 'ArrowDown') {
     //     keyboard.ARROWDOWN = false;

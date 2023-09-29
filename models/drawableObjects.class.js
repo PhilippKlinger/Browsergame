@@ -3,7 +3,6 @@ class DrawableObject {
     currentImage = 0;
     img;
     imageCache = {};
-    intervals = [];
 
 
     loadImage(path) {
@@ -20,7 +19,7 @@ class DrawableObject {
     }
 
     draw(ctx) {
-        this.drawBoundingBox(ctx);
+        // this.drawBoundingBox(ctx);
         if (this.otherDirection) {
             this.flipImage(ctx);
         }
@@ -48,4 +47,4 @@ class DrawableObject {
             ctx.closePath();
         }
     }
-}
+} 

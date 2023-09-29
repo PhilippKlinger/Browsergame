@@ -24,40 +24,6 @@ canvas {
     background-color: black;
     box-shadow: 0px 0px 60px 30px rgba(136 142 126 / 60%);
     border-radius: 20px;
-   
-}
-
-@media only screen and (max-width: 730px) {
-    .canvasSection {
-        display: none !important;
-    }
-
-    h1 {
-        display: none;
-    }
-
-    .smartphoneRotation {
-        display: flex !important;
-        flex-direction: column;
-        align-items: center;
-    }
-}
-
-@media only screen and (max-height: 490px) {
-    .canvasSection {
-        height: 100% !important;
-        width: 100% !important;
-    }
-
-    canvas {
-        height: 100%;
-        width: 100%; 
-    }
-
-    h1 {
-        display: none;
-    }
-
 }
 
 .d-none {
@@ -170,19 +136,6 @@ h2 {
     transition: all ease-in-out 0.3s;
 }
 
-@keyframes pulseStartBtn {
-
-    0%,
-    100% {
-        transform: scale(0.8);
-    }
-
-    50% {
-        transform: scale(1);
-    }
-}
-
-
 .helpSection {
     position: absolute;
     display: flex;
@@ -250,8 +203,65 @@ h2 {
 
 #endScreenOverlayWin {
     display: none;
+    animation: growAndRotate 2.5s forwards;
 }
 
 #endScreenOverlayLose {
     display: none;
+    animation: growAndRotate 2.5s forwards;
+}
+
+@keyframes growAndRotate {
+    0% {
+        transform: scale(0) rotate(0deg);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1) rotate(360deg);
+        opacity: 1;
+    }
+}
+
+@keyframes pulseStartBtn {
+
+    0%,
+    100% {
+        transform: scale(0.8);
+    }
+
+    50% {
+        transform: scale(1);
+    }
+}
+
+@media only screen and (max-width: 730px) {
+    .canvasSection {
+        display: none !important;
+    }
+
+    h1 {
+        display: none;
+    }
+
+    .smartphoneRotation {
+        display: flex !important;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media only screen and (max-height: 490px) {
+    .canvasSection {
+        height: 100% !important;
+        width: 100% !important;
+    }
+
+    canvas {
+        height: 100%;
+        width: 100%; 
+    }
+
+    h1 {
+        display: none;
+    }
 }

@@ -3,13 +3,15 @@ class MoveableObject extends DrawableObject {
     acceleration = 1.5;
     speed = 1;
     otherDirection = false;
+    isBouncingBack = false;
+    isSliding = false;
     health = 100;
     lastHit = 0;
-    maxSlideDistance = 250;
+    maxSlideDistance = 350;
     slideDistance = 0;
     newX;
 
-    // Überprüft, ob dieses DrawableObject mit einem anderen Objekt (übergeben als 'obj') kollidiert.
+
     isColliding(obj) {
         return (
             // Überprüft, ob die rechte Seite dieses Characters größer oder gleich der linken Seite des 'obj' ist.
@@ -27,7 +29,6 @@ class MoveableObject extends DrawableObject {
         return (
             (this.x + this.offsetWidth) + (this.width - this.offsetWidth) >= (obj.x + obj.offsetWidth / 2.2)
         );
-        
     }
 
     flipImage(ctx) {
@@ -62,13 +63,17 @@ class MoveableObject extends DrawableObject {
     }
 
     moveRight() {
-        this.x += this.speed;
-        this.otherDirection = false;
+        if (!this.isSliding) {
+            this.x += this.speed;
+            this.otherDirection = false;
+        }
     }
 
     moveLeft() {
-        this.x -= this.speed;
-        this.otherDirection = true;
+        if (!this.isSliding) {
+            this.x -= this.speed;
+            this.otherDirection = true;
+        }
     }
 
     stopMoving() {
@@ -83,29 +88,44 @@ class MoveableObject extends DrawableObject {
         this.speedY = 15;
     }
 
-    bounceBack() {
-        this.speedY = 8;
-        this.x -= 100;
+    bounceBack(distance) {
+        this.isBouncingBack = true;
+        // this.world.keyboard.isLocked = true;
+        this.speedY = 7;
+        const fallBackSpeed = 25;  // This is how fast the character will move back in x direction
+        const totalDistance = distance;  // The total distance the character should fall back
+        let distanceFallenBack = 0;  // A counter to keep track of the distance fallen back so far
+        const fallBackInterval = setInterval(() => {
+            this.x -= fallBackSpeed;
+            distanceFallenBack += fallBackSpeed;
+            if (distanceFallenBack >= totalDistance) {
+                clearInterval(fallBackInterval);
+                this.isBouncingBack = false;
+                // this.world.keyboard.isLocked = false;
+            }
+        }, 1000 / 30);
     }
 
     slide() {
+        this.isSliding = true;
         if (!this.otherDirection) {
             this.newX = this.x + this.maxSlideDistance;
             if (this.newX <= (5000 - this.width) && this.slideDistance < this.maxSlideDistance) {
                 this.x += this.speed;
                 this.slideDistance += this.speed; // Erhöhe die slidedistanz
-            } 
+            }
         } else {
             this.newX = this.x - this.maxSlideDistance;
             if (this.newX <= (5000 - this.width) && this.slideDistance < this.maxSlideDistance) {
                 this.x -= this.speed;
                 this.slideDistance += this.speed; // Erhöhe die slidedistanz
-            } 
+            }
         }
     }
 
     resetSlideDistance() {
         this.slideDistance = 0; // Setze die slidedistanz zurück
+        this.isSliding = false;
     }
 
     hit() {

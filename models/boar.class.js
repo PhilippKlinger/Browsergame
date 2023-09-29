@@ -59,7 +59,7 @@ class Boar extends MoveableObject {
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_HURTING);
         this.loadImages(this.IMAGES_DYING);
-        this.x = x + 3200;   //Math.random() * 200
+        this.x = x + Math.random() * 200;
         this.speed = 1.4 + Math.random() * 1;
         this.health = 2;
         this.animate();
@@ -68,7 +68,7 @@ class Boar extends MoveableObject {
     animate() {
 
         setInterval(() => {
-            if (this.allowWalking && !this.isDead() && world.character.x > 110 && world.character.x > (this.x - 800) && !world.gamePaused) {
+            if (this.allowWalking && !this.isDead() && world.character.x > 110 && world.character.x > (this.x - 700) && !world.gamePaused) {
                 this.playAnimation(this.IMAGES_WALKING);
                 this.moveLeft();
             }
@@ -89,9 +89,7 @@ class Boar extends MoveableObject {
         }, 1000 / 30);
 
         setTimeout(() => {
-
             this.allowWalking = true;
-
         }, 1000);
     }
 }

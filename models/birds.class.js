@@ -28,8 +28,8 @@ class Bird extends MoveableObject {
         super().loadImage(this.IMAGES_FLYING[0]);
         this.loadImages(this.IMAGES_FLYING);
         this.y = 20 + Math.random() * 80;
-        this.x = -800 + Math.random() * 600;
-        this.speed = 3 + Math.random() * 0.8;
+        this.x = -700 + Math.random() * 600;
+        this.speed = 4 + Math.random() * 0.8;
         this.animate();
     }
 
@@ -44,10 +44,6 @@ class Bird extends MoveableObject {
         setTimeout(() => {
             this.allowFlying = true;
         }, 2000);
-        
-
     }
-
-
 
 }

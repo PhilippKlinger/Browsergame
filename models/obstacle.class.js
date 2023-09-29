@@ -46,14 +46,14 @@ class Obstacle extends MoveableObject {
             } else if (i == 5 && !this.spikeIsUp) {
                 setTimeout(() => {
                     this.spikeIsUp = true;
-                }, 2000);
+                }, 1500);
             } else if (this.spikeIsUp && i !== 0) {
                 this.playAnimation(this.IMAGES_SPIKE_DOWN);
                 i--;
             } else if (i == 0 && this.spikeIsUp) {
                 setTimeout(() => {
                     this.spikeIsUp = false;
-                }, 2000);
+                }, 1500);
             }
         }, 1000 / 30);
 

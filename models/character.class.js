@@ -8,6 +8,7 @@ class Character extends MoveableObject {
     world;
     speed = 10;
     soundIndex = 0;
+  
     walkingSound = new Audio('./audio/walking.mp3');
     attackingSound = new Audio('./audio/hit.mp3');
     jumpingSound = new Audio('./audio/jumping2.mp3');
@@ -189,12 +190,13 @@ class Character extends MoveableObject {
                 this.soundIndex = Math.floor(Math.random() * this.hurtingSound.length);
             }
         }, 1000);
+       
     }
 
     moveCharacter() {
         this.walkingSound.pause();
         if (!this.isDead()) {
-            if (this.world.keyboard.ARROWRIGHT && this.x < this.world.level.levelEndpointX) {
+            if (this.world.keyboard.ARROWRIGHT && this.x < this.world.level.levelEndpointX && !this.isBouncingBack) {
                 this.moveRight();
                 this.walkingSound.play();
             }
@@ -247,7 +249,7 @@ class Character extends MoveableObject {
             if (this.world.keyboard.ARROWUP) {
                 this.attackingSound.play();
                 this.playAnimation(this.IMAGES_ATTACKING);
-            } else if (this.world.keyboard.NOKEY && !this.isAboveGround()) {
+            } else if (this.world.keyboard.NOKEY && !this.isAboveGround() && !this.isBouncingBack) {
                 this.slidingSound.pause();
                 this.resetSlideDistance();
                 this.playAnimation(this.IMAGES_IDLE);

@@ -10,7 +10,7 @@ class Platform extends DrawableObject {
     constructor(x, y) {
         super().loadImage(this.IMAGE_PLATFORM);
         this.height = 90;
-        this.width = 180;
+        this.width = 170;
         this.x = x;
         this.y = y
     }

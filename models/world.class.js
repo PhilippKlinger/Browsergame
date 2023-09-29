@@ -21,7 +21,6 @@ class World {
     gameStarted = false;
     gamePaused = true;
     gameFinished = false;
-    treasureCollected = false;
     playerWins = false;
 
     constructor(canvas, keyboard) {
@@ -83,7 +82,7 @@ class World {
             if(this.character.isColliding(obstacle) && !obstacle.spikeIsUp) {
                 this.character.hit();
                 this.statusbar.setPercentage(this.character.health);
-                this.character.bounceBack();
+                this.character.bounceBack(50);
             }
         });
     }
@@ -91,7 +90,7 @@ class World {
     checkCollisionsToPlatform() {
         this.level.platforms.forEach((platform) => {
             if(this.character.isColliding(platform) && !this.keyboard.S) {
-               this.character.bounceBack()
+               this.character.bounceBack(100);
             }
         });
     }
@@ -214,7 +213,6 @@ class World {
 
     checkGameIsOver() {
         if (this.character.isDead()) {
-            this.keyboard.isLocked = true;
             this.gameFinished = true;
             setTimeout(() => {
                 this.showEndscreen();
@@ -223,7 +221,6 @@ class World {
         } 
         this.level.endboss.forEach((endboss) => {
             if (endboss.isDead() ) { //&& this.treasureCollected
-                this.keyboard.isLocked = true;
                 this.gameFinished = true;
                 this.playerWins = true;
                 setTimeout(() => {
@@ -259,7 +256,7 @@ class World {
     }
 
     checkDistanceToEndboss() {
-        let startAttackAt = 300;
+        let startAttackAt = 500;
         let startHitAt = 95;
         this.level.endboss.forEach((endboss) => {
             let distance = Math.abs(this.character.x - endboss.x);
