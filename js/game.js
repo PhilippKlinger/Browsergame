@@ -10,6 +10,7 @@ isPlaying = true;
 function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
+    window.open('./toDo.html');
 }
 
 function startGame() {
