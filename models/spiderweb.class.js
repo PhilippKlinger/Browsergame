@@ -1,5 +1,4 @@
 class Spiderweb extends MoveableObject {
-
     world;
     offsetY = 50;
     offsetX = 20;
@@ -8,7 +7,6 @@ class Spiderweb extends MoveableObject {
     speed = 10;
 
     IMAGE_SPIDERWEB = './img/4_enemie_boss_blackwidow/web_projectile.png';
-
 
     constructor() {
         super().loadImage(this.IMAGE_SPIDERWEB);
@@ -19,13 +17,10 @@ class Spiderweb extends MoveableObject {
         this.squirt();
     }
 
-
     squirt() {
         setInterval(() => {
            this.moveLeft();
         }, 1000 / 30);
     }
-
-
     
 }

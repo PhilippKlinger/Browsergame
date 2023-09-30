@@ -102,6 +102,36 @@ h2 {
     transition: all ease-in-out 0.3;
 }
 
+#mobileControlsOverlay {
+    position: absolute;
+    bottom: 5px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    z-index: 99;
+}
+
+#mobileControlsOverlay img {
+    height: 60px;
+    padding: 5px;
+}
+
+.mobileControlsOverlayLeft {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+}
+
+.mobileControlsOverlayLeft img {
+   padding: 1px !important;
+}
+
+.mobileControlsOverlayRight {
+    display: flex;
+    margin-right: 20px;
+    align-items: flex-end;
+}
+
 .startOverlay {
     display: flex;
     position: absolute;
@@ -258,6 +288,10 @@ h2 {
         flex-direction: column;
         align-items: center;
     }
+
+    #fullscreenMode {
+        display: none !important;
+    }
 }
 
 @media only screen and (max-height: 490px) {
@@ -273,5 +307,9 @@ h2 {
 
     h1 {
         display: none;
+    }
+
+    #fullscreenMode {
+        display: none !important;
     }
 }

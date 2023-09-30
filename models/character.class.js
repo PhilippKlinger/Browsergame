@@ -168,6 +168,9 @@ class Character extends MoveableObject {
         this.applyGravity();
     }
 
+    /**
+    * Kicks off the animation routines and related behavior for the character.
+    */
     animate() {
         setInterval(() => this.moveCharacter(), 1000 / 60);
         setInterval(() => this.playCharacterAnimations(), 1000 / 60);
@@ -179,85 +182,185 @@ class Character extends MoveableObject {
         }, 1000);
     }
 
+    /**
+     * Handles the character's movement logic based on input and current conditions.
+     */
     moveCharacter() {
         this.walkingSound.pause();
         if (!this.isDead()) {
             if (this.allowMoveRight()) {
-                this.moveRight();
-                this.walkingSound.play();
+                this.moveCharacterRight();
             }
             if (this.allowMoveLeft()) {
-                this.moveLeft();
-                this.walkingSound.play();
+                this.moveCharacterLeft();
             }
             if (this.allowJump()) {
-                this.jump();
-                this.jumpingSound.play();
+                this.moveCharacterJump();
             }
             if (this.world.keyboard.S) {
-                this.slide();
-                this.slidingSound.play();
+                this.moveCharacterSlide();
             }
             this.world.cameraX = -this.x + 100;
         }
     }
 
+    /**
+    * Handles the character's movement to the right and sound.
+    */
+    moveCharacterRight() {
+        this.moveRight();
+        this.walkingSound.play();
+    }
+
+    /**
+    * Handles the character's movement to the left and sound.
+    */
+    moveCharacterLeft() {
+        this.moveLeft();
+        this.walkingSound.play();
+    }
+
+    /**
+    * Handles the character's movement jump and sound.
+    */
+    moveCharacterJump() {
+        this.jump();
+        this.jumpingSound.play();
+    }
+
+    /**
+    * Handles the character's movement slide and sound.
+    */
+    moveCharacterSlide() {
+        this.slide();
+        this.slidingSound.play();
+    }
+
+    /**
+    * Determines if the character is allowed to move right.
+    * @returns {boolean} Returns true if the character can move right, otherwise false.
+    */
     allowMoveRight() {
         return this.world.keyboard.ARROWRIGHT && this.x < this.world.level.levelEndpointX && !this.isBouncingBack && !this.encounterEndboss;
     }
 
+    /**
+    * Determines if the character is allowed to move left.
+    * @returns {boolean} Returns true if the character can move left, otherwise false.
+    */
     allowMoveLeft() {
         return this.world.keyboard.ARROWLEFT && this.x > 100;
     }
 
+    /**
+    * Determines if the character is allowed to jump.
+    * @returns {boolean} Returns true if the character can jump, otherwise false.
+    */
     allowJump() {
         return this.world.keyboard.SPACE && !this.isAboveGround();
     }
 
+    /**
+    * Handles the character's animation routines based on its current state.
+    */
     playCharacterAnimations() {
         if (this.isDead()) {
-            //this.dyingSound.play();
-            this.playAnimation(this.IMAGES_DYING);
-            setTimeout(() => {
-                this.stopAnimation(this.IMAGES_DYING);
-            }, 150);
+            this.playAnimationDead();
         } else if (this.isHurt() && !this.isAboveGround()) {
-            this.hurtingSound[this.soundIndex].play();
-            this.playAnimation(this.IMAGES_HURTING);
-            setTimeout(() => {
-                this.stopAnimation(this.IMAGES_HURTING);
-            }, 200);
+            this.playAnimationHurt();
         } else if (this.isAboveGround()) {
-            this.playAnimation(this.IMAGES_JUMPING);
-            setTimeout(() => {
-                this.stopAnimation(this.IMAGES_JUMPING);
-            }, 50);
+            this.playAnimationJump();
         } else if (this.slideDistance > 0) {
             this.playAnimation(this.IMAGES_SLIDING);
-        }
-        else {
-            if ((this.world.keyboard.ARROWRIGHT && this.x < this.world.level.levelEndpointX) || (this.world.keyboard.ARROWLEFT && this.x > 100)) {
-                this.playAnimation(this.IMAGES_WALKING);
-            }
+        } else if (this.allowPlayAnimationWalking()) {
+            this.playAnimation(this.IMAGES_WALKING);
         }
     }
 
+    /**
+    * Manages the animation sequence for the character when dead.
+    */
+    playAnimationDead() {
+        this.playAnimation(this.IMAGES_DYING);
+        setTimeout(() => {
+            this.stopAnimation(this.IMAGES_DYING);
+        }, 150);
+    }
+
+    /**
+    * Manages the animation sequence for the character when hurt.
+    */
+    playAnimationHurt() {
+        this.hurtingSound[this.soundIndex].play();
+        this.playAnimation(this.IMAGES_HURTING);
+        setTimeout(() => {
+            this.stopAnimation(this.IMAGES_HURTING);
+        }, 200);
+    }
+
+    /**
+    * Manages the animation sequence for the character when jumping.
+    */
+    playAnimationJump() {
+        this.playAnimation(this.IMAGES_JUMPING);
+        setTimeout(() => {
+            this.stopAnimation(this.IMAGES_JUMPING);
+        }, 50);
+    }
+
+    /**
+    * Determines if the walking animation for the character should play.
+    * @returns {boolean} Returns true if conditions for playing the walking animation are met, otherwise false.
+    */
+    allowPlayAnimationWalking() {
+        return ((this.world.keyboard.ARROWRIGHT && this.x < this.world.level.levelEndpointX) || (this.world.keyboard.ARROWLEFT && this.x > 100));
+    }
+
+    /**
+    * Handles additional animation routines for the character based on its current state.
+    */
     playCharacterAnimations2() {
         if (!this.isDead()) {
             if (this.world.keyboard.ARROWDOWN) {
-                this.attackingSound.play();
-                this.playAnimation(this.IMAGES_ATTACKING);
+                this.playAnimationAttack();
             } else if (this.world.keyboard.NOKEY && !this.isAboveGround() && !this.isBouncingBack) {
-                this.slidingSound.pause();
-                this.resetSlideDistance();
-                this.playAnimation(this.IMAGES_IDLE);
+                this.playAnimationIdle();
             } else if (this.world.keyboard.D && this.world.canThrow()) {
-                this.throwingSound.play();
-                this.playAnimation(this.IMAGES_THROWING);
+                this.playAnimationThrow();
             }
         }
     }
 
+    /**
+    * Manages the animation sequence for the character when attacking.
+    */
+    playAnimationAttack() {
+        this.attackingSound.play();
+        this.playAnimation(this.IMAGES_ATTACKING);
+    }
+
+    /**
+     * Manages the animation sequence for the character when idle.
+     */
+    playAnimationIdle() {
+        this.slidingSound.pause();
+        this.resetSlideDistance();
+        this.playAnimation(this.IMAGES_IDLE);
+    }
+
+    /**
+    * Manages the animation sequence for the character when throwing.
+    */
+    playAnimationThrow() {
+        this.throwingSound.play();
+        this.playAnimation(this.IMAGES_THROWING);
+    }
+
+    /**
+    * Checks if the character is jumping on a boar enemy.
+    * @param {Object} enemy - The enemy object to check against.
+    * @returns {boolean} Returns true if the character is jumping on the boar, otherwise false.
+    */
     isJumpingOnBoar(enemy) {
         return this.isColliding(enemy) && this.isAboveGround() && this.speedY < 0;
     }

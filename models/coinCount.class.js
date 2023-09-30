@@ -1,5 +1,5 @@
 class CoinCount extends DrawableObject {
-  
+
     IMAGES_COUNT = [
         './img/10_gui/numbers/0.png',
         './img/10_gui/numbers/1.png',
@@ -24,12 +24,23 @@ class CoinCount extends DrawableObject {
         this.updateCount();
     }
 
-    updateCount(count){
+    /**
+    * Updates the count and sets the corresponding image based on the count.
+    *
+    * @param {number} count - The new count value to be set.
+    */
+    updateCount(count) {
         this.count = count;
         let path = this.IMAGES_COUNT[this.resolveImageIndex()];
         this.img = this.imageCache[path];
     }
 
+    /**
+    * Resolves the image index based on the current count. This is used to
+    * determine which image from IMAGES_COUNT should be displayed.
+    *
+    * @returns {number} - The index corresponding to the count value.
+    */
     resolveImageIndex() {
         if (this.count == 9) {
             return 9;
@@ -53,5 +64,5 @@ class CoinCount extends DrawableObject {
             return 0;
         }
     }
-   
+
 }

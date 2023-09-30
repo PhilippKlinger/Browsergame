@@ -102,8 +102,6 @@ class Endboss extends MoveableObject {
         './img/4_enemie_boss_blackwidow/5_dead/__purple_black_widow_die_004.png'
     ];
 
-
-
     constructor() {
         super().loadImage(this.IMAGES_WALKING[0]);
         this.loadImages(this.IMAGES_WALKING);
@@ -117,38 +115,112 @@ class Endboss extends MoveableObject {
         this.startThrowTimer();
     }
 
-
+     /**
+     * Initialize and starts the animations related to the end boss character.
+     */
     animate() {
-        setInterval(() => {
-            if (!this.isDead() && !this.startAttack && !this.startHit && this.x == this.attackStartpoint) {
-                this.playAnimation(this.IMAGES_IDLE);
-                this.stopMoving();
-            } else if (!this.isDead() && this.startAttack && !this.startHit && this.x > this.attackEndpoint) {
-                this.playAnimation(this.IMAGES_WALKING);
-                this.moveLeft();
-            } else if (!this.isDead() && this.startHit) {
-                this.playAnimation(this.IMAGES_ATTACKING);
-                this.stopMoving();
-            } else if (!this.isDead() && !this.startHit && this.startThrow) {
-                this.playAnimation(this.IMAGES_THROWING);
-            } else if (!this.isDead() && !this.startHit) {
-                this.playAnimation(this.IMAGES_IDLE);
-            }
-        }, 1000 / 15);
-
-        setInterval(() => {
-            if (this.isDead()) {
-                this.stopMoving();
-                this.playAnimation(this.IMAGES_DYING);
-                setTimeout(() => {
-                    this.stopAnimation(this.IMAGES_DYING);
-                }, 150);
-            } else if (!this.isDead() && this.isHurt()) {
-                this.playAnimation(this.IMAGES_HURTING);
-            }
-        }, 1000 / 15);
+        setInterval(() => this.playEndbossAnimation(), 1000 / 15);
+        setInterval(() => this.playEndbossAnimation2(), 1000 / 15);
     }
 
+    /**
+     * Determines which animation the end boss should play based on various conditions.
+     */
+    playEndbossAnimation() {
+        if (this.allowIdle()) {
+            this.playEndbossAnimationIdle();
+        } else if (this.allowWalking()) {
+            this.playEndbossAnimationWalking();
+        } else if (this.allowAttacking()) {
+            this.playEndbossAnimationAttacking();
+        } else if (this.allowThrowing()) {
+            this.playAnimation(this.IMAGES_THROWING);
+        } else if (!this.isDead() && !this.startHit) {
+            this.playAnimation(this.IMAGES_IDLE);
+        }
+    }
+
+    /**
+     * Plays the attacking animation for the end boss.
+     */
+    playEndbossAnimationAttacking() {
+        this.playAnimation(this.IMAGES_ATTACKING);
+        this.stopMoving();
+    }
+
+    /**
+     * Plays the walking animation for the end boss.
+     */
+    playEndbossAnimationWalking() {
+        this.playAnimation(this.IMAGES_WALKING);
+        this.moveLeft();
+    }
+
+    /**
+     * Plays the idle animation for the end boss.
+     */
+    playEndbossAnimationIdle() {
+        this.playAnimation(this.IMAGES_IDLE);
+        this.stopMoving();
+    }
+
+    /**
+     * Determines if the end boss should be in idle state.
+     * @returns {boolean} Returns true if conditions for idle state are met.
+     */
+    allowIdle() {
+        return !this.isDead() && !this.startAttack && !this.startHit && this.x == this.attackStartpoint;
+    }
+
+    /**
+     * Determines if the end boss should be walking.
+     * @returns {boolean} Returns true if conditions for walking are met.
+     */
+    allowWalking() {
+        return !this.isDead() && this.startAttack && !this.startHit && this.x > this.attackEndpoint;
+    }
+
+    /**
+     * Determines if the end boss should be attacking.
+     * @returns {boolean} Returns true if conditions for attacking are met.
+     */
+    allowAttacking() {
+        return !this.isDead() && this.startHit;
+    }
+
+     /**
+     * Determines if the end boss should be throwing.
+     * @returns {boolean} Returns true if conditions for throwing are met.
+     */
+    allowThrowing() {
+        return !this.isDead() && !this.startHit && this.startThrow;
+    }
+
+    /**
+     * Determines other animations the end boss should play, especially when dying or getting hurt.
+     */
+    playEndbossAnimation2() {
+        if (this.isDead()) {
+            this.playEndbossAnimationDying();
+        } else if (!this.isDead() && this.isHurt()) {
+            this.playAnimation(this.IMAGES_HURTING);
+        }
+    }
+
+    /**
+     * Plays the dying animation for the end boss.
+     */
+    playEndbossAnimationDying() {
+        this.stopMoving();
+        this.playAnimation(this.IMAGES_DYING);
+        setTimeout(() => {
+            this.stopAnimation(this.IMAGES_DYING);
+        }, 150);
+    }
+
+    /**
+     * Starts a timer to check conditions for the end boss to throw.
+     */
     startThrowTimer() {
         setInterval(() => {
             if (this.x < this.attackEndpoint && this.spiderwebs > 0) {

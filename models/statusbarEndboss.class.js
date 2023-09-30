@@ -1,6 +1,6 @@
 class StatusbarEndboss extends DrawableObject {
-
     visible;
+    percentage = 100;
 
     IMAGES_HEALTHBAR = [
         './img/10_gui/load_bar/health/bar_0.svg',
@@ -15,8 +15,6 @@ class StatusbarEndboss extends DrawableObject {
         './img/10_gui/load_bar/health/bar_90.svg',
         './img/10_gui/load_bar/health/bar_100.svg'
     ];
-
-    percentage = 100;
 
     constructor() {
         super();

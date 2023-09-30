@@ -14,6 +14,4 @@ class Platform extends DrawableObject {
         this.x = x;
         this.y = y
     }
-
-
 }

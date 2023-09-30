@@ -1,6 +1,5 @@
 class SpearDisplay extends DrawableObject {
 
-
     constructor() {
         super();
         this.loadImage('./img/6_spear/spear_animation/spear0.png');
@@ -9,5 +8,4 @@ class SpearDisplay extends DrawableObject {
         this.width = 80;
         this.height = 100;
     }
-
 }

@@ -24,7 +24,6 @@ class ThrowableObject extends MoveableObject {
         './img/6_spear/spear_animation/spear75.png',
     ];
 
-
     constructor(x, y) {
         super().loadImage(this.IMAGES_SPEARTHROWING[0]);
         this.loadImages(this.IMAGES_SPEARTHROWING);
@@ -34,7 +33,6 @@ class ThrowableObject extends MoveableObject {
         this.width = 130;
         this.throw();
     }
-
 
     throw() {
         this.speedY = 10;

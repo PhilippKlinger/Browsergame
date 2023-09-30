@@ -8,12 +8,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EL MAYA VALIENTE</title>
-
+    <link rel="shortcut icon" type="image/x-icon" href="./img/favicon.ico">
     <link rel="stylesheet" href="./fonts/fonts.css">
     <link rel="stylesheet" href="style.css">
-
-    <link rel="icon" type="image/x-icon" href="./favicon/favicon.ico">
-
     <script src="./models/drawableObjects.class.js"></script>
     <script src="./models/movableObjects.class.js"></script>
     <script src="./models/backgroundObjects.class.js"></script>
@@ -40,6 +37,7 @@
 
     <script src="./levels/level1.js"></script>
     <script src="./js/game.js"></script>
+    <script src="./js/keyboard.js"></script>
 </head>
 
 <body onload="init()">
@@ -53,13 +51,30 @@
             <canvas id="canvas" width="720px" height="480px"></canvas> <!-- for 21:9 ratio -> width = 1120 -->
             <div id="optionsOverlay" class="optionsOverlay">
                 <div id="fullscreenMode" onclick="toggleFullscreen()">
-                    <img id="fullscreenImg" src="img/10_gui/options_overlay/fullscreen.png">
-                    <img id="normalscreenImg" src="img/10_gui/options_overlay/normalscreen.png" style="display:none">    
+                    <img id="fullscreenImg" src="./img/10_gui/options_overlay/fullscreen.png">
+                    <img id="normalscreenImg" src="./img/10_gui/options_overlay/normalscreen.png" style="display:none">
                 </div>
-                <img id="soundImgAmbient" src="img/10_gui/options_overlay/sound_off.png" onclick="toggleAmbientSound()" style="display:none">
-                <img id="soundImgMenu" src="img/10_gui/options_overlay/sound_off.png" onclick="toggleMenuSound()" style="display:none">
-                <img id="helpImg" src="img/10_gui/options_overlay/faq.png" onclick="showHelp()">
+                <img id="soundImgAmbient" src="./img/10_gui/options_overlay/sound_off.png" onclick="toggleAmbientSound()" style="display:none">
+                <img id="soundImgMenu" src="./img/10_gui/options_overlay/sound_off.png" onclick="toggleMenuSound()"
+                    style="display:none">
+                <img id="helpImg" src="./img/10_gui/options_overlay/faq.png" onclick="showHelp()">
                 <img id="returnImg" class="d-none" src="./img/10_gui/options_overlay/back.png" onclick="hideHelp()">
+            </div>
+            <div id="mobileControlsOverlay" style="display: none;">
+                <div class="mobileControlsOverlayLeft">
+                    <div>
+                        <img id="mobileBtnSlide" src="./img/10_gui/options_overlay/mobileSlide.png" onclick="mobileBtnSlide()">
+                        <img id="mobileBtnJump" src="./img/10_gui/options_overlay/mobileJump.png" onclick="mobileBtnJump()">
+                    </div>
+                    <div>
+                        <img id="mobileBtnThrow" src="./img/10_gui/options_overlay/mobileThrow.png" onclick="mobileBtnThrow()">
+                        <img id="mobileBtnAttack" src="./img/10_gui/options_overlay/mobileAttack.png" onclick="mobileBtnAttack()">
+                    </div>
+                </div>
+                <div class="mobileControlsOverlayRight">
+                    <img id="mobileBtnLeft" src="./img/10_gui/options_overlay/mobileLeft.png" onclick="mobileBtnLeft()">
+                    <img id="mobileBtnRight" src="./img/10_gui/options_overlay/mobileRight.png" onclick="mobileBtnRight()">
+                </div>
             </div>
             <div id="startOverlay" class="startOverlay">
                 <img class="startTheme" src="./img/start_theme/startScreen.png">
@@ -105,7 +120,8 @@
             <div id="endScreenOverlay" class="startOverlay endScreenOverlay" style="display: none;">
                 <img id="endScreenOverlayWin" class="endScreenTheme" src="./img/10_gui/winGame.png">
                 <img id="endScreenOverlayLose" class="endScreenTheme" src="./img/10_gui/loseGame.png">
-                <img id="restartBtn" class="restartBtn" src="./img/10_gui/options_overlay/restart.png" onclick="restartGame()" style="opacity: 0;">
+                <img id="restartBtn" class="restartBtn" src="./img/10_gui/options_overlay/restart.png"
+                    onclick="restartGame()" style="opacity: 0;">
             </div>
         </div>
     </div>

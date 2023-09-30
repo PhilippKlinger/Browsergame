@@ -34,6 +34,9 @@ class World {
         this.character.statusbar = this.statusbar;
     }
 
+     /**
+     * Runs game loop with periodic checks.
+     */
     run() {
         setInterval(() => {
             this.checkCollisions();
@@ -50,6 +53,9 @@ class World {
         }, 1000 / 10);
     }
 
+    /**
+     * Checks all collisions in the game.
+     */
     checkCollisions() {
         this.checkCollisionsBoar();
         this.checkCollisionsEndboss();
@@ -62,13 +68,7 @@ class World {
 
     checkAttackToBoar() {
         this.level.enemies.forEach((enemy) => {
-            if (this.character.isJumpingOnBoar(enemy)) {
-                this.character.bounce();
-                enemy.hit(1);
-                if (enemy.isDead()) {
-                    this.boarDies(enemy);
-                }
-            }
+           this.checkAttackToBoarJumping(enemy);
             if ((this.character.isInFrontOf(enemy) && this.keyboard.ARROWDOWN)) {
                 enemy.hit(1);
                 if (enemy.isDead()) {
@@ -76,6 +76,16 @@ class World {
                 }
             }
         });
+    }
+
+    checkAttackToBoarJumping(enemy) {
+        if (this.character.isJumpingOnBoar(enemy)) {
+            this.character.bounce();
+            enemy.hit(1);
+            if (enemy.isDead()) {
+                this.boarDies(enemy);
+            }
+        }
     }
 
     checkCollisionsToObstacle() {
@@ -206,7 +216,7 @@ class World {
     }
 
     canThrow() {
-        const minThrowInterval = 1000; // Mindestzeit zwischen zwei Würfen in Millisekunden
+        const minThrowInterval = 1000; 
         const currentTime = Date.now();
         if (!this.lastThrowTime || currentTime - this.lastThrowTime >= minThrowInterval
             && this.collectedSpears > 0 && !this.keyboard.ARROWRIGHT && !this.character.otherDirection) {
@@ -218,18 +228,13 @@ class World {
     checkGameIsOver() {
         if (this.character.isDead()) {
             this.gameFinished = true;
-            setTimeout(() => {
-                this.showEndscreen();
-            }, 1000);
-            
+            setTimeout(() => this.showEndscreen(), 1000); 
         } 
         this.level.endboss.forEach((endboss) => {
-            if (endboss.isDead() ) { //&& this.treasureCollected
+            if (endboss.isDead() ) { 
                 this.gameFinished = true;
                 this.playerWins = true;
-                setTimeout(() => {
-                    this.showEndscreen();
-                }, 1000);
+                setTimeout(() => this.showEndscreen(), 1000);
             }
         });
     }
@@ -265,12 +270,7 @@ class World {
         this.level.endboss.forEach((endboss) => {
             let distance = Math.abs(this.character.x - endboss.x);
             if (distance <= startAttackAt && !endboss.soundPlayed) {
-                if (endboss.encounterSound) {
-                    endboss.encounterSound.play();
-                    endboss.soundPlayed = true;
-                    endboss.startAttack = true;
-                    this.statusbarEndboss.visible = true;
-                }
+                this.endbossStartAttack(endboss);
             } else if (distance >= startHitAt) {
                 endboss.startHit = false;
                 if (distance > startAttackAt) {
@@ -281,6 +281,15 @@ class World {
                 endboss.startHit = true;
             }
         });
+    }
+
+    endbossStartAttack(endboss) {
+        if (endboss.encounterSound) {
+            endboss.encounterSound.play();
+            endboss.soundPlayed = true;
+            endboss.startAttack = true;
+            this.statusbarEndboss.visible = true;
+        }
     }
 
     showEndscreen() {
@@ -303,16 +312,31 @@ class World {
         this.drawableObject.world = this;
     }
 
+     /**
+     * Draws the game world and its objects.
+     */
     draw() {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); //canvas wird geleert bevor objects neu angezeigt werden.
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); 
+        this.drawObejcts1();
+        this.drawObejcts2();
+        this.drawObejcts3();
+        this.ctx.translate(-this.cameraX, 0);
+        let self = this;
+        requestAnimationFrame(function () { 
+            self.draw();
+        });
+    }
 
+    drawObejcts1() {
         this.ctx.translate(this.cameraX, 0);
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.spearCollect);
         this.addObjectsToMap(this.level.coinCollect);
         this.addObjectsToMap(this.level.obstacles);
         this.addObjectsToMap(this.level.platforms);
+    }
 
+    drawObejcts2() {
         this.ctx.translate(-this.cameraX, 0);
         this.statusbar.draw(this.ctx);
         this.drawStatusbar();
@@ -321,20 +345,15 @@ class World {
         this.coinDisplay.draw(this.ctx);
         this.coinCount.draw(this.ctx);
         this.ctx.translate(this.cameraX, 0);
+    }
 
+    drawObejcts3() {
         this.character.draw(this.ctx);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.endboss);
         this.addObjectsToMap(this.level.birds);
         this.addObjectsToMap(this.level.throwableObjects);
         this.addObjectsToMap(this.level.spiderwebs);
-
-        this.ctx.translate(-this.cameraX, 0);
-
-        let self = this;
-        requestAnimationFrame(function () { //somit wird draw() funktion immer wieder neu ausgeführt
-            self.draw();
-        });
     }
 
     drawStatusbar() {
@@ -343,12 +362,20 @@ class World {
         }
     }
 
+    /**
+     * Adds a list of objects to the game map for rendering.
+     * @param {Array} objects - The objects to add to the map.
+     */
     addObjectsToMap(objects) {
         objects.forEach(o => {
             o.draw(this.ctx);
         });
     }
 
+    /**
+     * Adds a single object to the game map for rendering.
+     * @param {Object} mo - The object to add to the map.
+     */
     addToMap(mo) {
         mo.draw(this.ctx);
     }

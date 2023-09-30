@@ -35,33 +35,39 @@ class Obstacle extends MoveableObject {
         this.y = y
     }
 
+    /**
+     * Initializes and starts the obstacle animation.
+     */
     animate() {
-
         let i = 0;
-
-        setInterval(() => {
-            if (this.allowProcess && this.activateSpikes && i < 5 && !this.spikeIsUp) {
-                this.playAnimation(this.IMAGES_SPIKE_UP);
-                i++;
-            } else if (i == 5 && !this.spikeIsUp) {
-                setTimeout(() => {
-                    this.spikeIsUp = true;
-                }, 1500);
-            } else if (this.spikeIsUp && i !== 0) {
-                this.playAnimation(this.IMAGES_SPIKE_DOWN);
-                i--;
-            } else if (i == 0 && this.spikeIsUp) {
-                setTimeout(() => {
-                    this.spikeIsUp = false;
-                }, 1500);
-            }
-        }, 1000 / 30);
-
-        setTimeout(() => {
-            this.allowProcess = true;
-        }, 1000);
-
+        setInterval(() => this.playObstacleAnimation(i), 1000 / 30);
+        setTimeout(() => this.allowProcess = true, 1000);
     }
 
+    /**
+     * Plays the obstacle animation based on certain conditions.
+     * @param {number} i - The current animation frame index.
+     */
+    playObstacleAnimation(i) {
+        if (this.allowSpikesUp()) {
+            this.playAnimation(this.IMAGES_SPIKE_UP);
+            i++;
+        } else if (i == 5 && !this.spikeIsUp) {
+            setTimeout(() => this.spikeIsUp = true, 1500);
+        } else if (this.spikeIsUp && i !== 0) {
+            this.playAnimation(this.IMAGES_SPIKE_DOWN);
+            i--;
+        } else if (i == 0 && this.spikeIsUp) {
+            setTimeout(() => this.spikeIsUp = false, 1500);
+        }
+    }
+
+    /**
+     * Checks if the conditions to show spikes upwards are met.
+     * @returns {boolean} True if conditions to animate spikes upwards are met, otherwise false.
+     */
+    allowSpikesUp() {
+        return this.allowProcess && this.activateSpikes && i < 5 && !this.spikeIsUp;
+    }
 
 }

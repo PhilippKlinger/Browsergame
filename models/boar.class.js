@@ -65,32 +65,46 @@ class Boar extends MoveableObject {
         this.animate();
     }
 
+    /**
+     * Initiates the animation routines for the game object.
+     */
     animate() {
+        setInterval(() => this.playBoar(), 1000 / 30);
+        setTimeout(() => this.allowWalking = true, 1000);
+    }
 
-        setInterval(() => {
-            if (world && this.allowWalking && !this.isDead() && world.character.x > 110 && world.character.x > (this.x - 700) && !world.gamePaused) {
-                this.playAnimation(this.IMAGES_WALKING);
-                this.moveLeft();
-            }
-        }, 1000 / 30);
+    /**
+     * Handles the boar's animations and movement logic based on its current state.
+     */
+    playBoar() {
+        if (this.isDead()) {
+           this.playBoarDying();
+        } else if (this.isHurt()) {
+            this.playAnimation(this.IMAGES_HURTING);
+        }
+        if (this.allowMoving()) {
+            this.playAnimation(this.IMAGES_WALKING);
+            this.moveLeft();
+        }
+    }
 
-
-        setInterval(() => {
-            if (this.isDead()) {
-                //no damage to chracater
-                this.stopMoving();
-                this.playAnimation(this.IMAGES_DYING);
-                setTimeout(() => {
-                    this.stopAnimation(this.IMAGES_DYING);
-                }, 150);
-            } else if (this.isHurt()) {
-                this.playAnimation(this.IMAGES_HURTING);
-            }
-        }, 1000 / 30);
-
+    /**
+     * Plays the boar's dying animation and movement.
+     */
+    playBoarDying() {
+        this.stopMoving();
+        this.playAnimation(this.IMAGES_DYING);
         setTimeout(() => {
-            this.allowWalking = true;
-        }, 1000);
+            this.stopAnimation(this.IMAGES_DYING);
+        }, 150);
+    }
+
+    /**
+    * Determines if the boar is allowed to move based on various conditions.
+    * @returns {boolean} Returns true if the boar is allowed to move, otherwise false.
+    */
+    allowMoving() {
+        return world && this.allowWalking && !this.isDead() && world.character.x > 110 && world.character.x > (this.x - 700) && !world.gamePaused;
     }
 }
 
