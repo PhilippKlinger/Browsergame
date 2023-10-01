@@ -82,7 +82,7 @@ class Boar extends MoveableObject {
         } else if (this.isHurt()) {
             this.playAnimation(this.IMAGES_HURTING);
         }
-        if (this.allowMoving()) {
+        if (world && this.allowWalking && !this.isDead() && world.character.x > 110 && world.character.x > (this.x - 700) && !world.gamePaused) {
             this.playAnimation(this.IMAGES_WALKING);
             this.moveLeft();
         }
@@ -97,14 +97,6 @@ class Boar extends MoveableObject {
         setTimeout(() => {
             this.stopAnimation(this.IMAGES_DYING);
         }, 150);
-    }
-
-    /**
-    * Determines if the boar is allowed to move based on various conditions.
-    * @returns {boolean} Returns true if the boar is allowed to move, otherwise false.
-    */
-    allowMoving() {
-        return world && this.allowWalking && !this.isDead() && world.character.x > 110 && world.character.x > (this.x - 700) && !world.gamePaused;
     }
 }
 

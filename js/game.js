@@ -3,9 +3,7 @@ let world;
 let isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 let isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 ambientSound = new Audio('./audio/rainforest_ambient.mp3');
-menuSound = new Audio('audio/menuSoundFinal.mp3');
 ambientSoundMuted = false;
-menuSoundMuted = false;
 effectSoundMuted = false;
 mobileMode = false;
 
@@ -55,9 +53,6 @@ function showHelp() {
         world.gamePaused = true;
         pauseAmbientSound();
     }
-    if (!menuSoundMuted) {
-        playMenuSound();
-    }
 }
 
 /**
@@ -69,7 +64,6 @@ function showHelpStyle() {
     document.getElementById('helpImg').classList.add('d-none');
     document.getElementById('returnImg').classList.remove('d-none');
     document.getElementById('startOverlay').style.display = 'none';
-    document.getElementById('soundImgMenu').style.display = 'block';
 }
 
 /**
@@ -80,7 +74,6 @@ function hideHelp() {
     if (mobileMode) { document.getElementById('mobileControlsOverlay').style.display = 'flex'; }
     if (!world.gameStarted) { document.getElementById('startOverlay').style.display = 'flex'; }
     if (world.gamePaused) { world.gamePaused = false; }
-    if (!menuSoundMuted) { pauseMenuSound(); }
     if (ambientSoundMuted) { playAmbientSound(); }
     else { pauseAmbientSound(); }
 }
@@ -93,7 +86,6 @@ function hideHelpStyle() {
     document.getElementById('fullscreenMode').classList.remove('d-none');
     document.getElementById('helpImg').classList.remove('d-none');
     document.getElementById('returnImg').classList.add('d-none');
-    document.getElementById('soundImgMenu').style.display = 'none';
 }
 
 /**
@@ -156,20 +148,6 @@ function toggleAmbientSound() {
 }
 
 /**
- * Toggles the menu sound on/off.
- */
-function toggleMenuSound() {
-    let soundImgMenu = document.getElementById('soundImgMenu');
-    if (!menuSoundMuted) {
-        pauseMenuSound();
-        soundImgMenu.src = './img/10_gui/options_overlay/sound.png';
-    } else if (menuSoundMuted) {
-        playMenuSound();
-        soundImgMenu.src = './img/10_gui/options_overlay/sound_off.png';
-    }
-}
-
-/**
  * Plays the ambient sound.
  */
 function playAmbientSound() {
@@ -185,22 +163,6 @@ function pauseAmbientSound() {
     ambientSound.pause();
     pauseEffectSound();
     ambientSoundMuted = true;
-}
-
-/**
- * Plays the menu sound.
- */
-function playMenuSound() {
-    menuSound.play();
-    menuSoundMuted = false;
-}
-
-/**
- * Pauses the menu sound.
- */
-function pauseMenuSound() {
-    menuSound.pause();
-    menuSoundMuted = true;
 }
 
 /**
@@ -223,28 +185,58 @@ function pauseEffectSound() {
  * Plays the character's effect sounds.
  */
 function playEffectSoundCharacter() {
-    // ... implementation ...
+    world.character.walkingSound.volume = 1;
+    world.character.attackingSound.volume = 1;
+    world.character.jumpingSound.volume = 1;
+    world.character.throwingSound.volume = 1;
+    world.character.slidingSound.volume = 1;
+    world.character.dyingSound.volume = 1;
+    world.character.hurtingSound.forEach((sound) => {
+        sound.volume = 1;
+    });
 }
 
 /**
  * Pauses the character's effect sounds.
  */
 function pauseEffectSoundCharacter() {
-    // ... implementation ...
+    world.character.walkingSound.volume = 0;
+    world.character.attackingSound.volume = 0;
+    world.character.jumpingSound.volume = 0;
+    world.character.throwingSound.volume = 0;
+    world.character.slidingSound.volume = 0;
+    world.character.dyingSound.volume = 0;
+    world.character.hurtingSound.forEach((sound) => {
+        sound.volume = 0;
+    });
 }
 
 /**
  * Plays the world's effect sounds.
  */
 function playEffectSoundWorld() {
-    // ... implementation ...
+    world.level.enemies.forEach((enemy) => {
+        enemy.gruntingSound.volume = 1;
+    });
+    world.level.endboss.forEach((endboss) => {
+        endboss.encounterSound.volume = 1;
+    });
+    world.coincollectSound.volume = 1;
+    world.spearcollectSound.volume = 1;
 }
 
 /**
  * Pauses the world's effect sounds.
  */
 function pauseEffectSoundWorld() {
-    // ... implementation ...
+    world.level.enemies.forEach((enemy) => {
+        enemy.gruntingSound.volume = 0;
+    });
+    world.level.endboss.forEach((endboss) => {
+        endboss.encounterSound.volume = 0;
+    });
+    world.coincollectSound.volume = 0;
+    world.spearcollectSound.volume = 0;
 }
 
 /**
